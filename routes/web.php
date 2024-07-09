@@ -9,3 +9,4 @@ Route::get('/', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('category/{slug?}', [HomeController::class, 'getCategories'])->name('categories');
+Route::get('product/{slug?}', [HomeController::class, 'productDetailPage'])->name('product_detail');
