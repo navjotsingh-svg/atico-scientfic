@@ -50,14 +50,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       @endif
       @endif
       @else
-      @if($route == "home")
+      @if($route == "home1")
       <title>{{ isset(getSeoModule()['meta_title']) ? getSeoModule()['meta_title'] : '
 School Science Lab Equipments Manufacturers, Educational Lab Equipment Manufacturer, Lab Equipment Manufacturers and Suppliers, Engineering Lab Equipments Manufacturers ,Educational Laboratory Equipments Manufacturers and Suppliers, Indian Lab Equipments Manufacturers, Physics Lab Equipment manufacturers, Scientific Lab Instruments Manufacturers and Suppliers in Ambala,science lab equipments for school, Lab Equipments Manufacturers in India, Chemistry Lab Equipments manufacturer, Educational Lab Manufacturers & Exporter,Scientific Lab Equipments, civil Engineering Lab Equiupments Manufacturers, Chemical Engineering Lab Equipment manufacturer, Biology Lab Equipments, Education Lab Equipments, School Lab Equipments Manufacturers, Engineering Lab Equipments Manufacturers, Math Lab Equipments Manufacturers and suppliers' }}</title>
       <meta name="description" content="{{ isset(getSeoModule()['meta_description']) ? getSeoModule()['meta_description'] : 'Atico Lab Export is a leading School Lab Equipments Manufactruers, Educational Lab Equipments, Scientific lab equipments manufactruers in India, Lab Glassware Manufactruers,Engineering Lab Equipments manufacturers' }}"/>
       <meta name="keywords" content="Educational Lab Manufacturers, Educational Lab Equipments manufacturer, Educational Scientific Instruments Exporters, Educational Scientific Lab Equipments, Scientific Educational Lab Equipments, Scientific Equipments Manufacturers, Scientific Instruments Manufacturers India, Scientific Lab Equipment Suppliers, Scientific Lab Instruments Manufacturers, Scientific Lab Equipments Manufacturer India,School Science Lab Equipments manufacturer, School Science Lab Equipment manufacturers, Physics Lab Equipment manufacturers,Physics Lab Equipment manufacturer, Chemistry Lab Equipments manufacturer,Chemistry Lab Equipment manufacturers, Biology Lab Equipment manufacturer, Biology Lab Equipments manufacturer, Mechanical Lab Equipments Manufacturer, Fluid Mechanics Lab Equipments manufacturer, Fluid Mechanics Lab Equipment manufacturers,Engineering Lab Equipments manufacturer, Engineering Lab Equipment manufacturers, Technical Educational Equipment Manufacturer, Technical Educational Equipment Manufacturers, Vocational Training Lab Equipments Manufacturers, Vocational Training Lab Equipment Manufacturers, Civil Engineering Lab Equipment manufacturers,Civil Engineering Lab Equipments manufacturers, Chemical Engineering Lab Equipment manufacturers, Chemical Engineering Lab Equipments manufacturer,Laboratory Glassware manufacturers,Material Testing Lab Equipment manufacturer,Material Testing Lab Equipment manufacturers TVET Lab Equipement manufacturers"/>
       @endif
        @endif
-      @if($route == "home")
+      @if($route == "home1")
       <link rel="canonical" href="https://aticolabexport.com/" />
       @endif
       @if($route == "categories")

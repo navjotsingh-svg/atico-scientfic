@@ -65,8 +65,23 @@
 </style>
 <div id="owl-demo" class="owl-carousel owl-theme">
  
-  <div class="item"><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us"></div>
-  <div class="item"><img src="{{ asset('assets/images/slider/slide2.png') }}" alt="GTA V"></div>
+  <div class="item" style='min-height:720px;'><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
+  <h1 class="category_name" style="color:#fff;margin-top:-580px;margin-left:1020px;">Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
+    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 14px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
+    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 14px; color:#fff;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
+    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 14px;  color:#fff;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
+    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 1020px;margin-top: 50px;">Explore more</button> 
+   
+</div>
+  <div class="item" >
+  <img src="{{ asset('assets/images/slider/slide2.png') }}" alt="The Last of us">
+    <h1 class="category_name" style="margin-top:-580px;margin-left:220px;">Educational Lab Equipment<br> Manufacturer & Supplier</h1>
+    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
+    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
+    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
+    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 216px;margin-top: 50px;">Explore more</button> 
+               
+</div>
 
 </div>
 <section id="categories" class="container">
@@ -339,16 +354,119 @@
         <button class="btn btn-default" style="background: orange;margin-right: 203px;margin-top: 16px;">Explore more</button> 
        
         </div>
-        <img src="{{ asset('assets/images/electrical.png') }}" style="width:80%;margin-top:40px;margin-left:140px;">
-        <img src="{{ asset('assets/images/research.png') }}" style="width:80%;margin-top:40px;margin-left:140px;">
-        <img src="{{ asset('assets/images/trusted.png') }}" style="width:80%;margin-top:40px;margin-left:140px;">
-        <img src="{{ asset('assets/images/call_us.png') }}" style="">
+        
 
     </div>
+    </section>
+<section id="electrical_tab" class="container" style="margin-top: 30px">
+    <div class="row">
+        <div class="col-md-6">
+        <img src="{{ asset('assets/images/electrical.png') }}" style="width:90%">
+        </div>
+        <div class="col-md-6" style="text-align: justify">
+                <h6 style="color: #F99E00">-Electrical-</h6>
+                <h4 class="category_name">Electrical Lab<br>
+                Testing Equipment Manufacturer,</h4>
+                <span style="line-height:2">ATICO Export is one of the largest Electrical Lab Testing Equipment Manufacturers, Suppliers and Exporters in India. We are a leading corporation for all types of scientific lab equipment throughout the world. With years of experience in this domain, we have become highly skilled in designing, developing and manufacturing almost all types of scientific and educational laboratory equipment and instruments. ATICO Export is one of the best electrical lab testing equipment manufacturers around the globe that has set standards in research, development and manufacturing high quality products.</span>
+                
+                <button class="btn btn-default" style='border: 1px solid #eeee;margin-top:20px;'>Send Query <img src="{{ asset('assets/images/arrow-left.png') }}"></button>
+               
+            </div>
+    </div>
+    <div class="row" style="margin-top:30px;">
+       
+        <div class="col-md-6" style="text-align: justify">
+                <h6 style="color: #F99E00">-Research-</h6>
+                <h4 class="category_name">Research Lab<br>
+                Equipment Manufacturers </h4>
+                <span style="line-height:2">ATICO Exports have emerged out as one of the leading Research Lab Equipment manufacturers, suppliers and exporters in India, offering a wide range of Scientific Equipment and laboratory Instruments. We have a diverse and flawless array of Research Laboratory Equipment. In spite of the cut throat competition, we have always succeeded to achieve client’s satisfaction by using a simple formula of manufacturing and supplying world class and best quality products in cost efficient manner.</span>
+                <div style="display:flex;margin-top:10px;">
+                <div class="col-md-6" style="text-align: justify">
+                <ul>
+                    <li class="li-icon" align="left">Heating Mantles</li>
+                    <li class="li-icon" align="left">Histology Equipment</li>
+                    <li class="li-icon" align="left">Tissue Embedding Station</li>
+                    <li class="li-icon" align="left">Lab Test Chambers</li>
+                </ul>
+                </div>
+                
+                <div class="col-md-6" style="text-align: justify">
+                <ul>
+                    <li class="li-icon" align="left">Cooling Equipment</li>
+                    <li class="li-icon" align="left">Microtome Equipment</li>
+                    <li class="li-icon" align="left">Slide Strainers</li>
+                    <li class="li-icon" align="left">Electrophoresis</li>
+                </ul>
+                </div>
+                </div>
+                <button class="btn btn-default" style='border: 1px solid #eeee;margin-top:20px;'>Send Query <img src="{{ asset('assets/images/arrow-left.png') }}"></button>
+               
+        </div>
+        <div class="col-md-6">
+        <img src="{{ asset('assets/images/research.png') }}" style="width:85%">
+        </div>    
+    </div>
+
 </section>
-<section >
+<section id="our_categories" style="min-height:450px;margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12" style="text-align: center;margin-top:30px;">
+            <h6 style="color: #F99E00">-Category-</h6>
+            <h4 class="category_name" style="color:#fff;">Our Category</h4>
+        </div> 
+    </div>
+    <div class="container">
+    <div class="row ">
+        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/etel.png') }});min-height:250px;width:23%;margin-right:2%;">
+               <label style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
+        </div>
+        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/cele.png') }});min-height:250px;width:23%;margin-right:2%;">
+                <label  style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
+        </div>
+        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/rle.png') }});min-height:250px;width:23%;margin-right:2%;">
+        <label  style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
+        </div>
+        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/etle.png') }});min-height:250px;width:23%;margin-right:2%;">
+        <label  style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
+        </div>
+
+
+    </div>
+    
+</div>
+</section>
+<section class="container" id="trusted">
+<img src="{{ asset('assets/images/trusted.png') }}" style="width:95%">
 </section>
 
+
+<section id="arrows" style="">
+        <div class="row">
+               <div class="col-md-12" style="background: url(http://127.0.0.1:8000/assets/images/call_us.png);padding: 50px;">
+               <h4 style="color:#ffff;margin-left: 250px;margin-top: 140px;">Call Us! We are available 24/7</h4>
+ <button class="btn btn-default" style="background: orange;margin-right: 900px;float: right;margin-top: -35px;">Contact Us</button> 
+    </div> 
+        </div>
+</section>
+<section id="our_categories" style="min-height:450px;" >
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12" style="text-align: center;margin-top:30px;">
+            <h6 style="color: #F99E00">-Services-</h6>
+            <h3 class="category_name" >Our Services</h3>
+        </div> 
+    </div>
+    <div class="container">
+    <div class="row ">
+        <div class="col-md-12" align="center" >
+        <img src="{{ asset('assets/images/services.png') }}" style="width:85%">
+        </div>
+        
+
+
+    </div>
+    
+</div>
+</section>
 <script>
     $(document).ready(function() {
  
