@@ -165,39 +165,23 @@
         </div>
 
     </div>
-    <div class="row" style="margin-top:50px;">
+    <div class="container">
+    <div class="row " style="margin-top:50px;">
         <div class="col-md-12">
-                <h4 class="category_name ms-5">Related Products</h4>
+                <h4 class="category_name">Related Products</h4>
                 <div class="row">
                     @if(count(getRelatedProducts($product->id))>0)
                     @foreach(getRelatedProducts($product->id) as $key => $related_product)
-                    <div class="ts-box-col-wrapper col-lg-3 col-sm-4 col-md-3 col-xs-12 oncology products-box">
-                      <article class="themestek-box themestek-box-portfolio ts-portfoliobox-style-1 ts-hover-style-2">
-                        <div class="themestek-post-item">
-                          <span class="themestek-item-thumbnail">
-                            <span class="themestek-item-thumbnail-inner">
-                              <a href="{{ route('product_detail', $related_product->slug) }}"><img width="800" height="650" src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}" class="attachment-themestek-img-800x650 size-themestek-img-800x650 wp-post-image" alt="" onerror="this.onerror=null;this.src='{{ asset("assets/frontend/images/no_product.png") }}';" /></a>
-                            </span>
-                          </span>
-                          <div class="themestek-box-content">
-                            <div class="themestek-box-content-inner">
-                              <div class="themestek-pf-box-title">
-                                <!-- <div class="themestek-box-category"><a href="{{ route('product_detail', $related_product->slug) }}" rel="tag">Oncology</a></div> -->
-                                <h3><a href="{{ route('product_detail', $related_product->slug) }}">{!! str_limit($related_product->name, 25) !!}</a></h3>
-                              </div>
-                              <div class="themestek-box-desc">
-                                <p>{!! str_limit(strip_tags($related_product->description), 60) !!}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
+                    <div class="col-md-4" style="width:24%;margin-right:1%;border:1px solid #D0D0D0;padding:10px;margin-top:30px;">
+                    <a href="{{ route('product_detail', $related_product->slug) }}"><img width="300" height="250" src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"  alt="" onerror="this.onerror=null;this.src='{{ asset("assets/frontend/images/no_product.png") }}';" /></a>
+                    <h5 class="text-center" style="margin-top:20px;"><a href="{{ route('product_detail', $related_product->slug) }}">{!! substr($related_product->name,0, 25) !!}</a></h5>    
+                </div>
                     @endforeach
                     @endif
                     
                   </div>
         </div>
 
+    </div>
     </div>
 @endsection
