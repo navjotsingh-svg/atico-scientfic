@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/atico-admin', [AuthController::class, 'getLogin'])->name('admin');
-Route::post('/atico-admin/login', [AuthController::class, 'getpostLoginLogin']);
+Route::post('/atico-admin/login', [AuthController::class, 'postLogin'])->name('adminlogin');
 Route::get('/atico-admin/logout', array('as' => 'admin-logout','uses' => 'Auth\AuthController@adminLogout'));
 
 
