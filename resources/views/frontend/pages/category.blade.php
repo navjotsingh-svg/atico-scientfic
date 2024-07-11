@@ -83,6 +83,46 @@
     font-size: 22px;
     margin-left: 590px;
 }
+.desktop_view{
+        display: none;
+    }
+    .related_product{
+           text-align: center;
+            
+        }
+@media only screen and (max-width: 600px) {
+    .brd-heading{
+    margin-top: 100px;
+    position: absolute;
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+    margin-left: 10px;
+    text-decoration: none;
+}
+.brd-sub-heading{
+    margin-top: 100px;
+    position: absolute;
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+    margin-left: 90px;
+}
+    .mobile_view{
+        display: none;
+    }
+    .desktop_view{
+        display: contents;
+    }
+    .product_name{
+        text-align:left !important;
+    }
+    .related_product{
+           text-align: center;
+            flex:40%;
+            
+        }
+}
 </style>
 @if(isset($sub_sub_cat))
 								@php
@@ -131,8 +171,9 @@
     <div class="col-md-3">
         <div class="info" style="background:#0530AD;color:#fff;">
            <label> Categories </label>
+           <span class="desktop_view toggle"><img  src="{{ asset('assets/images/toggle.png') }}"></span>
            </div>
-           <div class="accordion" id="accordionExample">
+           <div class="accordion mobile_view" id="accordionExample">
   
   
   
@@ -163,20 +204,26 @@
         
         </div>
         <div class="col-md-9">
-        <div class="info">
+        <div class="info mobile_view">
             Showing {{ count($categories) }} result
         </div>
         <div class="details" style="margin-top:20px;">
             <div class="row">
-                <div class="col-md-8" style="text-align:justify;line-height:2;">
+            
+                <div class="col-md-8 product_name" style="text-align:justify;line-height:2;">
                 <h3 class="category_name">{!! $category_detail['name'] !!}</h3>
+                <div class="desktop_view">
+                @if($category_detail['description'] != '')
+						<img width="330" height="262" src="{{ asset($category_detail['image'] ? 'uploads/product_images/'.$category_detail['image'] : 'assets/images/no_product.png') }}" alt="" />
+						@endif
+                </div>
                 @if(isset($cat))
 						{!! $cat['description'] !!}
 						@else
 						{!! $category['description'] !!}
 						@endif
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mobile_view">
                 @if($category_detail['description'] != '')
 						<img width="330" height="262" src="{{ asset($category_detail['image'] ? 'uploads/product_images/'.$category_detail['image'] : 'assets/images/no_product.png') }}" alt="" />
 						@endif
@@ -186,7 +233,7 @@
             <div class="row multi-columns-row themestek-boxes-row-wrapper">
 					@if(count($categories)>0)
 					@foreach($categories as $key => $category)
-					<div class="ts-box-col-wrapper col-lg-3 col-sm-6 col-md-4 col-xs-12 category_box" style="border:1px solid #DFDFDF !important;width:24%;margin-right:1%;margin-top:10px;" >
+					<div class="related_product ts-box-col-wrapper col-lg-3 col-sm-6 col-md-4 col-xs-12 category_box" style="border:1px solid #DFDFDF !important;width:24%;margin-right:1%;margin-top:10px;" >
 						<article class="themestek-box themestek-box-service ts-servicebox-style-3 category_border">
 							<div class="themestek-post-item">
 								<span class="themestek-item-thumbnail category_box">
@@ -221,5 +268,12 @@
         </div>
     </div>
 </div>                        
-
+<script>
+    $(".toggle").click(function(){
+        if($(".accordion").hasClass("mobile_view"))
+            $(".accordion").removeClass("mobile_view");
+        else
+            $(".accordion").addClass("mobile_view")
+    });
+</script>
 @endsection

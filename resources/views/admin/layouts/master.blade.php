@@ -8,24 +8,26 @@
 <meta name="csrf-token" content="{!! csrf_token() !!}" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
-{!! HTML::style('assets/css/bootstrap.css') !!}
+ <link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
 <!-- //bootstrap-css -->
 <!-- Custom CSS -->
-{!! HTML::style('assets/css/style.css') !!}
+<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
 
 <!-- font CSS -->
-{!! HTML::style('http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic') !!}
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+ <link media="all" type="text/css" rel="stylesheet"  href="http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
+<link media="all" type="text/css" rel="stylesheet" href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <!-- font-awesome icons -->
-{!! HTML::style('assets/css/font.css') !!}
-{!! HTML::style('assets/css/font-awesome.css') !!}
+<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
+<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}">
+
 
 <!-- //font-awesome icons -->
-<!-- {!! HTML::script('assets/js/jquery2.0.3.min.js') !!} -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{!! HTML::script('assets/js/modernizr.js') !!}
-{!! HTML::script('assets/js/jquery.cookie.js') !!}
-{!! HTML::script('assets/js/screenfull.js') !!}
+<script src="{{ asset('assets/js/modernizr.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.cookie.js') }}"></script>
+
 
 @yield('css')
     <script>
@@ -42,14 +44,19 @@
     });
     </script>
 <!-- charts -->
-{!! HTML::script('assets/js/raphael-min.js') !!}
-{!! HTML::script('assets/js/morris.js') !!}
-{!! HTML::script('assets/js/morris.js') !!}
-{!! HTML::style('assets/css/morris.css') !!}
-{!! HTML::style('assets/css/template.css') !!}
+<script src="{{ asset('assets/js/raphael-min.js') }}"></script>
+<script src="{{ asset('assets/js/morris.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/morris.js') }}/assets/js/morris.js"></script> -->
+
+<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/morris.css') }}">
+<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/template.css') }}">
+
+
 <!-- //charts -->
 <!--skycons-icons-->
-{!! HTML::script('assets/js/skycons.js') !!}
+<script src="{{ asset('assets/js/skycons.js') }}"></script>
+
+
 
 <!--//skycons-icons-->
 </head>

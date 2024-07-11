@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class AuthController
@@ -55,12 +56,12 @@ class AuthController extends Controller
     {
         $credentials = [
             'username' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
+            'password' => ($request->get('password')),
             'status' => 1
         ];
 
         if (!\Request::ajax()) { 
-            
+            echo "<pre>";print_r($credentials);echo "</pre>";
             $validator = (new User)->validateLoginUser($credentials);
             if ($validator->fails()) {
                 //dd($validator->messages());

@@ -62,6 +62,11 @@
 .li-icon{
     list-style-image: url({{ asset('assets/images/li.png') }})
 }
+@media only screen and (max-width: 600px) {
+.support_team{
+    flex:40%;
+}
+}
 </style>
 <div id="owl-demo" class="owl-carousel owl-theme">
  

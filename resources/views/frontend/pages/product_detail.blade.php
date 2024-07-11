@@ -87,6 +87,86 @@
     padding: 35px;
     border: 1px solid #DFDFDF;
 }
+.support_icons
+{
+    display:flex;
+    margin-top:30px;
+    margin-left:30px;
+}
+.description_head{
+    margin-top:150px;
+    margin-left:180px;
+    position:absolute;
+}
+.description{
+    margin-top:190px;
+    margin-left:180px;
+    position:absolute;
+    width:70%;
+    line-height:2;
+    text-align:justify;
+        }
+        .details{
+            min-height:500px;
+            background:#F5F5F5;
+        }
+        .related_product{
+            width:24%;
+            margin-right:1%;
+            border:1px solid #D0D0D0;
+            padding:10px;
+            margin-top:30px;
+        }
+        .related_product img{
+            width:300px;
+            height:250px;
+            
+        }
+@media only screen and (max-width: 600px) {
+  
+    .support_icons
+        {
+            display:flex;
+            margin-top:30px;
+            margin-left:5px;
+            font-size:11px;
+        }
+        .support_icons_img{
+            width:50px;
+            margin-left:8px;
+        }
+        .description_head{
+            margin-top:65px;
+            margin-left:40px;
+            position:absolute;
+        }
+        .description{
+            margin-top: 95px;
+            margin-left: 40px;
+            width:85%;
+        }
+        .details{
+            min-height:800px;
+            background:#F5F5F5;
+        }
+        .related_product{
+            width:24%;
+            flex:40%;
+            margin-right:1%;
+            border:1px solid #D0D0D0;
+            padding:0px;
+            margin-top:30px;
+            text-align:center;
+        }
+
+        .related_product img{
+            width:200px;
+            height:150px;
+            
+        }
+        
+  
+}
 </style>
 <div class="ts-titlebar-wrapper ts-bg ts-bgcolor-transparent ts-titlebar-align-left ts-textcolor-white ts-bgimage-yes">
   <div class="ts-titlebar-wrapper-bg-layer ts-bg-layer"></div>
@@ -130,21 +210,21 @@
               
                 <p style="margin-left:30px">{!! substr(strip_tags($product->description),0, 200) !!}...</p>
                 <p style='color:#01193D;font-size:20px;margin-left:30px;'>Product Code: {!! $product['product_code'] !!}</p>
-                <button style='color:#fff;font-size:20px;margin-left:30px;' class="btn btn-warning btn-lg col-7">Send Query</button>
+                <button style='color:#fff;font-size:20px;margin-left:30px;' class="btn btn-warning btn-lg col-9">Send Query</button>
 
-            <div style="display:flex;margin-top:30px;margin-left:30px;">
+            <div class="support_icons">
                 <div class="col-md-4">
-                    <img src="{{ asset('assets/images/dealer.png') }}">
+                    <img src="{{ asset('assets/images/dealer.png') }}" class="support_icons_img">
                     <span>&nbsp;&nbsp;Dealership</span>
 
                 </div>
                 <div class="col-md-4">
-                    <img src="{{ asset('assets/images/support.png') }}">
+                    <img src="{{ asset('assets/images/support.png') }}" class="support_icons_img">
                     <span>&nbsp;&nbsp;Support Team</span>
 
                 </div>
                 <div class="col-md-4">
-                    <img src="{{ asset('assets/images/payment.png') }}">
+                    <img src="{{ asset('assets/images/payment.png') }}" class="support_icons_img">
                     <span>&nbsp;&nbsp;Payment & Shipping</span>
 
                 </div>
@@ -158,9 +238,9 @@
 <div class="row" style="margin-top:50px;">
         <div class="col-md-12">
                 <h2 class="category_name text-center">{!! $product->name !!}</h2>
-                <div style="min-height:500px;background:#F5F5F5;">
-                    <h4 class="category_name" style="margin-top:150px;margin-left:180px;position:absolute">Description</h4>
-                    <div style="margin-top:190px;margin-left:180px;position:absolute;width:70%;line-height:2;text-align:justify;"> {!! ($product->description) !!}</div>
+                <div class="details">
+                    <h4 class="category_name description_head" style="">Description</h4>
+                    <div class="description" > {!! ($product->description) !!}</div>
                 </div>
         </div>
 
@@ -172,8 +252,8 @@
                 <div class="row">
                     @if(count(getRelatedProducts($product->id))>0)
                     @foreach(getRelatedProducts($product->id) as $key => $related_product)
-                    <div class="col-md-4" style="width:24%;margin-right:1%;border:1px solid #D0D0D0;padding:10px;margin-top:30px;">
-                    <a href="{{ route('product_detail', $related_product->slug) }}"><img width="300" height="250" src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"  alt="" onerror="this.onerror=null;this.src='{{ asset("assets/frontend/images/no_product.png") }}';" /></a>
+                    <div class="col-md-4 related_product" style="">
+                    <a href="{{ route('product_detail', $related_product->slug) }}"><img  src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"  alt="" onerror="this.onerror=null;this.src='{{ asset("assets/frontend/images/no_product.png") }}';" /></a>
                     <h5 class="text-center" style="margin-top:20px;"><a href="{{ route('product_detail', $related_product->slug) }}">{!! substr($related_product->name,0, 25) !!}</a></h5>    
                 </div>
                     @endforeach
