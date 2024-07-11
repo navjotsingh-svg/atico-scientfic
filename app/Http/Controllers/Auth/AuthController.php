@@ -54,6 +54,7 @@ class AuthController extends Controller
      */
     public function postLogin(Request $request)
     {
+       
         $credentials = [
             'username' => $request->get('email'),
             'password' => ($request->get('password')),

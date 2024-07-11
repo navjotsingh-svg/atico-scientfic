@@ -447,7 +447,7 @@
 
 <section id="arrows" style="">
         <div class="row">
-               <div class="col-md-12" style="background: url(http://127.0.0.1:8000/assets/images/call_us.png);padding: 50px;">
+               <div class="col-md-12" style="background: url({{ asset('assets/images/call_us.png') }});padding: 50px;">
                <h4 style="color:#ffff;margin-left: 250px;margin-top: 140px;">Call Us! We are available 24/7</h4>
  <button class="btn btn-default" style="background: orange;margin-right: 900px;float: right;margin-top: -35px;">Contact Us</button> 
     </div> 
