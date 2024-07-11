@@ -61,7 +61,6 @@ class AuthController extends Controller
         ];
 
         if (!\Request::ajax()) { 
-            echo "<pre>";print_r($credentials);echo "</pre>";
             $validator = (new User)->validateLoginUser($credentials);
             if ($validator->fails()) {
                 //dd($validator->messages());
