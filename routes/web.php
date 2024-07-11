@@ -3,6 +3,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FaqController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -276,7 +278,7 @@ Route::group(['middleware' => 'auth', 'after' => 'no-cache'], function () {
                 'uses' => 'BlogController@drop']);
 
             // FAQ route start
-            Route::resource('faq', 'FaqController', [
+            Route::resource('faq', FaqController::class, [
                 'names' => [
                     'index' => 'faq.index',
                     'create' => 'faq.create',
