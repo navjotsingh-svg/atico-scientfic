@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-{!! HTML::script('assets/js/nicEdit-latest.js') !!}  <script type="text/javascript">
+<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script> <script type="text/javascript">
 //<![CDATA[
 bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 //]]>
@@ -24,85 +24,99 @@ $route  = \Route::currentRouteName();
                                 <h4>{!! lang('sub_category.sub_category') !!} Information</h4>
                             </div>
                             <div class="form-body">
-                                @if($route == 'sub_category.create')
-                                {!! Form::open(array('method' => 'POST', 'route' => array('sub_category.store'), 'id' => 'sub_category-form', 'class' => '', 'files' => 'true')) !!}
-                                @elseif($route == 'sub_category.edit')
-                                {!! Form::model($result, array('route' => array('sub_category.update', $result->id), 'method' => 'PATCH', 'id' => 'sub_category-form', 'class' => '', 'files' => 'true')) !!}
-                                @else
-                                Nothing
+                             
+
+                                <form  class="form" enctype="multipart/form-data"
+                                @if (!empty($result)) method="post" action="{{ route('sub_category.update', $result->id) }}" @else method="post" action="{{ route('sub_category.store') }}" @endif>
+                            
+                               @csrf
+                               @if (!empty($result))
+                               @method('PUT')
                                 @endif
                                 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            {!! Form::label('parent_id', 'Category', array('class' => '')) !!}<sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            {!! Form::select('parent_id',$categories,!empty($result->parent_id)?$result->parent_id:'', array('class' => 'select2 form-control1')) !!}
+                                        <label for="parent_id">Category</label>
+                                        <select name="parent_id" class="select2 form-control1">
+                                                <option value="">-Select Sub Category-</option>
+                                                @foreach($categories as $key => $cat)
+                                                <option value="{{ $key }}" {{ $key == @$result['parent_id'] ? 'selected' : '' }}>{{ $cat }}</option>
+                                                @endforeach
+                                            </select>
+                                              
                                         </div>
                                         
                                         <div class="form-group">
-                                            {!! Form::label('second_parent_id', 'Second Category', array('class' => '')) !!}
-                                            {!! Form::select('second_parent_id',$categories,!empty($result->second_parent_id)?$result->second_parent_id:'', array('class' => 'select2 form-control1')) !!}
+                                            <label for="second_parent_id">Second Category</label>
+                                            <select name="second_parent_id" class="select2 form-control1">
+                                                <option value="">-Select Sub Category-</option>
+                                                @foreach($categories as $key => $cat)
+                                                <option value="{{ $key }}" {{ $key == @$result['parent_id'] ? 'selected' : '' }}>{{ $cat }}</option> @endforeach
+                                            </select>
                                         </div>
                                         
                                         <div class="form-group">
-                                            {!! Form::label('third_parent_id', 'Third Category', array('class' => '')) !!}
-                                            {!! Form::select('third_parent_id',$categories,!empty($result->third_parent_id)?$result->third_parent_id:'', array('class' => 'select2 form-control1')) !!}
+                                        <label for="third_parent_id">Third Category</label>
+                                        <select name="third_parent_id" class="select2 form-control1">
+                                                <option value="">-Select Sub Category-</option>
+                                                @foreach($categories as $key => $cat)
+                                                <option value="{{ $key }}" {{ $key == @$result['parent_id'] ? 'selected' : '' }}>{{ $cat }}</option>  @endforeach
+                                            </select>
+                                          </div>
+                                        
+                                        <div class="form-group">
+                                        <label for="four_parent_id">Fourth Category</label>
+                                        <select name="four_parent_id" class="select2 form-control1">
+                                                <option value="">-Select Sub Category-</option>
+                                                @foreach($categories as $key => $cat)
+                                                <option value="{{ $key }}" {{ $key == @$result['parent_id'] ? 'selected' : '' }}>{{ $cat }}</option>  @endforeach
+                                            </select></div>
+                                        
+                                        <div class="form-group">
+                                        <label for="name">Name</label>
+                                        
+                                        <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
+                                        <input type="text" name="name" class="form-control" value="<?= @$result->name ?>">
+                                       </div>
+
+                                        <div class="form-group">
+                                        <label for="short_name">Short Name</label>
+                                        <input type="text" name="short_name" class="form-control" value="<?= @$result->short_name ?>">
+                                         </div>
+
+                                      
+                                        <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" name="description" rows="20"><?= @$result->description ?></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label for="meta_tag">Meta Tag</label>
+                                        <input type="text" name="meta_tag" class="form-control" value="<?= @$result->meta_tag ?>">
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label for="meta_description">Meta Description</label>
+                                        <input type="text" name="meta_description" class="form-control" value="<?= @$result->meta_description ?>">
+                                          </div>
+
+                                        <div class="form-group">
+                                        <label for="meta_title">Meta Title</label>
+                                        <input type="text" name="meta_title" class="form-control" value="<?= @$result->meta_title ?>">
                                         </div>
                                         
                                         <div class="form-group">
-                                            {!! Form::label('four_parent_id', 'Fourth Category', array('class' => '')) !!}
-                                            {!! Form::select('four_parent_id',$categories,!empty($result->four_parent_id)?$result->four_parent_id:'', array('class' => 'select2 form-control1')) !!}
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            {!! Form::label('name', lang('common.name'), array('class' => '')) !!}
-                                            <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            {!! Form::text('name', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {!! Form::label('short_name', lang('common.short_name'), array('class' => '')) !!}
-                                            {!! Form::text('short_name', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-
-                                        <!-- <div class="form-group">
-                                            {!! Form::label('heading', lang('common.heading'), array('class' => '')) !!}
-                                            {!! Form::text('heading', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div> -->
-                                        <div class="form-group">
-                                            {!! Form::label('description', lang('common.description'), array('class' => '')) !!}
-                                            
-                                            {!! Form::textarea('description', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {!! Form::label('meta_tag', lang('common.meta_tag'), array('class' => '')) !!}
-                                            {!! Form::text('meta_tag', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {!! Form::label('meta_description', lang('common.meta_description'), array('class' => '')) !!}
-                                            {!! Form::text('meta_description', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {!! Form::label('meta_title', lang('common.meta_title'), array('class' => '')) !!}
-                                            {!! Form::text('meta_title', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            {!! Form::label('image', lang('common.image'), array('class' => '')) !!}
-                                            {!! Form::file('image', null, array('class' => 'form-control')) !!}
-                                            @if(!empty($result->image))
+                                        <label for="image">Image</label>
+                                       
+                                       <input type="file" name="image" class="form-control" >
+                                        @if(!empty($result->image))
                                             <div class="form-group">
                                                 <img src="{{ asset('uploads/product_images/'.$result->image) }}" class="img-responsive" style="max-height: 70px;">
                                             </div>
                                             @endif
                                         </div>
-                                        <!--   <div class="form-group">
-                                            {!! Form::label('sort', lang('common.sort'), array('class' => '')) !!}
-                                            {!! Form::number('sort', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div> -->
+                                       
                                     </div>
                                     
                                     
@@ -114,7 +128,7 @@ $route  = \Route::currentRouteName();
                                     </div>
                                 </div>
                                 
-                                {!! Form::close() !!}
+</form>
                             </div>
                         </div>
                     </div>

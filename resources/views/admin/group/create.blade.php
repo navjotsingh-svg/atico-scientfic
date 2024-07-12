@@ -1,6 +1,8 @@
 @extends('admin.layouts.master')
 @section('css')
-{!! HTML::script('assets/js/nicEdit-latest.js') !!}  <script type="text/javascript">
+<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
+
+<script type="text/javascript">
 //<![CDATA[
 bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 //]]>
@@ -24,12 +26,14 @@ $route  = \Route::currentRouteName();
                                 <h4>{!! lang('group.group') !!} Information</h4>
                             </div>
                             <div class="form-body">
-                                @if($route == 'group.create')
-                                {!! Form::open(array('method' => 'POST', 'route' => array('group.store'), 'id' => 'group-form', 'class' => '', 'files' => 'true')) !!}
-                                @elseif($route == 'group.edit')
-                                {!! Form::model($result, array('route' => array('group.update', $result->id), 'method' => 'PATCH', 'id' => 'group-form', 'class' => '', 'files' => 'true')) !!}
-                                @else
-                                Nothing
+                              
+
+                                <form  class="form" enctype="multipart/form-data"
+                                @if (!empty($result)) method="post" action="{{ route('group.update', $result->id) }}" @else method="post" action="{{ route('group.store') }}" @endif>
+                            
+                               @csrf
+                               @if (!empty($result))
+                               @method('PUT')
                                 @endif
                                 
                                 <div class="row">
@@ -49,14 +53,17 @@ $route  = \Route::currentRouteName();
                                         </ul>
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::label('name', lang('common.name'), array('class' => '')) !!}
-                                        <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                        {!! Form::text('name', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                    <label class="" for="name">Name</label>
+                                    <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
+                                       <input type="text" name="name" id="name" class="form-control" value="<?= @$result->name ?>">
+                                     
                                     </div>
 
                                     <div class="form-group">
-                                            {!! Form::label('image', lang('common.image'), array('class' => '')) !!}
-                                            {!! Form::file('image', null, array('class' => 'form-control')) !!}
+                                            
+                                            <label class="" for="image">Image</label>
+                                        <input type="file" name="image" id="image" class="form-control" value="<?= @$result->name ?>">
+                                     
                                             @if(!empty($result->image))
                                             <div class="form-group">
                                                 <img src="{{ asset('uploads/product_images/'.$result->image) }}" class="img-responsive" style="max-height: 70px;">
@@ -66,30 +73,36 @@ $route  = \Route::currentRouteName();
 
                                         
                                     <div class="form-group">
-                                        {!! Form::label('sort', lang('common.sort'), array('class' => '')) !!}
-                                        <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                        {!! Form::number('sort', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                    <label class="" for="sort">Sort</label>
+                                    <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
+                                      
+                                        <input type="number" name="sort" id="sort" class="form-control" value="<?= @$result->sort ?>" >
+                                   
                                     </div>
 
                                     <div class="form-group">
-                                        {!! Form::label('route', lang('common.route'), array('class' => '')) !!}
-                                        {!! Form::text('route', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                    <label class="" for="route">Route</label>
+                                        <input type="text" name="route" id="route" class="form-control" value="<?= @$result->route ?>">
+                                     
+                                       </div>
+
+                                    <div class="form-group">
+                                        <label class="" for="meta_tag">Meta Tag</label>
+                                        <input type="text" name="meta_tag" id="meta_tag" class="form-control" value="<?= @$result->meta_tag ?>">
+                                      
                                     </div>
 
                                     <div class="form-group">
-                                        {!! Form::label('meta_tag', lang('common.meta_tag'), array('class' => '')) !!}
-                                        {!! Form::text('meta_tag', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                        <label class="" for="meta_description">Meta Description</label>
+                                        <input type="text" name="meta_description" id="meta_description" class="form-control" value="<?= @$result->meta_description ?>">
+                                      
                                     </div>
 
                                     <div class="form-group">
-                                        {!! Form::label('meta_description', lang('common.meta_description'), array('class' => '')) !!}
-                                        {!! Form::text('meta_description', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                    </div>
-
-                                    <div class="form-group">
-                                        {!! Form::label('meta_title', lang('common.meta_title'), array('class' => '')) !!}
-                                        {!! Form::text('meta_title', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                    </div>
+                                    <label class="" for="meta_title">Meta Title</label>
+                                        <input type="text" name="meta_title" id="meta_title" class="form-control" value="<?= @$result->meta_title ?>">
+                                        
+                                       </div>
                                   
                                 </div>
                                 
@@ -101,7 +114,7 @@ $route  = \Route::currentRouteName();
                                 </div>
                             </div>
                             
-                            {!! Form::close() !!}
+</form>
                         </div>
                     </div>
                 </div>

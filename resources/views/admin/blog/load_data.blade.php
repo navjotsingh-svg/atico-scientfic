@@ -25,11 +25,11 @@
         </a>
     </td>
 
-    <td>{!! HTML::image(asset('uploads/blog_images/'.$detail->image),'' ,array('width' => 70 , 'height' => 70,'class'=>'img-responsive') ) !!} </td> 
+    <td><img src="{{ asset('uploads/blog_images/'.$detail->image) }}" class="img-responsive" width="70" height="70" ></td> 
 
     <td class="text-center">
         <a href="javascript:void(0);" class="toggle-status" data-message="{!! lang('messages.change_status') !!}" data-route="{!! route('blog.toggle', $detail->id) !!}">
-            {!! HTML::image('assets/images/' . $detail->status . '.gif') !!}
+        <img src="{{'/assets/images/' . $detail->status . '.gif'}}"> 
         </a>
     </td>
     <td class="text-center col-md-1">

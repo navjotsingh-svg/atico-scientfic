@@ -37,7 +37,13 @@
                         <i class="fa fa-times-circle"></i> &nbsp;
                         {!! Lang::get('messages.please_fix') !!}
                     </div>
-                    {!! HTML::ul($errors->all()) !!}
+                    <ul class="list-group cat_ul" id="myDiv">
+                                                @foreach($errors->all() as $key => $cat)
+                                                <li class="list-group-item">{!! $cat !!}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                   
                 </div>
             </div>
             @endif

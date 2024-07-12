@@ -31,7 +31,7 @@
     <td>{!! $detail->created_at !!}</td>
 <!-- Inside your table loop -->
 <td>
-    <form action="{{ route('product_query.destroy', $detail->id) }}" method="POST">
+    <form action="{{ route('product_query.drop', $detail->id) }}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger">Delete</button>

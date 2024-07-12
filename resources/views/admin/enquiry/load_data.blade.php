@@ -30,7 +30,7 @@
 </td>
 
 <td>
-    <form action="{{ route('enquiry.destroy', $detail->id) }}" method="POST">
+    <form action="{{ route('enquiry.drop', $detail->id) }}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger">Delete</button>

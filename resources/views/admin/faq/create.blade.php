@@ -1,9 +1,10 @@
 @extends('admin.layouts.master')
 @section('css')
 <script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
+<script type="text/javascript">
 //<![CDATA[
-bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-//]]>
+        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+  //]]>
 </script>
 @stop
 @section('content')
@@ -25,11 +26,13 @@ $route  = \Route::currentRouteName();
                             </div>
                             <div class="form-body">
 
-                            <form method="post" class="form" enctype="multipart/form-data"
-                                @if (!empty($result)) action="{{ route('faq.update', $result->id) }}" @else action="{{ route('faq.store') }}" @endif>
+                            <form  class="form" enctype="multipart/form-data"
+                                @if (!empty($result)) method="post" action="{{ route('faq.update', $result->id) }}" @else method="post" action="{{ route('faq.store') }}" @endif>
                             
-                               
-                                
+                               @csrf
+                               @if (!empty($result))
+                               @method('PUT')
+                                @endif
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -42,7 +45,7 @@ $route  = \Route::currentRouteName();
                                         <div class="form-group">
                                         <label for="description">Description</label>
                                             <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            <textarea class="form-control" name="description"><?= @$result->description ?></textarea>
+                                            <textarea class="form-control" name="description" rows="20"><?= @$result->description ?></textarea>
                                             
                                         </div>
 

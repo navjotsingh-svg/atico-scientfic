@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-<script src="assets/js/nicEdit-latest.js"></script>
+<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -28,20 +28,20 @@ $route  = \Route::currentRouteName();
                             <div class="form-body">
                                  <form method="post" class="form" enctype="multipart/form-data"
                                 @if (!empty($result)) action="{{ route('category.update', $result->id) }}" @else action="{{ route('category.store') }}" @endif>
-                                
+                                @csrf
                                 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="" for="name">Name</label>
                                             <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            <input type="text" name="name" id="name" class="form-control" >
+                                            <input type="text" name="name" id="name" class="form-control" value="<?= @$result->name ?>">
                                             
                                         </div>
 
                                         <div class="form-group">
                                         <label class="" for="short_name">Short Name</label>
-                                        <input type="text" name="short_name" id="short_name" class="form-control" >
+                                        <input type="text" name="short_name" id="short_name" class="form-control" value="<?= @$result->short_name ?>">
                                             
                                             
                                         </div>
@@ -49,26 +49,26 @@ $route  = \Route::currentRouteName();
 
                                         <div class="form-group">
                                             <label class="" for="description">Description</label>
-                                            <textarea class="form-control" name="description" id="description" rows="20"></textarea>
+                                            <textarea class="form-control" name="description" id="description" rows="20"><?= @$result->description ?></textarea>
                                             
                                         </div>
 
                                         <div class="form-group">
                                         <label class="" for="meta_tag">Meta Tag</label>
-                                        <input type="text" name="meta_tag" id="meta_tag" class="form-control" >
+                                        <input type="text" name="meta_tag" id="meta_tag" class="form-control" value="<?= @$result->meta_tag ?>">
                                          
                                             
                                         </div>
 
                                         <div class="form-group">
                                         <label class="" for="meta_description">Meta Description</label>
-                                        <input type="text" name="meta_description" id="meta_description" class="form-control" >
+                                        <input type="text" name="meta_description" id="meta_description" class="form-control" value="<?= @$result->meta_description ?>">
                                         
                                         </div>
 
                                         <div class="form-group">
                                         <label class="" for="meta_title">Meta Title</label>
-                                        <input type="text" name="meta_title" id="meta_title" class="form-control" >
+                                        <input type="text" name="meta_title" id="meta_title" class="form-control" value="<?= @$result->meta_title ?>">
                                         
                                         </div>
                                     

@@ -15,7 +15,7 @@
                 <div class="agile-tables">
                     <div class="w3l-table-info">
                       <h3>Enquiry Details</h3>
-<form action="{{ route('enquiry.deleteSelected') }}" method="POST" id="deleteSelectedForm">
+<form action="{{ route('enquiry.drop') }}" method="POST" id="deleteSelectedForm">
     @csrf
     @method('DELETE')
     <button type="submit" class="btn btn-danger">Delete Selected</button>
@@ -25,12 +25,15 @@
 
                         <form action="#" method="post">
                             <div class="col-md-3 text-right pull-right padding0 marginbottom10">
-                                {!! lang('common.per_page') !!}: {!! Form::select('name', ['20' => '20', '40' => '40', '100' => '100', '200' => '200', '300' => '300'], '20', ['id' => 'per-page']) !!}
+                                {!! lang('common.per_page') !!}: 
+                                <form action="#" method="post">
+                                 <select id="per-page" name="name"><option value="20" selected="selected">20</option><option value="40">40</option><option value="100">100</option><option value="200">200</option><option value="300">300</option></select>   
+                        
                             </div>
                             <div class="col-md-3 padding0 marginbottom10">
-                                {!! Form::hidden('page', 'search') !!}
-                                {!! Form::hidden('_token', csrf_token()) !!}
-                                {!! Form::text('name', null, array('class' => 'form-control live-search', 'placeholder' => 'Search Enquiry by Name')) !!}
+                            <input name="page" type="hidden" value="search">
+                            @csrf
+                                <input type="text" name="name" class="form-control  live-search" placeholder="Search enquiry by name">
                             </div>
                             <table id="paginate-load" data-route="{{ route('enquiry.paginate') }}" class="table table-hover">
                             </table>

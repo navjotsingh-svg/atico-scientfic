@@ -28,48 +28,52 @@
                                     
                                     <div class="panel-body">
                                         <div class="col-md-12">
-                                            {!! Form::open(array('method' => 'POST',
-                                            'route' => array('sub_sub_category.paginate'), 'id' => 'ajaxForm')) !!}
+                                           
+                                            <form method="post" id="ajaxForm" action="{{ route('sub_sub_category.paginate') }}">
+
                                             <div class="row">
 
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        {!! Form::label('category_id', lang('category.category'), array('class' => 'control-label')) !!}
-                                                        {!! Form::select('category_id', $categories, (session('category_id') != "") ? session('category_id') : '', array('class' => 'form-control')) !!}
-                                                    </div>
+                                                    <label for="name" class="control-label">Category</label>
+                                                    <select name="category_id" class="form-control">
+                                                    <option value="">-Select  Category-</option>
+                                                @foreach($categories as $key => $cat)
+                                                <option value="{{ $key }}" {{ $key == session('category_id') ? 'selected' : '' }}>{{ $cat }}</option>  @endforeach
+                                                    </select></div>
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        {!! Form::label('name', lang('common.name'), array('class' => 'control-label')) !!}
-                                                        {!! Form::text('name', (session('name') != "") ? session('name') : '', array('class' => 'form-control', 'placeholder' => 'Search by Name', 'autocomplete' => 'off')) !!}
-                                                    </div>
+                                                    <label for="name" class="control-label">Name</label>
+                                                        <input type="text" name="name" value="<?php echo (session('name') != "") ? session('name') : '';  ?>" class="form-control" placeholder='Search by Name' autocomplete="off">
+                                                   </div>
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        {!! Form::label('slug', lang('common.slug'), array('class' => 'control-label')) !!}
-                                                        {!! Form::text('slug', (session('slug') != "") ? session('slug') : '', array('class' => 'form-control', 'placeholder' => 'Search by slug', 'autocomplete' => 'off')) !!}
-                                                    </div>
+                                                    <label for="status" class="control-label">Slug</label>
+                                                         <input type="text" name="slug" value="<?php echo (session('slug') != "") ? session('slug') : '';  ?>" class="form-control" placeholder='Search by slug' autocomplete="off">
+                                                   </div>
                                                 </div>
 
                                                                                              
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        {!! Form::label('status', lang('common.status'), array('class' => 'control-label')) !!}
-                                                        {!! Form::select('status', $statuses, (session('status') != "") ? session('status') : '', array('class' => 'form-control')) !!}
-                                                    </div>
+                                                    <label for="status" class="control-label">Status</label>
+                                                         <select class="form-control" id="status" name="status"><option value="1">Active</option><option value="2">Non-active</option><option value="" selected="selected">All</option></select>
+                                                  </div>
                                                 </div>
                                                 
                                                 <div class="col-sm-3 margintop20">
                                                     <div class="form-group">
-                                                        {!! Form::hidden('form-search', 1) !!}
-                                                        {!! Form::submit(lang('common.filter'), array('class' => 'btn btn-primary')) !!}
-                                                        <a href="{!! route('sub_sub_category.index') !!}" class="btn btn-success"> {!! lang('common.reset_filter') !!}</a>
+                                                    <input type="hidden" name="form-search" value="1">
+                                                    <input type="submit" value="Filter" class="btn btn-primary">
+                                                    <a href="{!! route('sub_sub_category.index') !!}" class="btn btn-success"> {!! lang('common.reset_filter') !!}</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {!! Form::close() !!}
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -80,13 +84,16 @@
 
                         <form action="#" method="post">
                             <div class="col-md-3 text-right pull-right padding0 marginbottom10">
-                                {!! lang('common.per_page') !!}: {!! Form::select('name', ['20' => '20', '40' => '40', '100' => '100', '200' => '200', '300' => '300'], '20', ['id' => 'per-page']) !!}
-                            </div>
+                                {!! lang('common.per_page') !!}: 
+                                <form action="#" method="post">
+                                 <select id="per-page" name="name"><option value="20" selected="selected">20</option><option value="40">40</option><option value="100">100</option><option value="200">200</option><option value="300">300</option></select>   
+                        
+                                </div>
                             <div class="col-md-3 padding0 marginbottom10">
-                                {!! Form::hidden('page', 'search') !!}
-                                {!! Form::hidden('_token', csrf_token()) !!}
-                                {!! Form::text('name', null, array('class' => 'form-control live-search', 'placeholder' => 'Search sub_sub_category by name')) !!}
-                            </div>
+                            <input name="page" type="hidden" value="search">
+                            @csrf
+                                <input type="text" name="name" class="form-control  live-search" placeholder="Search sub_sub_category by name">
+                                </div>
                             <table id="paginate-load" data-route="{{ route('sub_sub_category.paginate') }}" class="table table-hover">
                             </table>
                         </form>

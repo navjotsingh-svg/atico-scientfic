@@ -123,7 +123,7 @@ class FaqController extends Controller
             ];
             (new Faq)->store($inputs, $id);
             return redirect()->route('faq.index')
-                ->with('success', lang('messages.updated', lang('faq.faq')));
+                ->with('success', 'Updated', lang('faq.faq'));
 
         } catch (\Exception $exception) {
             return redirect()->route('faq.edit', [$id])

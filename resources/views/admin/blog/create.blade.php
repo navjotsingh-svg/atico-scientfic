@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-{!! HTML::script('assets/js/nicEdit-latest.js') !!}
+<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
 <script type="text/javascript">
 //<![CDATA[
         bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
@@ -27,62 +27,63 @@
                                 <h4>{!! lang('blog.blog') !!} Information</h4>                        
                             </div>
                             <div class="form-body">
-                                @if($route == 'blog.create')
-                                    {!! Form::open(array('method' => 'POST', 'route' => array('blog.store'), 'id' => 'blog-form', 'class' => '', 'files' => 'true')) !!}
-
-                                @elseif($route == 'blog.edit')
-                                    {!! Form::model($result, array('route' => array('blog.update', $result->id), 'method' => 'PATCH', 'id' => 'blog-form', 'class' => '', 'files' => 'true')) !!}
-                                @else
-                                    Nothing
+                               
+                                <form  class="form" enctype="multipart/form-data"
+                                @if (!empty($result)) method="post" action="{{ route('blog.update', $result->id) }}" @else method="post" action="{{ route('blog.store') }}" @endif>
+                            
+                               @csrf
+                               @if (!empty($result))
+                               @method('PUT')
                                 @endif
-                                
                                 <div class="row">
                                     <div class="col-md-12">
                                        <div class="form-group">
-                                            {!! Form::label('name', lang('common.name'), array('class' => '')) !!}
-                                            <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                             {!! Form::text('name', null, array('class' => 'form-control')) !!}
-                                            
+                                       <label for="name">{!! lang('common.name') !!}</label>
+                                        <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
+                                          
+                                        <input type="text" name="name" class="form-control" value="<?= @$result->name ?>">
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('slug', lang('common.slug'), array('class' => '')) !!}
-                                             {!! Form::text('slug', null, array('class' => 'form-control', 'readonly')) !!}                                            
+                                        <label for="slug">{!! lang('common.slug') !!}</label>
+                                        <input type="text" name="slug" class="form-control"  value="<?= @$result->slug ?>">
+                                                                                       
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('meta_title', lang('common.meta_title'), array('class' => '')) !!}
-                                             {!! Form::text('meta_title', null, array('class' => 'form-control')) !!}
-                                            
+                                           <label for="meta_title">{!! lang('common.meta_title') !!}</label>
+                                           <input type="text" name="meta_title" class="form-control"  value="<?= @$result->meta_title ?>">
+                                        
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('meta_tag', lang('common.meta_tag'), array('class' => '')) !!}
-                                             {!! Form::text('meta_tag', null, array('class' => 'form-control')) !!}
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('meta_description', lang('common.meta_description'), array('class' => '')) !!}
-                                             {!! Form::text('meta_description', null, array('class' => 'form-control')) !!}
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('description', lang('common.description'), array('class' => '')) !!}
-                                            <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                             {!! Form::textarea('description', null, array('class' => 'form-control', 'rows' => '20')) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('file', lang('common.image'), array('class' => '')) !!}(Height : 100-200px and Width : 200-300px)
-                                            <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            {!! Form::file('image', null, array('class' => 'form-control')) !!}
 
+                                        <label for="meta_tag">{!! lang('common.meta_tag') !!}</label>
+                                           <input type="text" name="meta_tag" class="form-control" value="<?= @$result->meta_tag ?>">
+                                        
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                        <label for="meta_description">{!! lang('common.meta_description') !!}</label>
+                                           <input type="text" name="meta_description" class="form-control" value="<?= @$result->meta_description ?>">
+                                           
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
+                                            <textarea name="description" class="form-control" rows="20"><?= @$result->description ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image">Image</label>(Height : 100-200px and Width : 200-300px)
+                                            <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
+                                            <input type="file" name="image" class="form-control">
                                         </div>  
                                         @if(!empty($result->image))
                                             <div class="form-group"> 
-                                                {!! HTML::image(asset('uploads/blog_images/'.$result->image),'' ,array('width' => 70 , 'height' => 70,'class'=>'img-responsive') ) !!}
+                                                <img src="{{asset('uploads/blog_images/'.$result->image)}}" class="img-responsive" width="70" height="70">
                                             </div>
                                         @endif     
                                         
                                        
                                         <div class="checkbox"> 
-                                            <label>{!! Form::checkbox('status', '1', true) !!} Status </label> 
+                                            <label><input type="checkbox" value="1" <?php if( @$result->status==1) echo "checked"; ?> name="status"> Status </label> 
                                         </div>
                                     </div>
                                   
@@ -95,7 +96,7 @@
                                     </div>
                                 </div>
                                     
-                                {!! Form::close() !!}
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-{!! HTML::script('assets/js/nicEdit-latest.js') !!}
+<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
 <script type="text/javascript">
 //<![CDATA[
         bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
@@ -27,8 +27,11 @@
                             </div>
                             <div class="form-body">
                                 @if($route == 'sidebar_category.create')
-                                    {!! Form::open(array('method' => 'POST', 'route' => array('sidebar_category.store'), 'id' => '', 'class' => '','files'=>'true')) !!}
-                               
+
+                                <form  class="form" enctype="multipart/form-data"
+                                method="post" action="{{ route('sidebar_category.store') }}" >
+                           
+                                @csrf
                                 @endif
                                 
                                 <div class="row">
@@ -60,7 +63,7 @@
                                     </div>
                                 </div>
                                     
-                                {!! Form::close() !!}
+</form>
                             </div>
                         </div>
                     </div>

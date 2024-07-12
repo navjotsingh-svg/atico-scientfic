@@ -15,12 +15,10 @@
 
 
 <!-- font CSS -->
- <link media="all" type="text/css" rel="stylesheet"  href="http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
-<link media="all" type="text/css" rel="stylesheet" href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+ <link media="all" type="text/css" rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
+<link media="all" type="text/css" rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <!-- font-awesome icons -->
-<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
-<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- //font-awesome icons -->
 

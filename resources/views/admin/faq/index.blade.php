@@ -10,7 +10,7 @@
     <div class="grids">       
         <div class="row">
             <div class="col-md-12">                
-                <h1 class="page-header">{!! lang('faq.faq') !!} Listing <a class="btn btn-sm btn-primary pull-right" href="{!! route('faq.create') !!}"> <i class="fa fa-plus fa-fw"></i> {!! lang('common.create_heading', lang('faq.faq')) !!} </a><a style="margin-right: 10px;" href="{{ url()->previous() }}" class="btn btn-sm btn-success pull-right">Back</a></h1>
+                <h1 class="page-header">Faq Listing <a class="btn btn-sm btn-primary pull-right" href="{!! route('faq.create') !!}"> <i class="fa fa-plus fa-fw"></i> {!! lang('common.create_heading', lang('faq.faq')) !!} </a><a style="margin-right: 10px;" href="{{ url()->previous() }}" class="btn btn-sm btn-success pull-right">Back</a></h1>
 
                 <div class="agile-tables">
                     <div class="w3l-table-info">
@@ -21,12 +21,15 @@
 
                         <form action="#" method="post">
                             <div class="col-md-3 text-right pull-right padding0 marginbottom10">
-                                {!! lang('common.per_page') !!}: {!! Form::select('name', ['20' => '20', '40' => '40', '100' => '100', '200' => '200', '300' => '300'], '20', ['id' => 'per-page']) !!}
+                               Per Page:
+                                <form action="#" method="post">
+                                 <select id="per-page" name="name"><option value="20" selected="selected">20</option><option value="40">40</option><option value="100">100</option><option value="200">200</option><option value="300">300</option></select>   
+                        
                             </div>
                             <div class="col-md-3 padding0 marginbottom10">
-                                {!! Form::hidden('page', 'search') !!}
-                                {!! Form::hidden('_token', csrf_token()) !!}
-                                {!! Form::text('name', null, array('class' => 'form-control live-search', 'placeholder' => 'Search Record Rule by name')) !!}
+                            <input name="page" type="hidden" value="search">
+                            @csrf
+                                <input type="text" name="name" class="form-control  live-search" placeholder="Search Record Rule by name">
                             </div>
                             <table id="paginate-load" data-route="{{ route('faq.paginate') }}" class="table table-hover">
                             </table>

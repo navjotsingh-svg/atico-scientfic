@@ -21,13 +21,16 @@
 
                         <form action="#" method="post">
                             <div class="col-md-3 text-right pull-right padding0 marginbottom10">
-                                {!! lang('common.per_page') !!}: {!! Form::select('name', ['20' => '20', '40' => '40', '100' => '100', '200' => '200', '300' => '300'], '20', ['id' => 'per-page']) !!}
+                                {!! lang('common.per_page') !!}: 
+                                <form action="#" method="post">
+                                 <select id="per-page" name="name"><option value="20" selected="selected">20</option><option value="40">40</option><option value="100">100</option><option value="200">200</option><option value="300">300</option></select>   
+                        
                             </div>
                             <div class="col-md-3 padding0 marginbottom10">
-                                {!! Form::hidden('page', 'search') !!}
-                                {!! Form::hidden('_token', csrf_token()) !!}
-                                {!! Form::text('name', null, array('class' => 'form-control live-search', 'placeholder' => 'Search product_review by name')) !!}
-                            </div>
+                            <input name="page" type="hidden" value="search">
+                            @csrf
+                                <input type="text" name="name" class="form-control  live-search" placeholder="Search product review by name">
+                           </div>
                             <table id="paginate-load" data-route="{{ route('product_review.paginate') }}" class="table table-hover">
                             </table>
                         </form>
