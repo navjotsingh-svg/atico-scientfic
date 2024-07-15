@@ -74,25 +74,60 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
     flex:40%;
 }
 }
+.text-overlay{
+    color: #fff;
+    top: 90px;
+    position: absolute;
+    right: 324px;
+}
+.text-overlay2{
+    color: #fff;
+    top: 90px;
+    position: absolute;
+    left: 224px;
+}
+.text-overlay h1{
+    color: #fff;
+}
+.text-overlay2 h1{
+    color: #0530AD;
+}
+.text-overlay span {
+   
+    font-size: 18px;
+    
+}
+.text-overlay2 span {
+   color: #000;
+   font-size: 18px;
+   
+}
+.text-overlay button, .text-overlay2 button {
+   
+   margin-top: 60px;
+   
+}
 </style>
 <div id="owl-demo" class="owl-carousel owl-theme">
  @if($display==1)
-  <div class="item" style='min-height:720px;'><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
-  <h1 class="category_name" style="color:#fff;margin-top:-580px;margin-left:1020px;">Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 5px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
-    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 5px; color:#fff;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
-    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 5x;  color:#fff;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
-    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 1020px;margin-top: 50px;">Explore more</button> 
-   
+   <div class="item" style='min-height:720px;'><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
+  <div class="text-overlay">
+  <h1>Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
+    <span>Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
+    <span>Columns, Clevenger apparatus, Condensers, Filtration <br></span>
+    <span>Assembly, Laboratory flasks, pipettes, etc.<br></span>
+    <button class="btn btn-warning" >Explore more</button> 
 </div>
+</div> 
   <div class="item" >
   <img src="{{ asset('assets/images/slider/slide2.png') }}" alt="The Last of us">
-    <h1 class="category_name" style="margin-top:-580px;margin-left:220px;">Educational Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 5px;   color: black;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
-    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 5px;   color: black;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
-    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 5px;   color: black;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
-    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 216px;margin-top: 50px;">Explore more</button> 
-               
+  <div class="text-overlay2">
+    <h1>Educational Lab Equipment<br> Manufacturer & Supplier</h1>
+    <span>Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
+    <span>Columns, Clevenger apparatus, Condensers, Filtration <br></span>
+    <span>Assembly, Laboratory flasks, pipettes, etc.<br></span>
+    <button class="btn btn-warning" >Explore more</button> 
+</div>
 </div>
 @else
 <div class="item" style='min-height:520px;'><img style='min-height:520px;' src="{{ asset('assets/images/slider/slider1mob.png') }}" alt="The Last of us">
@@ -118,6 +153,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
 </div>
 <section id="categories" class="container">
     <div class="row">
+        @if($display==1)
         <div class="col-md-3" >
                <div class="wpb_wrapper">
                 <div align="left">
@@ -174,6 +210,79 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
                <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
                </div> 
         </div>
+        @else
+        <div id="owl-demo1" class="owl-carousel owl-theme">
+                <div class="item">
+                <div class="col-md-3" >
+               <div class="wpb_wrapper">
+                <div align="left">
+                    <img src="{{ asset('assets/images/laboratorium.png') }}">
+                </div>
+               <h5 align="left" class="category_name">Civil Engineering Equipment</h5>
+               <ul>
+                    <li class="li-icon" align="left">Aggregate Testing</li>
+                    <li class="li-icon" align="left">Rockwell Testing Machine</li>
+                    <li class="li-icon" align="left">Compression Testing</li>
+               </ul>
+               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
+               </div> 
+        </div>
+                </div>
+
+                <div class="item">
+                <div class="col-md-3" >
+                <div class="wpb_wrapper">
+                <div align="left">
+                    <img src="{{ asset('assets/images/lab1.png') }}">
+                </div>
+               <h5 align="left" class="category_name">Educational Lab Equipment</h5>
+               <ul>
+                    <li class="li-icon" align="left">Physics Lab Equipments</li>
+                    <li class="li-icon" align="left">Biology Lab Equipments</li>
+                    <li class="li-icon" align="left">Chemistry Lab Equipments</li>
+               </ul>
+               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
+               </div> 
+        </div>
+                </div>
+
+                
+                <div class="item">
+                <div class="col-md-3" >
+        <div class="wpb_wrapper">
+                <div align="left">
+                    <img src="{{ asset('assets/images/lab2.png') }}">
+                </div>
+               <h5 align="left" class="category_name">Research Lab Equipment</h5>
+               <ul>
+                    <li class="li-icon" align="left">Clean Room Equipment</li>
+                    <li class="li-icon" align="left">Humidity Cabinet</li>
+                    <li class="li-icon" align="left">Test Chambers</li>
+               </ul>
+               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
+               </div> 
+        </div>
+                </div>
+
+
+                <div class="item">
+                <div class="col-md-3" >
+               <div  class="wpb_wrapper">
+                <div align="left">
+                    <img src="{{ asset('assets/images/lab3.png') }}">
+                </div>
+               <h5 align="left" class="category_name">Testing Lab Equipments</h5>
+               <ul>
+                    <li class="li-icon" align="left">NDT Metal Testers</li>
+                    <li class="li-icon" align="left">Brinell Hardness Testing</li>
+                    <li class="li-icon" align="left">NDT Testers - Concrete</li>
+               </ul>
+               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
+               </div> 
+        </div>
+        </div>
+
+        @endif
     </div>
 </section>
 <section id="arrows">
@@ -520,7 +629,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
 <script>
     $(document).ready(function() {
  
- $("#owl-demo").owlCarousel({
+ $("#owl-demo,#owl-demo1").owlCarousel({
 
      navigation : true, // Show next and prev buttons
 

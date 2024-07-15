@@ -4,10 +4,10 @@
         padding: 8px;;
     }
     .desktop-view{
-      padding-left:350px;
+      padding-left:250px;
     }
     li.nav-item {
-    margin-left: 47px;
+    margin-left: 28px;
 }
 a.nav-link.active {
     color: orange !important;
@@ -15,7 +15,7 @@ a.nav-link.active {
 }
 .logo{
   width: 200px;
-    margin-left: 217px;
+    margin-left: 100px;
 }
 a.nav-link {
     color: #0530AD !important;
