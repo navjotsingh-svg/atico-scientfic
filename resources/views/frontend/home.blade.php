@@ -1,5 +1,12 @@
 @extends('frontend.layouts.app')
 @section('content')
+@php
+    $useragent=$_SERVER['HTTP_USER_AGENT'];
+$display=1;
+if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4)))
+    $display=0;
+    
+    @endphp
 <style>
     #owl-demo .item img{
     display: block;
@@ -69,16 +76,35 @@
 }
 </style>
 <div id="owl-demo" class="owl-carousel owl-theme">
- 
+ @if($display==1)
   <div class="item" style='min-height:720px;'><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
   <h1 class="category_name" style="color:#fff;margin-top:-580px;margin-left:1020px;">Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 14px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
-    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 14px; color:#fff;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
-    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 14px;  color:#fff;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
+    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 5px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
+    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 5px; color:#fff;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
+    <span style="margin-top:-430px;margin-left:1020px;line-height: 2; word-spacing: 5x;  color:#fff;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
     <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 1020px;margin-top: 50px;">Explore more</button> 
    
 </div>
   <div class="item" >
+  <img src="{{ asset('assets/images/slider/slide2.png') }}" alt="The Last of us">
+    <h1 class="category_name" style="margin-top:-580px;margin-left:220px;">Educational Lab Equipment<br> Manufacturer & Supplier</h1>
+    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 5px;   color: black;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
+    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 5px;   color: black;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
+    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 5px;   color: black;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
+    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 216px;margin-top: 50px;">Explore more</button> 
+               
+</div>
+@else
+<div class="item" style='min-height:520px;'><img style='min-height:520px;' src="{{ asset('assets/images/slider/slider1mob.png') }}" alt="The Last of us">
+  <h1 class="category_name" style="color:#fff;margin-top:-680px;margin-left:60px;">Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
+    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes,<br></span>
+    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px; color:#fff;"> Chromatography, Columns, Clevenger apparatus,  <br></span>
+    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;  color:#fff;">Condensers, Filtration,Assembly, Laboratory flasks<br></span>
+    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;  color:#fff;">pipettes, etc.<br></span>
+    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 150px;margin-top: 50px;">Explore more</button> 
+   
+</div>
+  <!-- <div class="item" >
   <img src="{{ asset('assets/images/slider/slide2.png') }}" alt="The Last of us">
     <h1 class="category_name" style="margin-top:-580px;margin-left:220px;">Educational Lab Equipment<br> Manufacturer & Supplier</h1>
     <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
@@ -86,7 +112,8 @@
     <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
     <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 216px;margin-top: 50px;">Explore more</button> 
                
-</div>
+</div> -->
+@endif
 
 </div>
 <section id="categories" class="container">
@@ -159,6 +186,7 @@
 </section>
 <section id="contact_details">
     <div class="row">
+        @if($display==1)
             <div class="col-md-3 support_team">
                 <div class="ref_icons">
                     <img src="{{ asset('assets/images/support_team.png') }}">
@@ -184,9 +212,13 @@
                 <div class="ref_icons">
                     <img src="{{ asset('assets/images/email.png') }}">
                 </div>
-                    <!-- <h6 align="right">Contact Us</h6>
-                    <h6 align="right">Email Now</h6> -->
+                    
             </div>
+            @else
+            <div class="col-md-3">
+                    <img src="{{ asset('assets/images/support_info.png') }}">
+                </div>
+            @endif
     </div>
 </section>
 <section id="arrows">
@@ -199,8 +231,8 @@
 </section>
 <section id="school_equipments" class="container" style="margin-top:20px;">
     <div class="row">
-        <div class="col-md-6" style="display: flex">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/cle.png') }})">
+        <div class="col-md-6" style="display: <?php if($display==1) echo 'flex'; ?>">
+            <div class="col-md-6" style="background: url({{ asset('assets/images/cle.png') }});<?php if($display==0) echo 'min-height: 200px'; ?>">
                 &nbsp;
             </div>
             <div class="col-md-6" style="border: 1px solid #E2E2E2">
@@ -216,8 +248,8 @@
             </div>    
         </div>
 
-        <div class="col-md-6" style="display: flex">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/ple.png') }})">
+        <div class="col-md-6" style="display: <?php if($display==1) echo 'flex'; ?>">
+            <div class="col-md-6" style="background: url({{ asset('assets/images/ple.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
                 &nbsp;
             </div>
             <div class="col-md-6" style="border: 1px solid #E2E2E2">
@@ -235,8 +267,8 @@
 
     </div>
     <div class="row" style="margin-top:20px">
-        <div class="col-md-4" style="display: flex">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/lg.png') }})">
+        <div class="col-md-4" style="display: <?php if($display==1) echo 'flex'; ?>">
+            <div class="col-md-6" style="background: url({{ asset('assets/images/lg.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
                 &nbsp;
             </div>
             <div class="col-md-6" style="border: 1px solid #E2E2E2">
@@ -252,8 +284,8 @@
             </div>    
         </div>
 
-        <div class="col-md-4" style="display: flex">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/mle.png') }})">
+        <div class="col-md-4" style="display: <?php if($display==1) echo 'flex'; ?>">
+            <div class="col-md-6" style="background: url({{ asset('assets/images/mle.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
                 &nbsp;
             </div>
             <div class="col-md-6" style="border: 1px solid #E2E2E2">
@@ -269,8 +301,8 @@
             </div>    
         </div>
 
-        <div class="col-md-4" style="display: flex">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/ble.png') }})">
+        <div class="col-md-4" style="display: <?php if($display==1) echo 'flex'; ?>">
+            <div class="col-md-6" style="background: url({{ asset('assets/images/ble.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
                 &nbsp;
             </div>
             <div class="col-md-6" style="border: 1px solid #E2E2E2">
@@ -289,12 +321,23 @@
     </div>
 </section>
 <section id="arrows" style="margin-top:70px;">
+    @if($display==1)
         <div class="row">
-               <div class="col-md-12" style="text-align: center;background: url({{ asset('assets/images/banner.png') }});padding: 50px;">
+               <div class="col-md-12" style="text-align: center;background: url({{ asset('assets/images/banner.png') }}) no-repeat;padding: 50px;background-size:100%">
                    <label style="color:#ffff;margin-left: 450px;">If you are a college or university looking to setup a <br>complete lab. Please contact us with your details<br> for custom quotation.</label>
                    <button class="btn btn-default" style="background: orange;margin-right: 203px;float: right;margin-top: 16px;">Send Mail</button> 
                 </div> 
         </div>
+
+    @else
+    <div class="row">
+               <div class="col-md-12" style="text-align: center;background: url({{ asset('assets/images/bannermob.png') }}) no-repeat;padding: 50px;background-size:100%">
+                   <label style="color:#ffff;margin-left: 50px;">If you are a college or university looking to<br> setup a complete lab. Please contact us with<br> your details for custom quotation.</label>
+                   <button class="btn btn-default" style="background: orange;margin-right: 148px;float: right;margin-top: 16px;">Send Mail</button> 
+                </div> 
+        </div>
+    
+    @endif
 </section>
 <section id="arrows" class="container" style="margin-top:70px;">
         <div class="row">
@@ -324,12 +367,13 @@
             </div> 
                <div class="col-md-6" >
                 <img src="{{ asset('assets/images/about_us.png') }}" style="width:90%">
-                <div style="margin-top:-525px;margin-left:44px;"> 
+                <div style="<?php if($display==1) echo "margin-top:-525px;margin-left:44px;"; else echo  "margin-top:-407px;margin-left:9px;";?>"> 
                      <img src="{{ asset('assets/images/years.png') }}">
                 </div>
                </div>
         </div>
 </section>
+@if($display==1)
 <section id="trade" style="margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
     <div class="row" style="margin-top:20px">
         <div class="col-md-12" style="text-align: center;margin-top:30px;">
@@ -363,7 +407,8 @@
 
     </div>
     </section>
-<section id="electrical_tab" class="container" style="margin-top: 30px">
+@endif    
+<section id="electrical_tab" class="container" style="margin-top: <?php if($display==1) echo "30px"; else echo  "375px";?>">
     <div class="row">
         <div class="col-md-6">
         <img src="{{ asset('assets/images/electrical.png') }}" style="width:90%">

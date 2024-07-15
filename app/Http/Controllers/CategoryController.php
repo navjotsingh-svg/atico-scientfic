@@ -330,10 +330,10 @@ class CategoryController extends Controller
 
     public function exportCategory()
     {
-        $userData = Category::all()->downloadExcel('query-download.xlsx', [
-            'Content-Type' => 'application/vnd.ms-excel',
-            'Content-Disposition' => "attachment; filename='Report.xls'"
-       ]);;
+        $userData = Category::all();//->downloadExcel('categories.XLSX');;
+
+        return Excel::download($userData, 'invoices.tsv', \Maatwebsite\Excel\Excel::TSV);
+
 
         //\Excel::download($userData, 'users.xls');
 
