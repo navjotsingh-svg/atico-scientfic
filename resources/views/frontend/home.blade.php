@@ -107,10 +107,22 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
    margin-top: 60px;
    
 }
+body{
+    background: #f8f9fa;
+}
+.catbox{
+    z-index: 17;
+    background: #fff;
+    margin-top: -32px;
+    position: relative;
+    padding: 10px;
+    box-shadow: #D0D0CD 2px 3px 5px;
+    min-height: 250px;
+}
 </style>
 <div id="owl-demo" class="owl-carousel owl-theme">
  @if($display==1)
-   <div class="item" style='min-height:720px;'><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
+   <div class="item" ><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
   <div class="text-overlay">
   <h1>Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
     <span>Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
@@ -155,7 +167,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
     <div class="row">
         @if($display==1)
         <div class="col-md-3" >
-               <div class="wpb_wrapper">
+               <div class="catbox">
                 <div align="left">
                     <img src="{{ asset('assets/images/laboratorium.png') }}">
                 </div>
@@ -169,7 +181,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
                </div> 
         </div>
         <div class="col-md-3" >
-        <div class="wpb_wrapper">
+        <div class="catbox">
                 <div align="left">
                     <img src="{{ asset('assets/images/lab1.png') }}">
                 </div>
@@ -183,7 +195,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
                </div> 
         </div>
         <div class="col-md-3" >
-        <div class="wpb_wrapper">
+        <div class="catbox">
                 <div align="left">
                     <img src="{{ asset('assets/images/lab2.png') }}">
                 </div>
@@ -197,7 +209,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
                </div> 
         </div>
         <div class="col-md-3" >
-               <div  class="wpb_wrapper">
+               <div class="catbox">
                 <div align="left">
                     <img src="{{ asset('assets/images/lab3.png') }}">
                 </div>
@@ -214,7 +226,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
         <div id="owl-demo1" class="owl-carousel owl-theme">
                 <div class="item">
                 <div class="col-md-3" >
-               <div class="wpb_wrapper">
+               <div>
                 <div align="left">
                     <img src="{{ asset('assets/images/laboratorium.png') }}">
                 </div>
@@ -231,7 +243,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
 
                 <div class="item">
                 <div class="col-md-3" >
-                <div class="wpb_wrapper">
+                <div>
                 <div align="left">
                     <img src="{{ asset('assets/images/lab1.png') }}">
                 </div>
@@ -249,7 +261,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
                 
                 <div class="item">
                 <div class="col-md-3" >
-        <div class="wpb_wrapper">
+        <div>
                 <div align="left">
                     <img src="{{ asset('assets/images/lab2.png') }}">
                 </div>
@@ -267,7 +279,7 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
 
                 <div class="item">
                 <div class="col-md-3" >
-               <div  class="wpb_wrapper">
+               <div >
                 <div align="left">
                     <img src="{{ asset('assets/images/lab3.png') }}">
                 </div>
