@@ -167,7 +167,7 @@ body{
     <div class="row">
         @if($display==1)
         <div class="col-md-3" >
-               <div class="catbox">
+               <div class="catbox" data-image="{{ asset('assets/images/ceqh.png') }}">
                 <div align="left">
                     <img src="{{ asset('assets/images/laboratorium.png') }}">
                 </div>
@@ -181,7 +181,7 @@ body{
                </div> 
         </div>
         <div class="col-md-3" >
-        <div class="catbox">
+        <div class="catbox" data-image="{{ asset('assets/images/eleh.png') }}">
                 <div align="left">
                     <img src="{{ asset('assets/images/lab1.png') }}">
                 </div>
@@ -195,7 +195,7 @@ body{
                </div> 
         </div>
         <div class="col-md-3" >
-        <div class="catbox">
+        <div class="catbox" data-image="{{ asset('assets/images/rleh.png') }}">
                 <div align="left">
                     <img src="{{ asset('assets/images/lab2.png') }}">
                 </div>
@@ -209,7 +209,7 @@ body{
                </div> 
         </div>
         <div class="col-md-3" >
-               <div class="catbox">
+               <div class="catbox" data-image="{{ asset('assets/images/tleh.png') }}">
                 <div align="left">
                     <img src="{{ asset('assets/images/lab3.png') }}">
                 </div>
@@ -640,7 +640,17 @@ body{
 </section>
 <script>
     $(document).ready(function() {
- 
+ $(".catbox").mouseover (function(){
+    var img_src=$(this).attr("data-image");
+    $(this).css("background-image",'url(' + img_src + ')');
+    $(this).find("h5").css("color",'#fff');
+    $(this).find("li").css("color",'#fff');
+ });
+ $(".catbox").mouseleave (function(){
+    $(this).css("background",'#fff');
+    $(this).find("h5").css("color",'#0530AD');
+    $(this).find("li").css("color",'#000');
+ });
  $("#owl-demo,#owl-demo1").owlCarousel({
 
      navigation : true, // Show next and prev buttons
