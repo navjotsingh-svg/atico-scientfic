@@ -118,6 +118,11 @@ School Science Lab Equipments Manufacturers, Educational Lab Equipment Manufactu
         <link rel='stylesheet'  href="{{ asset('assets/css/owl.carousel.min5560.css?ver=5.0.4') }}"  media='all' />
         <!-- <link rel='stylesheet'  href="{{ asset('assets/frontend/css/style.css?ver=5.0.1') }}"  media='all' /> -->
         <!-- <link rel='stylesheet'  href="{{ asset('assets/frontend/css/admin-ajax.css?ver=5.0.1') }}"  media='all' /> -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&display=swap" rel="stylesheet">
+       
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">        
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
@@ -131,7 +136,23 @@ School Science Lab Equipments Manufacturers, Educational Lab Equipment Manufactu
 <meta name="google-site-verification" content="wlfmbRxsoJnXNtqxS6uAYeaPFwM6MO1yzkX8jFXbwOs" />
 
    <meta name="msvalidate.01" content="A37FED68578C80CB5842B7FCBF342AFD" />
-
+<style>
+    .anek-bangla {
+  font-family: "Anek Bangla", sans-serif;
+  font-optical-sizing: auto;
+ 
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0;
+}
+</style>
 </head>
 
 <body class="home page-template page-template-page-template page-template-blank-page page-template-page-templateblank-page-php page page-id-832 woocommerce woocommerce-no-js wpb-js-composer js-comp-ver-5.7 vc_responsive">

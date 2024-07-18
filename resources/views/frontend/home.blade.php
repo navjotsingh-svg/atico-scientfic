@@ -24,26 +24,31 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
     color: #0530AD;
     margin-left: 10px;
     margin-top:10px;
+    font-weight: 600;
 }
 .support_team{
     background-color: #0046AE;
     color: #FFFFFF;
     padding: 50px;
+    border-right: 1px dotted #fff;
 }
 .tenders{
     background-color: #00398E;
     color: #FFFFFF;
     padding: 50px;
+    border-right: 1px dotted #fff;
 }
 .dealership{
     background-color: #002761;
     color: #FFFFFF;
     padding: 50px;
+    border-right: 1px dotted #fff;
 }
 .contact_us{
     background-color: #01193D;
     color: #FFFFFF;
     padding: 50px;
+    border-right: 1px dotted #fff;
 }
 .ref_icons {
     border-radius: 50%;
@@ -68,6 +73,9 @@ if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|c
 }
 .li-icon{
     list-style-image: url({{ asset('assets/images/li.png') }})
+}
+.explore_now a {
+    color: #0530AD;
 }
 @media only screen and (max-width: 600px) {
 .support_team{
@@ -119,6 +127,23 @@ body{
     box-shadow: #D0D0CD 2px 3px 5px;
     min-height: 250px;
 }
+.catbox_mob{
+    z-index: 17;
+    background: #fff;
+    position: relative;
+    padding: 10px;
+    box-shadow: #D0D0CD 2px 3px 5px;
+    min-height: 250px;
+}
+img.mob_slider {
+    width: 18% !important;
+}
+.catbox h3 a {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    display: flex;
+}
 </style>
 <div id="owl-demo" class="owl-carousel owl-theme">
  @if($display==1)
@@ -142,7 +167,7 @@ body{
 </div>
 </div>
 @else
-<div class="item" style='min-height:520px;'><img style='min-height:520px;' src="{{ asset('assets/images/slider/slider1mob.png') }}" alt="The Last of us">
+<div class="item" style='min-height:600px;'><img  src="{{ asset('assets/images/slider/slider1mob.png') }}" alt="The Last of us">
   <h1 class="category_name" style="color:#fff;margin-top:-680px;margin-left:60px;">Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
     <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes,<br></span>
     <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px; color:#fff;"> Chromatography, Columns, Clevenger apparatus,  <br></span>
@@ -163,7 +188,7 @@ body{
 @endif
 
 </div>
-<section id="categories" class="container">
+<section id="categories" class="container" <?php if($display==0) echo "style='margin-top:-40px;'"; ?>>
     <div class="row">
         @if($display==1)
         <div class="col-md-3" >
@@ -171,7 +196,7 @@ body{
                 <div align="left">
                     <img src="{{ asset('assets/images/laboratorium.png') }}">
                 </div>
-               <h5 align="left" class="category_name">Civil Engineering Equipment</h5>
+               <h3 align="left" class="category_name anek-bangla"><a>Civil Engineering Equipment</a></h3>
                <ul>
                     <li class="li-icon" align="left">Aggregate Testing</li>
                     <li class="li-icon" align="left">Rockwell Testing Machine</li>
@@ -185,7 +210,7 @@ body{
                 <div align="left">
                     <img src="{{ asset('assets/images/lab1.png') }}">
                 </div>
-               <h5 align="left" class="category_name">Educational Lab Equipment</h5>
+               <h3 align="left" class="category_name anek-bangla"><a>Educational Lab Equipment</a></h3>
                <ul>
                     <li class="li-icon" align="left">Physics Lab Equipments</li>
                     <li class="li-icon" align="left">Biology Lab Equipments</li>
@@ -199,7 +224,7 @@ body{
                 <div align="left">
                     <img src="{{ asset('assets/images/lab2.png') }}">
                 </div>
-               <h5 align="left" class="category_name">Research Lab Equipment</h5>
+               <h3 align="left" class="category_name anek-bangla"><a>Research Lab Equipment</a></h3>
                <ul>
                     <li class="li-icon" align="left">Clean Room Equipment</li>
                     <li class="li-icon" align="left">Humidity Cabinet</li>
@@ -213,7 +238,7 @@ body{
                 <div align="left">
                     <img src="{{ asset('assets/images/lab3.png') }}">
                 </div>
-               <h5 align="left" class="category_name">Testing Lab Equipments</h5>
+               <h3 align="left" class="category_name anek-bangla"><a>Testing Lab Equipments</a></h3>
                <ul>
                     <li class="li-icon" align="left">NDT Metal Testers</li>
                     <li class="li-icon" align="left">Brinell Hardness Testing</li>
@@ -226,11 +251,12 @@ body{
         <div id="owl-demo1" class="owl-carousel owl-theme">
                 <div class="item">
                 <div class="col-md-3" >
-               <div>
+                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
+               
                 <div align="left">
-                    <img src="{{ asset('assets/images/laboratorium.png') }}">
+                    <img class="mob_slider" src="{{ asset('assets/images/laboratorium.png') }}">
                 </div>
-               <h5 align="left" class="category_name">Civil Engineering Equipment</h5>
+               <h5 align="left" class="category_name anek-bangla">Civil Engineering Equipment</h5>
                <ul>
                     <li class="li-icon" align="left">Aggregate Testing</li>
                     <li class="li-icon" align="left">Rockwell Testing Machine</li>
@@ -243,9 +269,10 @@ body{
 
                 <div class="item">
                 <div class="col-md-3" >
-                <div>
+                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
+               
                 <div align="left">
-                    <img src="{{ asset('assets/images/lab1.png') }}">
+                    <img class="mob_slider" src="{{ asset('assets/images/lab1.png') }}">
                 </div>
                <h5 align="left" class="category_name">Educational Lab Equipment</h5>
                <ul>
@@ -261,9 +288,10 @@ body{
                 
                 <div class="item">
                 <div class="col-md-3" >
-        <div>
+                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
+               
                 <div align="left">
-                    <img src="{{ asset('assets/images/lab2.png') }}">
+                    <img class="mob_slider" src="{{ asset('assets/images/lab2.png') }}">
                 </div>
                <h5 align="left" class="category_name">Research Lab Equipment</h5>
                <ul>
@@ -279,9 +307,10 @@ body{
 
                 <div class="item">
                 <div class="col-md-3" >
-               <div >
+                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
+               
                 <div align="left">
-                    <img src="{{ asset('assets/images/lab3.png') }}">
+                    <img class="mob_slider" src="{{ asset('assets/images/lab3.png') }}">
                 </div>
                <h5 align="left" class="category_name">Testing Lab Equipments</h5>
                <ul>
@@ -305,7 +334,7 @@ body{
                </div> 
         </div>
 </section>
-<section id="contact_details">
+<section id="contact_details" class="container-fluid">
     <div class="row">
         @if($display==1)
             <div class="col-md-3 support_team">
@@ -337,12 +366,14 @@ body{
             </div>
             @else
             <div class="col-md-3">
+                
                     <img src="{{ asset('assets/images/support_info.png') }}">
                 </div>
             @endif
     </div>
 </section>
-<section id="arrows">
+
+<section id="arrows" class="container-fluid">
         <div class="row">
                <div class="col-md-12" style="text-align: center">
                     <h6 style="color: #F99E00">-School-</h6>
@@ -350,6 +381,7 @@ body{
                </div> 
         </div>
 </section>
+
 <section id="school_equipments" class="container" style="margin-top:20px;">
     <div class="row">
         <div class="col-md-6" style="display: <?php if($display==1) echo 'flex'; ?>">
@@ -441,7 +473,7 @@ body{
 
     </div>
 </section>
-<section id="arrows" style="margin-top:70px;">
+<section id="arrows" style="margin-top:70px;" class="container-fluid">
     @if($display==1)
         <div class="row">
                <div class="col-md-12" style="text-align: center;background: url({{ asset('assets/images/banner.png') }}) no-repeat;padding: 50px;background-size:100%">
@@ -495,7 +527,7 @@ body{
         </div>
 </section>
 @if($display==1)
-<section id="trade" style="margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
+<section id="trade" class="container-fluid" style="margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
     <div class="row" style="margin-top:20px">
         <div class="col-md-12" style="text-align: center;margin-top:30px;">
             <h6 style="color: #F99E00">-Trade-</h6>
@@ -511,7 +543,7 @@ body{
         </div>
     </div>
 </section>
-<section id="trade" style="margin-top:10px;" >
+<section id="trade" style="margin-top:10px;" class="container-fluid" >
    
     <div class="row ">
         <div class="col-md-6" align="center">
@@ -528,7 +560,7 @@ body{
 
     </div>
     </section>
-@endif    
+@endif  
 <section id="electrical_tab" class="container" style="margin-top: <?php if($display==1) echo "30px"; else echo  "375px";?>">
     <div class="row">
         <div class="col-md-6">
@@ -579,7 +611,7 @@ body{
     </div>
 
 </section>
-<section id="our_categories" style="min-height:450px;margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
+<section id="our_categories" class="container-fluid" style="min-height:450px;margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
     <div class="row" style="margin-top:20px">
         <div class="col-md-12" style="text-align: center;margin-top:30px;">
             <h6 style="color: #F99E00">-Category-</h6>
@@ -609,9 +641,7 @@ body{
 <section class="container" id="trusted">
 <img src="{{ asset('assets/images/trusted.png') }}" style="width:95%">
 </section>
-
-
-<section id="arrows" style="">
+<section id="arrows" class="container-fluid">
         <div class="row">
                <div class="col-md-12" style="background: url({{ asset('assets/images/call_us.png') }});padding: 50px;">
                <h4 style="color:#ffff;margin-left: 250px;margin-top: 140px;">Call Us! We are available 24/7</h4>
@@ -619,7 +649,8 @@ body{
     </div> 
         </div>
 </section>
-<section id="our_categories" style="min-height:450px;" >
+
+<section id="our_categories" style="min-height:450px;" class="container-fluid">
     <div class="row" style="margin-top:20px">
         <div class="col-md-12" style="text-align: center;margin-top:30px;">
             <h6 style="color: #F99E00">-Services-</h6>
