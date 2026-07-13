@@ -24,19 +24,70 @@ class HomeController extends Controller{
      * Display a listing of resource.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getProducts($slug=''){
+        $links=array();
+         $products = Category::where('status', 1)->where('name','like',"%$slug%")->orderBy('id', 'desc')->get();
+         
+         $links[]="<li>---Categories (".count($products->toArray()).")---</li>";
+         foreach($products->toArray() as $product){
+            $links[]="<li><a href='/category/".$product['slug']."'>".$product['name']."</a></li>";
+         }
+         $products = Product::where('status', 1)->where('name','like',"%$slug%")->orderBy('id', 'desc')->get();
+         
+         $links[]="<li>---Products (".count($products->toArray()).")---</li>";
+         foreach($products->toArray() as $product){
+            $links[]="<li><a href='/product/".$product['slug']."'>".$product['name']."</a></li>";
+         }
+         return ($links);
+
+
+    }
+     public function getSearchCategories($slug='',$id=''){
+         $products = Category::where('status', 1)->where('name','like',"%$slug%")->where('parent_id',$id)->orderBy('id', 'desc')->get();
+         $links=array();
+         foreach($products->toArray() as $product){
+            $links[]="<li><a href='/category/".$product['slug']."'>".$product['name']."</a></li>";
+         }
+         return ($links);
+
+
+    }
+
+     public function getSearchCategoriesProducts($slug='',$id=''){
+        $pids = ProductCategory::where("category_id",$id)->get('product_id');
+        $p_ids=array();
+        foreach($pids->toArray() as $pid){
+            $p_ids[]=$pid['product_id'];
+        }
+         $products = Product::where('status', 1)->where('name','like',"%$slug%")->whereIn('id',$p_ids)->orderBy('id', 'desc')->get();
+         $links=array();
+         foreach($products->toArray() as $product){
+            $links[]="<li><a href='/product/".$product['slug']."'>".$product['name']."</a></li>";
+         }
+         return ($links);
+
+
+    }
     public function index()
     {
-        try{
+        try {
             $products = Product::where('status', 1)->orderBy('id', 'desc')->take(8)->get();
-            $blogs = Blog::where('status', '1')->take('4')->orderBy('id', 'desc')->get();
-            $faqs = Faq::where('status', 1)->take(4)->orderBy('id', 'desc')->get();
-            $groups = Group::where('status', 1)->take('8')->orderBy('sort', 'asc')->get();
-            $latest_cats = \App\Models\SidebarCategory::join('categories', 'sidebar_categories.category_id', '=', 'categories.id')->select('categories.name', 'categories.slug', 'categories.id', 'categories.image')->take('8')->get();
+            $blogs = Blog::where('status', '1')->take(4)->orderBy('id', 'desc')->get();
+            $faqs = Faq::where('status', 1)->take(5)->orderBy('id', 'desc')->get();
+            $groups = Group::where('status', 1)->take(8)->orderBy('sort', 'asc')->get();
+            $latest_cats = \App\Models\SidebarCategory::join('categories', 'sidebar_categories.category_id', '=', 'categories.id')->select('categories.name', 'categories.slug', 'categories.id', 'categories.image')->take(8)->get();
 
             return view('frontend.home', compact('products', 'blogs', 'faqs', 'groups', 'latest_cats'));
-        } catch(\Exception $e){
-           // dd($e);
-            return back();
+        } catch (\Exception $e) {
+            \Log::error('Home page error: '.$e->getMessage());
+
+            return view('frontend.home', [
+                'products' => collect(),
+                'blogs' => collect(),
+                'faqs' => collect(),
+                'groups' => collect(),
+                'latest_cats' => collect(),
+            ]);
         }
     }
 

@@ -17,7 +17,7 @@ class BlogCommentController extends Controller
             }
             $inputs = $inputs + ['status'=>0];
             (new BlogComment)->store($inputs);
-            return back()->with('success', 'We have received your comment. Thank you!');
+            return back()->with('success', 'Thank you...!!! We have received your inquiry. Our Team will get back to you soon');
     	}
     	catch(\Exception $e){
     		return back();

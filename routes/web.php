@@ -19,8 +19,13 @@ use App\Http\Controllers\SubSubCategoryController;
 
 
 use Illuminate\Support\Facades\Route;
+//Route::delete('enquiry/{id}', 'EnquiryController@destroy')->name('enquiry.destroy');
+//Route::delete('enquiry/deleteSelected', 'EnquiryController@deleteSelected')->name('enquiry.deleteSelected');
 
 
+Route::get('/products/{slug?}', [HomeController::class, 'getProducts'])->name('products');
+Route::get('/get_categories/{slug?}/{id?}', [HomeController::class, 'getSearchCategories'])->name('get_categories');
+Route::get('/get_categories_product/{slug?}/{id?}', [HomeController::class, 'getSearchCategoriesProducts'])->name('get_categories_product');
 
 Route::get('/atico-admin', [AuthController::class, 'getLogin'])->name('admin');
 Route::post('/atico-admin/login', [AuthController::class, 'postLogin'])->name('adminlogin');
@@ -239,18 +244,7 @@ Route::group(['middleware' => 'auth', 'after' => 'no-cache'], function () {
 
             // ProductQuery route start
 
-            Route::resource('product_query', ProductQueryController::class, [
-                'names' => [
-                   'index' => 'product_query.index',
-                    'create' => 'product_query.create',
-                    'edit' => 'product_query.edit',
-                    'update' => 'product_query.update',
-                ],
-                'except' => ['show', 'destroy']
-            ]);
-            Route::any('product_query/paginate/{page?}', [ProductQueryController::class, 'productQueryPaginate'])->name('product_query.paginate');
-            Route::any('product_query/drop/{page?}', [ProductQueryController::class, 'destroy'])->name('product_query.drop');
-
+          
 
             // Route::resource('product_query', 'ProductQueryController', [
             //     'names' => [
@@ -284,19 +278,7 @@ Route::group(['middleware' => 'auth', 'after' => 'no-cache'], function () {
 
 
             // Request Quote route start
-            Route::resource('blog_comment', BlogCommentController::class, [
-                'names' => [
-                    'index' => 'blog_comment.index',
-                    'create' => 'blog_comment.create',
-                    'edit' => 'blog_comment.edit',
-                    'update' => 'blog_comment.update',
-                ],
-                'except' => ['show', 'destroy']
-            ]);
-            Route::any('blog_comment/paginate/{page?}', [BlogCommentController::class, 'blogCommentPaginate'])->name('blog_comment.paginate');
-            Route::any('blog_comment/drop/{page?}', [BlogCommentController::class, 'drop'])->name('blog_comment.drop');
-            Route::any('blog_comment/toggle/{page?}', [BlogCommentController::class, 'blogCommentToggle'])->name('blog_comment.toggle');
-
+            
            
            
 
@@ -434,10 +416,50 @@ Route::group(['middleware' => 'auth', 'after' => 'no-cache'], function () {
     });
 
 });
-Route::get('/', function () {
-    return view('frontend/home');
-});
+Route::get('/thankyou', function () {
+    return view('frontend/thankyou');
+})->name('thankyou');
+Route::get('/lab-tenders', function () {
+    return view('frontend/pages/lab-tenders');
+})->name('lab_tender_page');
+Route::get('/engineering-lab-tender', function () {
+    return view('frontend/pages/engineering-lab-tenders');
+})->name('engineering_lab_tender_page');
+Route::get('/about-us', function () {
+    return view('frontend/pages/about-us');
+})->name('about_us_page');
+Route::get('/contact-us', function () {
+    return view('frontend/pages/contact-us');
+})->name('contact_us_page');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('category/{slug?}', [HomeController::class, 'getCategories'])->name('categories');
 Route::get('product/{slug?}', [HomeController::class, 'productDetailPage'])->name('product_detail');
+
+Route::post('product/search',[HomeController::class, 'productSearch'])->name('product_search');
+Route::post('enquiry-store',  [EnquiryController::class, 'store'])->name('enquiry.store');
+Route::get('blogs', [HomeController::class, 'blogPage'])->name('blog_page');
+Route::get('blog/{slug?}', [HomeController::class, 'blogDetailPage'])->name('blog_detail');
+  Route::resource('product_query', ProductQueryController::class, [
+                'names' => [
+                   'index' => 'product_query.index',
+                    'create' => 'product_query.create',
+                    'edit' => 'product_query.edit',
+                    'update' => 'product_query.update',
+                ],
+                'except' => ['show', 'destroy']
+            ]);
+            Route::any('product_query/paginate/{page?}', [ProductQueryController::class, 'productQueryPaginate'])->name('product_query.paginate');
+            Route::any('product_query/drop/{page?}', [ProductQueryController::class, 'destroy'])->name('product_query.drop');
+Route::resource('blog_comment', BlogCommentController::class, [
+                'names' => [
+                    'index' => 'blog_comment.index',
+                    'create' => 'blog_comment.create',
+                    'edit' => 'blog_comment.edit',
+                    'update' => 'blog_comment.update',
+                ],
+                'except' => ['show', 'destroy']
+            ]);
+            Route::any('blog_comment/paginate/{page?}', [BlogCommentController::class, 'blogCommentPaginate'])->name('blog_comment.paginate');
+            Route::any('blog_comment/drop/{page?}', [BlogCommentController::class, 'drop'])->name('blog_comment.drop');
+            Route::any('blog_comment/toggle/{page?}', [BlogCommentController::class, 'blogCommentToggle'])->name('blog_comment.toggle');

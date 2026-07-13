@@ -16,6 +16,15 @@ class ProductQueryController extends Controller
             if( $validator->fails() ) {
                 return back()->withErrors($validator)->withInput();
             }
+            $fileUrl = '';
+        if ($request->hasFile('file_name')) {
+            $file = $request->file('file_name');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('files'), $filename); // Move file to public folder
+            
+            $fileUrl = '/files/' . $filename; // Relative path of the stored file
+            $inputs['file_name'] = $fileUrl;
+        }
             $id = (new ProductQuery)->store($inputs);
 
             $query = ProductQuery::find($id);
@@ -27,7 +36,8 @@ class ProductQueryController extends Controller
                 'country' => $query['country'],
                 'phone_number' => $query['phone_number'],
                 'quantity' => $query['quantity'],
-                'massage' => $query['message']
+                'massage' => $query['message'],
+                  'file_name' => $fileUrl
             ];
             //dd($data);
 
@@ -42,15 +52,15 @@ class ProductQueryController extends Controller
 
             if($email){
                 \Mail::send('frontend.emails.product_query', $data, function($message) use ($email){
-                    $message->from('enquiry@tejcargopackersandmovers.com');
-                    $message->to('sales@aticoindia.com');
+                    $message->from('sales@aticoscientific.com');
+                    $message->to('sales@aticoscientific.com');
                     $message->subject('Product Query Received');
                 });    
             }
 
 
-
-            return back()->with('success', 'We have received your message. Thank you!');
+            return view('frontend.thankyou');
+//            return back()->with('success', 'Thank you...!!! We have received your inquiry. Our Team will get back to you soon');
     	}
     	catch(\Exception $e){
            // dd($e);
@@ -128,8 +138,9 @@ public function destroy($id)
             
             \Session::start();
             \Session::put('message_reg', 'message_reg');
-
-            return back()->with('success', 'We have received your message. Thank you!');
+            return view('frontend.thankyou');
+  //          return back()->with('success', 'Thank you...!!!
+ //We have received your inquiry. Our Team will get back to you soon');
           
             
     	}
@@ -186,11 +197,12 @@ public function destroy($id)
         
 
 
-
-        return back()->with('success', 'We have received your message. Thank you!');
+return view('frontend.thankyou');
+  /*      return back()->with('success', 'Thank you...!!!
+ We have received your inquiry. Our Team will get back to you soon');*/
     } catch (\Exception $e) {
         // Log error message in console
-        dd($e);
+//        dd($e);
         return back();
     }
 }

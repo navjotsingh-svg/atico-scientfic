@@ -29,7 +29,8 @@ $route  = \Route::currentRouteName();
                                  <form method="post" class="form" enctype="multipart/form-data"
                                 @if (!empty($result)) action="{{ route('category.update', $result->id) }}" @else action="{{ route('category.store') }}" @endif>
                                 @csrf
-                                
+                                @method('PUT')
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">

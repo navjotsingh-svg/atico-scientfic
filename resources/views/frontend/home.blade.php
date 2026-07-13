@@ -1,702 +1,486 @@
 @extends('frontend.layouts.app')
+
 @section('content')
 @php
-    $useragent=$_SERVER['HTTP_USER_AGENT'];
-$display=1;
-if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4)))
-    $display=0;
-    
-    @endphp
-<style>
-    #owl-demo .item img{
-    display: block;
-    width: 100%;
-    height: auto;
-}
-.wpb_wrapper {
-    border: 6px solid #f3f3f3;
-    padding: 10px 5px;
-    text-align: center;
-    min-height: 275px;
-}
+  $groups = $groups ?? collect();
+  $faqs = $faqs ?? collect();
+  $blogs = $blogs ?? collect();
+  $products = $products ?? collect();
+  $latest_cats = $latest_cats ?? collect();
 
-.explore_now, .category_name{
-    color: #0530AD;
-    margin-left: 10px;
-    margin-top:10px;
-    font-weight: 600;
-}
-.support_team{
-    background-color: #0046AE;
-    color: #FFFFFF;
-    padding: 50px;
-    border-right: 1px dotted #fff;
-}
-.tenders{
-    background-color: #00398E;
-    color: #FFFFFF;
-    padding: 50px;
-    border-right: 1px dotted #fff;
-}
-.dealership{
-    background-color: #002761;
-    color: #FFFFFF;
-    padding: 50px;
-    border-right: 1px dotted #fff;
-}
-.contact_us{
-    background-color: #01193D;
-    color: #FFFFFF;
-    padding: 50px;
-    border-right: 1px dotted #fff;
-}
-.ref_icons {
-    border-radius: 50%;
-    border: 1px solid #E8E8E8;
-    width: 80px;
-    height: 80px;
-    padding: 6px;
-    position: absolute;
-    margin-top: -15px;
-    margin-left: 70px;
-}
-#contact_details{
-    margin-top: 30px;
-}
-#arrows{
-    margin-top:30px;
-}
-.aboutus{
-    display: inline-grid;
-    margin-left: 16px;
-    vertical-align: middle;
-}
-.li-icon{
-    list-style-image: url({{ asset('assets/images/li.png') }})
-}
-.explore_now a {
-    color: #0530AD;
-}
-@media only screen and (max-width: 600px) {
-.support_team{
-    flex:40%;
-}
-}
-.text-overlay{
-    color: #fff;
-    top: 90px;
-    position: absolute;
-    right: 324px;
-}
-.text-overlay2{
-    color: #fff;
-    top: 90px;
-    position: absolute;
-    left: 224px;
-}
-.text-overlay h1{
-    color: #fff;
-}
-.text-overlay2 h1{
-    color: #0530AD;
-}
-.text-overlay span {
-   
-    font-size: 18px;
-    
-}
-.text-overlay2 span {
-   color: #000;
-   font-size: 18px;
-   
-}
-.text-overlay button, .text-overlay2 button {
-   
-   margin-top: 60px;
-   
-}
-body{
-    background: #f8f9fa;
-}
-.catbox{
-    z-index: 17;
-    background: #fff;
-    margin-top: -32px;
-    position: relative;
-    padding: 10px;
-    box-shadow: #D0D0CD 2px 3px 5px;
-    min-height: 250px;
-}
-.catbox_mob{
-    z-index: 17;
-    background: #fff;
-    position: relative;
-    padding: 10px;
-    box-shadow: #D0D0CD 2px 3px 5px;
-    min-height: 250px;
-}
-img.mob_slider {
-    width: 18% !important;
-}
-.catbox h3 a {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.2;
-    display: flex;
-}
-</style>
-<div id="owl-demo" class="owl-carousel owl-theme">
- @if($display==1)
-   <div class="item" ><img src="{{ asset('assets/images/slider/slide1.png') }}" alt="The Last of us">
-  <div class="text-overlay">
-  <h1>Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span>Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
-    <span>Columns, Clevenger apparatus, Condensers, Filtration <br></span>
-    <span>Assembly, Laboratory flasks, pipettes, etc.<br></span>
-    <button class="btn btn-warning" >Explore more</button> 
-</div>
-</div> 
-  <div class="item" >
-  <img src="{{ asset('assets/images/slider/slide2.png') }}" alt="The Last of us">
-  <div class="text-overlay2">
-    <h1>Educational Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span>Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
-    <span>Columns, Clevenger apparatus, Condensers, Filtration <br></span>
-    <span>Assembly, Laboratory flasks, pipettes, etc.<br></span>
-    <button class="btn btn-warning" >Explore more</button> 
-</div>
-</div>
-@else
-<div class="item" style='min-height:600px;'><img  src="{{ asset('assets/images/slider/slider1mob.png') }}" alt="The Last of us">
-  <h1 class="category_name" style="color:#fff;margin-top:-680px;margin-left:60px;">Mechanical Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;   color:#fff;">Adaptors, Glass Beakers, Bottles, Burettes,<br></span>
-    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px; color:#fff;"> Chromatography, Columns, Clevenger apparatus,  <br></span>
-    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;  color:#fff;">Condensers, Filtration,Assembly, Laboratory flasks<br></span>
-    <span style="margin-top:-430px;margin-left:50px;line-height: 2; word-spacing: 5px;  color:#fff;">pipettes, etc.<br></span>
-    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 150px;margin-top: 50px;">Explore more</button> 
-   
-</div>
-  <!-- <div class="item" >
-  <img src="{{ asset('assets/images/slider/slide2.png') }}" alt="The Last of us">
-    <h1 class="category_name" style="margin-top:-580px;margin-left:220px;">Educational Lab Equipment<br> Manufacturer & Supplier</h1>
-    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Adaptors, Glass Beakers, Bottles, Burettes, Chromatography<br></span>
-    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Columns, Clevenger apparatus, Condensers, Filtration <br></span>
-    <span style="margin-top:-430px;margin-left:220px;line-height: 2; word-spacing: 14px;   color: black;">Assembly, Laboratory flasks, pipettes, etc.<br></span>
-    <button class="btn btn-default" style="text-align:center;background: orange;margin-left: 216px;margin-top: 50px;">Explore more</button> 
-               
-</div> -->
+  $slides = [
+    [
+      'image' => asset('assets/images/export-slides/Image1.webp'),
+      'eyebrow' => 'ELECTRICAL TRAINING EQUIPMENTS',
+      'title' => 'Welcome to ATICO Scientific',
+      'subtitle' => 'The Leading Educational, Hospital & Laboratory Scientific Equipment Manufacturers & Suppliers',
+      'text' => 'ATICO is the leading Manufacturer & Exporter of Laboratory Scientific equipment, Laboratory Instruments & Supplies, Engineering Lab equipment, Medical & Hospital Equipment, Educational Scientific equipment, and Science Education Kits for Schools, Colleges, Universities & Research Labs.',
+      'link' => url('/contact-us'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image2.webp'),
+      'eyebrow' => 'SCIENTIFIC LABORATORY SOLUTIONS',
+      'title' => 'Scientific Lab Equipments',
+      'subtitle' => 'Biotechnology Lab Solutions',
+      'text' => 'AUTOCLAVE – BIOSAFE CABINET – LAMINAR AIR FLOW – FUME HOOD – CLEAN AIR SYSTEM – ROTARY EVAPORATOR – OVEN – INCUBATOR – STORAGE CABINETS – WATER BATHS – LABORATORY FURNITURE',
+      'link' => url('/category/laboratory-research-equipment'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image3.webp'),
+      'eyebrow' => 'GLOBAL PARTNERSHIPS',
+      'title' => 'TVET Lab Equipments',
+      'subtitle' => 'Workshop Machines & CNC Solutions',
+      'text' => 'ATICO creates tools for use in TVET Colleges. Mechanical, civil, workshop machinery, hand tools, plumbing and electrical engineering labs. Polytechnics and ITIs trust our durable and precisely made products which meet global criteria.',
+      'link' => url('/category/educational-trainers'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image4.webp'),
+      'eyebrow' => 'STEM & SCIENCE KITS',
+      'title' => 'Science Stem Kits',
+      'subtitle' => 'Physics, Chemistry & Biology Experiments',
+      'text' => 'PHYSICS EXPERIMENTS KITS - SCIENCE EXPERIMENTS KITS – CHEMISTRY – BIOLOGY – MICROSCOPE – LABORATORY GLASSWARE – GENERAL LABWARE – CHEMISTRY EXPERIMENTS KITS – BIOLOGY EXPERIMENTS KITS',
+      'link' => url('/category/educational-lab-equipment'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image5.webp'),
+      'eyebrow' => 'CIVIL ENGINEERING',
+      'title' => 'Civil Engineering Lab',
+      'subtitle' => 'Testing Machines & Materials Analysis',
+      'text' => 'TESTING MACHINES – METALLURGICAL LAB EQUIPMENTS – MINING LAB EQUIPMENTS – SURVEY – MECHANICAL TESTING - CEMENT – SOIL – CONCRETE – BITUMEN – AGGREGATE',
+      'link' => url('/category/civil-engineering-instruments'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image6.webp'),
+      'eyebrow' => 'ANALYTICAL INSTRUMENTS',
+      'title' => 'Analytical & Laboratory Equipment',
+      'subtitle' => 'Your Trusted Partner in India',
+      'text' => 'HPLC – ATOMIC ABSORPTION SPECTROPHOTOMETER – SPECTROPHOTOMETER - PH METER – COLORIMETER - CONDUCTIVITY METER - TDS METER - COLONY COUNTER – GAS CHROMATOGRAPH – KARL FISHER TITRATOR',
+      'link' => url('/category/testing-lab-machines'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image7.webp'),
+      'eyebrow' => 'ELECTRONICS TRAINING',
+      'title' => 'Electronics Lab Trainers',
+      'subtitle' => 'Electrical Engineering Solutions',
+      'text' => 'ATICO is a pioneer in manufacturing educational trainer kits. Analog & Digital Lab Trainer | Electrical Machine Trainer | Power Electronics Trainer | Basic Electricity Trainer | Embedded Trainer | PLC Trainer | Process Control Trainer',
+      'link' => url('/category/educational-trainers'),
+    ],
+    [
+      'image' => asset('assets/images/export-slides/Image8.webp'),
+      'eyebrow' => 'TECHNICAL TRAINING',
+      'title' => 'Technical Training Equipments',
+      'subtitle' => 'Engineering Lab Solutions',
+      'text' => 'FLUID MECHANICS – CHEMICAL ENGINEERING – HEAT TRANSFER LAB – THERMAL ENGINEERING – HVAC – HYDRAULICS – AEROSPACE – AGRICULTURE – ENVIRONMENTAL – MARINE',
+      'link' => url('/category/engineering-lab-equipment'),
+    ],
+  ];
+
+  $countries = ['Afghanistan','Albania','Algeria','Australia','Bahrain','Bangladesh','Belgium','Brazil','Canada','Egypt','Ghana','India','Indonesia','Kenya','Malaysia','Nigeria','Qatar','Saudi Arabia','South Africa','UAE','UK','USA','Zambia'];
+@endphp
+
+<section class="ae-slider" id="aeSlider">
+  @foreach($slides as $i => $slide)
+    <div class="ae-slide {{ $i === 0 ? 'is-active' : '' }}" data-slide="{{ $i }}">
+      <img src="{{ $slide['image'] }}" alt="{{ $slide['title'] }}" @if($i===0) loading="eager" fetchpriority="high" @else loading="lazy" @endif>
+      <div class="ae-slide-overlay"></div>
+      <div class="ae-slide-content">
+        <div class="ae-slide-copy">
+          <span class="ae-eyebrow">{{ $slide['eyebrow'] }}</span>
+          <h2>{{ $slide['title'] }}</h2>
+          <h3>{{ $slide['subtitle'] }}</h3>
+          <p>{{ $slide['text'] }}</p>
+          <a class="ae-cta" href="{{ $slide['link'] }}">Explore Products →</a>
+        </div>
+      </div>
+    </div>
+  @endforeach
+  <div class="ae-dots" id="aeDots">
+    @foreach($slides as $i => $slide)
+      <button type="button" class="{{ $i === 0 ? 'is-active' : '' }}" aria-label="Go to slide {{ $i+1 }}" data-goto="{{ $i }}"></button>
+    @endforeach
+  </div>
+</section>
+
+<section class="ae-section">
+  <div class="ae-container">
+    <div class="ae-about-grid">
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="ae-accent-bar m-0"></div>
+          <p class="ae-kicker m-0">Manufacturer &amp; Exporter Around Globe</p>
+        </div>
+        <h1 class="ae-title">ATICO - Laboratory Equipment <span>Manufacturer &amp; Exporter in India</span></h1>
+        <div class="ae-text">
+          <p>Atico Scientific is an <strong>ISO 9001–certified laboratory equipment manufacturer in India</strong> and one of the most trusted suppliers serving global institutions. We have been manufacturing and exporting scientific, educational, and engineering equipment for many years.</p>
+          <p>Today, we are recognised among leading lab equipment manufacturers, laboratory glassware producers, and research laboratory equipment exporters worldwide.</p>
+          <p>We serve schools, colleges, universities, hospitals, research laboratories, industrial labs, and TVET institutions across many countries.</p>
+          <p><strong>Our product range includes:</strong></p>
+          <ul>
+            <li>School and college laboratory equipment</li>
+            <li>Scientific and engineering lab instruments</li>
+            <li>Research and industrial laboratory systems</li>
+            <li>Laboratory microscopes and optical instruments</li>
+            <li>Laboratory glassware and consumables</li>
+            <li>Testing and quality control equipment</li>
+          </ul>
+          <p><strong>Why institutions trust Atico:</strong></p>
+          <ul>
+            <li>ISO 9001–certified manufacturing systems</li>
+            <li>In-house R&amp;D and quality control</li>
+            <li>Compliance with ASTM, IS, BIS, and ISO standards</li>
+            <li>Experienced technical team</li>
+            <li>Consistent product durability and performance</li>
+            <li>Reliable after-sales support</li>
+          </ul>
+        </div>
+        <a class="ae-cta-outline" href="{{ url('/contact-us') }}">Contact Us</a>
+      </div>
+      <div>
+        <img src="{{ asset('assets/images/export-slides/exp_img.webp') }}" alt="Laboratory equipment manufacturer India" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ae-section" style="padding-top:20px;">
+  <div class="ae-container">
+    <div class="ae-solution">
+      <img src="{{ asset('assets/images/export-slides/medical_pro.webp') }}" alt="Hospital and medical equipments" loading="lazy">
+      <div>
+        <div class="span_bold">
+        <h6>Hospital And Medical Equipments</h6>
+        <h3>Solutions for Medical Training Laboratory and Hospital Equipment</h3>
+        <p style="text-align: justify;line-height: 26px; font-size: 15px;"><span class="font-bold text-white">ATICO</span> was established in the year <span class="font-bold text-white">1954</span> and has since been engaged in the export of medical equipment, hospital equipment,
+         orthopaedic implants &amp; instruments, laboratory equipment, and scientific &amp; educational products worldwide. <span class="font-bold text-white">Government of India</span> recognised export house. Your
+          support has made us a <span class="font-bold text-white">Government of India</span> recognised export house. Our goods have reached <span class="font-bold text-white">all continents</span>. With 
+          <span class="font-bold text-white">40+ employees</span> who are involved in activities related to production, inspections and dispatch we assure you <span class="font-bold text-white">world class healthcare products</span> 
+          delivered to your doorstep. Each employee has in-depth knowledge about the product and has years of experience to back that knowledge.</p>
+        <a class="ae-cta" href="{{ url('/category/pharmacy-lab-equipment') }}">View Medical Range →</a></div>
+      </div>
+    </div>
+
+    <div class="ae-solution reverse">
+      <img src="{{ asset('assets/images/export-slides/Image5.webp') }}" alt="Civil and mechanical engineering" loading="lazy">
+      <div class="org_back">
+        <h6>Engineering Solutions</h6>
+        <h3>Civil and Mechanical Engineering Machinery and Trainers</h3>
+        <p style="text-align: justify;line-height: 26px; font-size: 15px;">Welcome to Atico Export – Your Trusted Partner 
+          in <span class="font-bold text-white">Civil Engineering Lab Equipments</span>, <span class="font-bold text-white">Construction Materials Testing</span> and Environmental Instrumentation 
+          Companies located at <span class="font-bold text-white">SAHA, India</span>. Our organization deals in Manufacturing, Supplying and Trading extensive range of Civil Engineering Lab Equipment, 
+          <span class="font-bold text-white">Material Testing Lab Equipment</span>, Building Material Testing, <span class="font-bold text-white">Non-Destructive Testing</span>, Pavement Engineering, 
+          Survey &amp; Geospatial, Industrial Material Testing, Bitumen &amp; Asphalt Testing, Cement &amp; Concrete Testing Soil Testing Lab Equipment. Our products are manufactured by employing 
+          <span class="font-bold text-white">quality raw material</span> and <span class="font-bold text-white">advanced technologies</span>. The relevant features of our products are premium quality, fine finish, 
+          dimensional accuracy, easy to operate, rugged construction and many more. We have been able to garner huge market for our products. Join us as we continue to innovate and set new standards in the industry. 
+          Discover the difference with ATICO EXPORT – Where <span class="font-bold text-white">Quality Meets Excellence</span>.</p>
+        <a style="color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;" href="{{ url('/category/civil-engineering-instruments') }}">View Engineering Labs →</a>
+      </div>
+    </div>
+
+    <div class="ae-solution">
+      <img src="{{ asset('assets/images/export-slides/labimg.webp') }}" alt="Educational scientific instruments" loading="lazy">
+      <div class="span_bold">
+        <h6>Educational &amp; Scientific Instruments</h6>
+        <h3>Educational Lab Equipments Manufacturers, exporter, Wholesaler and Suppliers</h3>
+        <p style="text-align: justify; line-height: 26px; font-size: 15px;">Atico is a leading <span class="font-bold">Educational Lab Equipment manufacturer in India 
+        </span>and one of the most dependable Educational Lab Equipment suppliers and Educational Lab Equipment exporters. Atico Export has been manufacturing and exporting school lab and science 
+        equipment for many years, supplying Schools and Science College Lab equipment worldwide.<br><br>We provide <span class="font-bold">top-quality Educational Lab Equipment and educational science teaching kits</span> 
+        at very reasonable prices. Our management team comprises devoted professionals with in-depth domain knowledge. We use high-quality raw materials to manufacture all kinds of scientific lab equipments.<br><br>Some of 
+        our widely used educational science teaching kits include school biology lab equipment, school physics lab equipment, school chemistry lab equipment, school mathematics lab kits, school lab microscopes and slides,
+         laboratory glassware, school science lab plasticware, geography lab models, high school science kits, and more.<br><br>We are among the top <span class="font-bold">Chemistry Lab Equipment manufacturers, Physics Lab 
+          Equipment manufacturers, Biology Lab Equipment manufacturers, Chemistry Lab Equipment exporters, Physics Lab Equipment exporters, and Biology Lab Equipment exporters</span>, supplying a wide range of laboratory instruments globally.</p>
+        <a class="ae-cta" href="{{ url('/category/educational-lab-equipment') }}">View Educational Lab Equipments Range →</a>
+      </div>
+    </div>
+
+    <div class="ae-solution reverse">
+      <img src="{{ asset('assets/images/export-slides/ensimg.webp') }}" alt="Material testing equipments" loading="lazy">
+      <div class="org_back">
+        <h6>Engineering Testing Equipment</h6>
+        <h3>Material Testing Equipments and Testing Machines Manufacturer</h3>
+        <p>Atico is a reputed Engineering Training Equipment and Laboratory Glassware manufacturer in India. Atico Export has been manufacturing and exporting engineering instruments for
+           decades.<br><br>We provide top-quality engineering solutions at very reasonable prices. Our technical team has in-depth expertise in their respective domains.<br><br>Our 
+           engineering training equipment includes <span class="font-bold">automobile engine equipment</span>, <span class="font-bold">integrated circuits trainers</span>, 
+           <span class="font-bold">hydraulic bench</span>, <span class="font-bold">heat transfer systems</span>, <span class="font-bold">air compressor rigs</span>, and <span class="font-bold">fluid 
+            mechanics equipment</span>.<br><br>We are recognised among the top laboratory glassware manufacturers in India, offering precision-engineered solutions.</p>
+        <a style="color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;" href="{{ url('/category/testing-lab-machines') }}">View Engineering Lab Equipment →</a>
+      </div>
+    </div>
+    <div class="ae-solution">
+      <img src="{{ asset('assets/images/export-slides/labimg.webp') }}" alt="Educational scientific instruments" loading="lazy">
+      <div class="span_bold">
+        <h6>Educational Lab Equipment</h6>
+        <h3>Schools and Science College Lab Equipment</h3>
+        <p>We are a <span class="font-bold">INDIA based</span> school science equipment company. We supply <span class="font-bold">high quality
+         and affordable</span> <span class="font-bold">laboratory equipment</span> to schools, colleges, industry &amp; individuals.</p>
+        <a class="ae-cta" href="{{ url('/category/educational-lab-equipment') }}">View Educational Lab Equipments Range →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+@if($groups->count() || $latest_cats->count() || $products->count())
+<section class="ae-section ae-home-products">
+  <div class="ae-container">
+    <div class="ae-accent-bar mx-auto"></div>
+    <h2 class="ae-title text-center">Our Product Categories</h2>
+    <p class="text-center mb-4" style="color:#6b7280;">Explore laboratory, educational and engineering equipment ranges</p>
+
+    @if($groups->count())
+      <div class="ae-card-grid is-3 mb-4">
+        @foreach($groups as $group)
+          <a class="ae-pcard" href="{{ route('categories', $group->route) }}">
+            <div class="ae-pcard-media">
+              <img
+                src="{{ asset($group->image ? 'uploads/product_images/'.$group->image : 'assets/images/no_product.png') }}"
+                alt="{!! strip_tags($group->name) !!}"
+                loading="lazy"
+                onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
+              >
+            </div>
+            <div class="ae-pcard-title">{!! $group->name !!}</div>
+          </a>
+        @endforeach
+      </div>
+    @elseif($latest_cats->count())
+      <div class="ae-card-grid is-3 mb-4">
+        @foreach($latest_cats as $cat)
+          <a class="ae-pcard" href="{{ route('categories', $cat->slug) }}">
+            <div class="ae-pcard-media">
+              <img
+                src="{{ asset($cat->image ? 'uploads/product_images/'.$cat->image : 'assets/images/no_product.png') }}"
+                alt="{!! strip_tags($cat->name) !!}"
+                loading="lazy"
+                onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
+              >
+            </div>
+            <div class="ae-pcard-title">{!! $cat->name !!}</div>
+          </a>
+        @endforeach
+      </div>
+    @endif
+
+    @if($products->count())
+      <h3 class="ae-title text-center" style="font-size:1.35rem;margin-top:28px;">Featured Products</h3>
+      <div class="ae-card-grid">
+        @foreach($products as $item)
+          <a class="ae-pcard" href="{{ url('/product/'.$item->slug) }}">
+            <div class="ae-pcard-media">
+              <img
+                src="{{ asset($item->image ? 'uploads/product_images/'.$item->image : 'assets/images/no_product.png') }}"
+                alt="{!! strip_tags($item->name) !!}"
+                loading="lazy"
+                onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
+              >
+            </div>
+            <div class="ae-pcard-title">{!! $item->name !!}</div>
+          </a>
+        @endforeach
+      </div>
+    @endif
+  </div>
+</section>
 @endif
 
-</div>
-<section id="categories" class="container" <?php if($display==0) echo "style='margin-top:-40px;'"; ?>>
-    <div class="row">
-        @if($display==1)
-        <div class="col-md-3" >
-               <div class="catbox" data-image="{{ asset('assets/images/ceqh.png') }}">
-                <div align="left">
-                    <img src="{{ asset('assets/images/laboratorium.png') }}">
-                </div>
-               <h3 align="left" class="category_name anek-bangla"><a>Civil Engineering Equipment</a></h3>
-               <ul>
-                    <li class="li-icon" align="left">Aggregate Testing</li>
-                    <li class="li-icon" align="left">Rockwell Testing Machine</li>
-                    <li class="li-icon" align="left">Compression Testing</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-        <div class="col-md-3" >
-        <div class="catbox" data-image="{{ asset('assets/images/eleh.png') }}">
-                <div align="left">
-                    <img src="{{ asset('assets/images/lab1.png') }}">
-                </div>
-               <h3 align="left" class="category_name anek-bangla"><a>Educational Lab Equipment</a></h3>
-               <ul>
-                    <li class="li-icon" align="left">Physics Lab Equipments</li>
-                    <li class="li-icon" align="left">Biology Lab Equipments</li>
-                    <li class="li-icon" align="left">Chemistry Lab Equipments</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-        <div class="col-md-3" >
-        <div class="catbox" data-image="{{ asset('assets/images/rleh.png') }}">
-                <div align="left">
-                    <img src="{{ asset('assets/images/lab2.png') }}">
-                </div>
-               <h3 align="left" class="category_name anek-bangla"><a>Research Lab Equipment</a></h3>
-               <ul>
-                    <li class="li-icon" align="left">Clean Room Equipment</li>
-                    <li class="li-icon" align="left">Humidity Cabinet</li>
-                    <li class="li-icon" align="left">Test Chambers</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-        <div class="col-md-3" >
-               <div class="catbox" data-image="{{ asset('assets/images/tleh.png') }}">
-                <div align="left">
-                    <img src="{{ asset('assets/images/lab3.png') }}">
-                </div>
-               <h3 align="left" class="category_name anek-bangla"><a>Testing Lab Equipments</a></h3>
-               <ul>
-                    <li class="li-icon" align="left">NDT Metal Testers</li>
-                    <li class="li-icon" align="left">Brinell Hardness Testing</li>
-                    <li class="li-icon" align="left">NDT Testers - Concrete</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-        @else
-        <div id="owl-demo1" class="owl-carousel owl-theme">
-                <div class="item">
-                <div class="col-md-3" >
-                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
-               
-                <div align="left">
-                    <img class="mob_slider" src="{{ asset('assets/images/laboratorium.png') }}">
-                </div>
-               <h5 align="left" class="category_name anek-bangla">Civil Engineering Equipment</h5>
-               <ul>
-                    <li class="li-icon" align="left">Aggregate Testing</li>
-                    <li class="li-icon" align="left">Rockwell Testing Machine</li>
-                    <li class="li-icon" align="left">Compression Testing</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-                </div>
-
-                <div class="item">
-                <div class="col-md-3" >
-                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
-               
-                <div align="left">
-                    <img class="mob_slider" src="{{ asset('assets/images/lab1.png') }}">
-                </div>
-               <h5 align="left" class="category_name">Educational Lab Equipment</h5>
-               <ul>
-                    <li class="li-icon" align="left">Physics Lab Equipments</li>
-                    <li class="li-icon" align="left">Biology Lab Equipments</li>
-                    <li class="li-icon" align="left">Chemistry Lab Equipments</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-                </div>
-
-                
-                <div class="item">
-                <div class="col-md-3" >
-                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
-               
-                <div align="left">
-                    <img class="mob_slider" src="{{ asset('assets/images/lab2.png') }}">
-                </div>
-               <h5 align="left" class="category_name">Research Lab Equipment</h5>
-               <ul>
-                    <li class="li-icon" align="left">Clean Room Equipment</li>
-                    <li class="li-icon" align="left">Humidity Cabinet</li>
-                    <li class="li-icon" align="left">Test Chambers</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-                </div>
-
-
-                <div class="item">
-                <div class="col-md-3" >
-                <div class="catbox_mob" data-image="{{ asset('assets/images/ceqh.png') }}">
-               
-                <div align="left">
-                    <img class="mob_slider" src="{{ asset('assets/images/lab3.png') }}">
-                </div>
-               <h5 align="left" class="category_name">Testing Lab Equipments</h5>
-               <ul>
-                    <li class="li-icon" align="left">NDT Metal Testers</li>
-                    <li class="li-icon" align="left">Brinell Hardness Testing</li>
-                    <li class="li-icon" align="left">NDT Testers - Concrete</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-               </div> 
-        </div>
-        </div>
-
-        @endif
+<section class="ae-stats">
+  <div class="ae-container">
+    <div class="ae-stats-grid">
+      <div><strong>15000+</strong><span>Products</span></div>
+      <div><strong>300+</strong><span>Clients</span></div>
+      <div><strong>40+</strong><span>Turnkey Projects</span></div>
+      <div><strong>35+</strong><span>Countries</span></div>
     </div>
+  </div>
 </section>
-<section id="arrows">
-        <div class="rows">
-               <div class="col-md-12" style="text-align: center">
-                    <span><img src="{{ asset('assets/images/arrow-left.png') }}"></span>
-                    <span><img src="{{ asset('assets/images/arrow-right.png') }}"></span>
-               </div> 
+
+<section class="ae-section">
+  <div class="ae-container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="ae-accent-bar"></div>
+        <h2 class="ae-title" style="font-size:1.5rem;">GLOBAL EXPORTER</h2>
+        <p class="ae-text">Atico is trusted among international institutions as one of the leading Scientific lab Equipment exporters. ISO-aligned manufacturing, in-house R&amp;D, export documentation, OEM support and custom specifications for international tenders.</p>
+        <a href="{{ url('/about-us') }}" style="color:var(--ae-blue);font-weight:700;text-decoration:none;">Read more →</a>
+      </div>
+      <div class="col-md-6">
+        <div class="ae-accent-bar"></div>
+        <h2 class="ae-title" style="font-size:1.5rem;">TENDERS &amp; BIDDINGS</h2>
+        <p class="ae-text">Leading manufacturer of lab equipment as per MOE tender specifications — biology, school/college labs, electronics trainers, microscopes, engineering labs and science lab equipment.</p>
+        <a href="{{ url('/lab-tenders') }}" style="color:var(--ae-blue);font-weight:700;text-decoration:none;">Read more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ae-section" style="background:#f9fafb;">
+  <div class="ae-container">
+    <h2 class="ae-title text-center">We Serve 35+ Countries</h2>
+    <p class="text-center mb-4" style="color:#6b7280;">Atico exports laboratory equipment and scientific instruments globally</p>
+    <div class="ae-countries mb-4">
+      <div class="ae-countries-track">
+        @foreach(array_merge($countries, $countries) as $country)
+          <span>{{ $country }}</span>
+        @endforeach
+      </div>
+    </div>
+    <div class="ae-feature-row">
+      <div class="ae-feature"><h4>Worldwide Shipping</h4><p>Shipping costs depend on consignment size. Contact us for details.</p></div>
+      <div class="ae-feature"><h4>Bulk Orders</h4><p>Special discounts available on bulk orders worldwide.</p></div>
+      <div class="ae-feature"><h4>Best Quality</h4><p>High-quality products at competitive prices.</p></div>
+      <div class="ae-feature"><h4>Secure Payments</h4><p>Wire Transfer, TT, Letter of Credit, PayPal and more.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="ae-section">
+  <div class="ae-container">
+    <h2 class="ae-title text-center">Client Testimonies &amp; Success</h2>
+    <p class="text-center mb-4" style="color:#6b7280;">Hear from our valued clients about their experience working with us</p>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="ae-testimonial">
+          <p>“We had a good experience with the stirrer machine, and the glassware quality was excellent. The products met our operational and quality expectations.”</p>
+          <h5>Nur Mohammed</h5>
+          <small>Procurement Partner, Top Lab Solution, Malaysia</small>
         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ae-testimonial">
+          <p>“We have been working with Atico for more than 20 years. After visiting their manufacturing facility, I am confident about our continued collaboration.”</p>
+          <h5>Jacob</h5>
+          <small>Business Partner, Chemical and Glassware (Pty) Ltd, South Africa</small>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ae-testimonial">
+          <p>“Atico is a reliable supplier for school science laboratory equipment. Their products are suitable for educational institutions and meet required standards.”</p>
+          <h5>Mohammed Al Hussaini</h5>
+          <small>Education Supplies Consultant, Qatar</small>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<section id="contact_details" class="container-fluid">
-    <div class="row">
-        @if($display==1)
-            <div class="col-md-3 support_team">
-                <div class="ref_icons">
-                    <img src="{{ asset('assets/images/support_team.png') }}">
-                </div>
-                    <h6 align="right">Support Team</h6>
-                    <h6 align="right">+(91) 9996186555</h6>
+
+@if($faqs->count())
+<section class="ae-section ae-faq" style="background:#f9fafb;">
+  <div class="ae-container" style="max-width:860px;">
+    <h2 class="ae-title text-center">Frequently Asked <span>Questions about Atico</span></h2>
+    <div class="accordion" id="aeFaq">
+      @foreach($faqs->take(5) as $index => $faq)
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading{{ $faq->id }}">
+            <button class="accordion-button {{ $index ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $faq->id }}">
+              {{ $faq->name }}
+            </button>
+          </h2>
+          <div id="faqCollapse{{ $faq->id }}" class="accordion-collapse collapse {{ $index ? '' : 'show' }}" data-bs-parent="#aeFaq">
+            <div class="accordion-body">{!! $faq->description !!}</div>
+          </div>
+        </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+@endif
+
+<section class="ae-section">
+  <div class="ae-container">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+      <h2 class="ae-title mb-0">Latest News</h2>
+      <a href="{{ url('/blogs') }}" style="color:var(--ae-blue);font-weight:700;text-decoration:none;">View All Articles</a>
+    </div>
+    <div class="ae-blog-grid">
+      @forelse($blogs->take(3) as $blog)
+        <a class="ae-blog-card" href="{{ route('blog_detail', $blog->slug) }}">
+          <img src="{{ asset($blog->image ? 'uploads/blog_images/'.$blog->image : 'assets/images/export-slides/Image1.webp') }}" alt="{{ $blog->name }}" loading="lazy">
+          <div class="body">
+            <h3>{{ $blog->name }}</h3>
+            <p>{{ \Illuminate\Support\Str::limit(strip_tags($blog->description), 110) }}</p>
+            <span class="ae-blog-link">Read more</span>
+          </div>
+        </a>
+      @empty
+        @foreach([1,2,3] as $n)
+          <a class="ae-blog-card" href="{{ url('/blogs') }}">
+            <img src="{{ asset('assets/images/export-slides/Image'.$n.'.webp') }}" alt="" loading="lazy">
+            <div class="body">
+              <h3>Laboratory Equipment Insights</h3>
+              <p>Updates on scientific, educational and engineering laboratory equipment from Atico.</p>
+              <span class="ae-blog-link">Read more</span>
             </div>
-            <div class="col-md-3 tenders">
-                <div class="ref_icons">
-                    <img src="{{ asset('assets/images/tenders.png') }}">
-                </div>
-                    <h6 align="right">OEM & Tenders</h6>
-                    <h6 align="right">Get a Quote</h6>
-            </div>
-            <div class="col-md-3 dealership">
-                <div class="ref_icons">
-                    <img src="{{ asset('assets/images/dealership.png') }}">
-                </div>
-                    <h6 align="right">Dealership</h6>
-                    <h6 align="right">Request Now!</h6>
-            </div>
-            <div class="col-md-3 contact_us">
-                <div class="ref_icons">
-                    <img src="{{ asset('assets/images/email.png') }}">
-                </div>
-                    
-            </div>
-            @else
-            <div class="col-md-3">
-                
-                    <img src="{{ asset('assets/images/support_info.png') }}">
-                </div>
-            @endif
+          </a>
+        @endforeach
+      @endforelse
     </div>
+  </div>
 </section>
 
-<section id="arrows" class="container-fluid">
-        <div class="row">
-               <div class="col-md-12" style="text-align: center">
-                    <h6 style="color: #F99E00">-School-</h6>
-                    <h4 class="category_name">School Lab Equipments</h4>
-               </div> 
-        </div>
-</section>
-
-<section id="school_equipments" class="container" style="margin-top:20px;">
-    <div class="row">
-        <div class="col-md-6" style="display: <?php if($display==1) echo 'flex'; ?>">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/cle.png') }});<?php if($display==0) echo 'min-height: 200px'; ?>">
-                &nbsp;
-            </div>
-            <div class="col-md-6" style="border: 1px solid #E2E2E2">
-                <h5 class="category_name">Chemistry Lab Equipment</h5>
-                <ul>
-                    <li class="li-icon" align="left">Biochemistry</li>
-                    <li class="li-icon" align="left">Textiles</li>
-                    <li class="li-icon" align="left">Environmental Science</li>
-                    <li class="li-icon" align="left">Pharmaceutical science</li>
-                    <li class="li-icon" align="left">Production Engineering</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-            </div>    
-        </div>
-
-        <div class="col-md-6" style="display: <?php if($display==1) echo 'flex'; ?>">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/ple.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
-                &nbsp;
-            </div>
-            <div class="col-md-6" style="border: 1px solid #E2E2E2">
-                <h5 class="category_name">Physics Lab Equipments</h5>
-                <ul>
-                    <li class="li-icon" align="left">Meteorology Earth Science</li>
-                    <li class="li-icon" align="left">Fluid Mechanics Physics</li>
-                    <li class="li-icon" align="left">Modern Physics</li>
-                    <li class="li-icon" align="left">Measurement Instruments</li>
-                    <li class="li-icon" align="left">Mechanics Laboratory Equipment</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-            </div>    
-        </div>
-
-    </div>
-    <div class="row" style="margin-top:20px">
-        <div class="col-md-4" style="display: <?php if($display==1) echo 'flex'; ?>">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/lg.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
-                &nbsp;
-            </div>
-            <div class="col-md-6" style="border: 1px solid #E2E2E2">
-                <h5 class="category_name">Laboratory Glasswaret</h5>
-                <ul>
-                    <li class="li-icon" align="left">Beakers</li>
-                    <li class="li-icon" align="left">Volumetric flasks</li>
-                    <li class="li-icon" align="left">Titration flasks</li>
-                    <li class="li-icon" align="left">Condensers</li>
-                    <li class="li-icon" align="left">Titration burettes</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-            </div>    
-        </div>
-
-        <div class="col-md-4" style="display: <?php if($display==1) echo 'flex'; ?>">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/mle.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
-                &nbsp;
-            </div>
-            <div class="col-md-6" style="border: 1px solid #E2E2E2">
-                <h5 class="category_name">Math's lab Equipment</h5>
-                <ul>
-                    <li class="li-icon" align="left">Base Ten Block</li>
-                    <li class="li-icon" align="left">Geometric Shapes</li>
-                    <li class="li-icon" align="left">Mathematics Kit</li>
-                    <li class="li-icon" align="left">Math's Wooden Products</li>
-                    
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-            </div>    
-        </div>
-
-        <div class="col-md-4" style="display: <?php if($display==1) echo 'flex'; ?>">
-            <div class="col-md-6" style="background: url({{ asset('assets/images/ble.png') }});<?php if($display==0) echo 'min-height: 200px;margin-top:10px;'; ?>">
-                &nbsp;
-            </div>
-            <div class="col-md-6" style="border: 1px solid #E2E2E2">
-                <h5 class="category_name">Biology Lab Equipment</h5>
-                <ul>
-                    <li class="li-icon" align="left">Test Tubes</li>
-                    <li class="li-icon" align="left">Flask</li>
-                    <li class="li-icon" align="left">Beaker</li>
-                    <li class="li-icon" align="left">Microscope</li>
-                    <li class="li-icon" align="left">Crucible Tongs</li>
-               </ul>
-               <h6 align="left" class="explore_now"><a href="#">Explore More</a></h6>
-            </div>    
-        </div>
-
-    </div>
-</section>
-<section id="arrows" style="margin-top:70px;" class="container-fluid">
-    @if($display==1)
-        <div class="row">
-               <div class="col-md-12" style="text-align: center;background: url({{ asset('assets/images/banner.png') }}) no-repeat;padding: 50px;background-size:100%">
-                   <label style="color:#ffff;margin-left: 450px;">If you are a college or university looking to setup a <br>complete lab. Please contact us with your details<br> for custom quotation.</label>
-                   <button class="btn btn-default" style="background: orange;margin-right: 203px;float: right;margin-top: 16px;">Send Mail</button> 
-                </div> 
-        </div>
-
-    @else
-    <div class="row">
-               <div class="col-md-12" style="text-align: center;background: url({{ asset('assets/images/bannermob.png') }}) no-repeat;padding: 50px;background-size:100%">
-                   <label style="color:#ffff;margin-left: 50px;">If you are a college or university looking to<br> setup a complete lab. Please contact us with<br> your details for custom quotation.</label>
-                   <button class="btn btn-default" style="background: orange;margin-right: 148px;float: right;margin-top: 16px;">Send Mail</button> 
-                </div> 
-        </div>
-    
-    @endif
-</section>
-<section id="arrows" class="container" style="margin-top:70px;">
-        <div class="row">
-               <div class="col-md-6" style="min-height:550px;">
-               <h6 style="color: #F99E00">-About Us-</h6>
-               <h4 class="category_name">Welcome To<br>
-               Atico Scientific</h4>
-               <p>We are the name to reckon with in the industry for Mechanical Manufacturers laboratory equipment in PAN India and International Market. We have supplied mechanical tools, equipment, instrument, and lab apparatus to engineering lab in India, as well across 30 countries.</p>
-                <button class="btn btn-default" style='border: 1px solid #eeee;'>Read more <img src="{{ asset('assets/images/arrow-left.png') }}"></button>
-               
-                <div class="col-md-8" style="display:flex;margin-top:30px;">
-                        <div class="col-md-6">
-                        <img src="{{ asset('assets/images/products.png') }}"><span class="aboutus">Products<br><strong style="color:#F99E00">20000+</strong></span>
-                        </div>
-                        <div class="col-md-6">
-                        <img src="{{ asset('assets/images/location.png') }}"><span class="aboutus">Countries<br><strong style="color:#F99E00">90+</strong></span>
-                        </div>
-                </div>
-                <div class="col-md-8" style="display:flex;margin-top:50px;">
-                        <div class="col-md-6">
-                        <img src="{{ asset('assets/images/clients.png') }}"><span class="aboutus">Clients<br><strong style="color:#F99E00">1000+</strong></span>
-                        </div>
-                        <div class="col-md-6">
-                        <img src="{{ asset('assets/images/ph_key.png') }}"> <span class="aboutus">Turnkey Projects<br><strong style="color:#F99E00">2000+</strong></span>
-                        </div>
-                </div>
-            </div> 
-               <div class="col-md-6" >
-                <img src="{{ asset('assets/images/about_us.png') }}" style="width:90%">
-                <div style="<?php if($display==1) echo "margin-top:-525px;margin-left:44px;"; else echo  "margin-top:-407px;margin-left:9px;";?>"> 
-                     <img src="{{ asset('assets/images/years.png') }}">
-                </div>
-               </div>
-        </div>
-</section>
-@if($display==1)
-<section id="trade" class="container-fluid" style="margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
-    <div class="row" style="margin-top:20px">
-        <div class="col-md-12" style="text-align: center;margin-top:30px;">
-            <h6 style="color: #F99E00">-Trade-</h6>
-            <h4 class="category_name" style="color:#fff;">Trade with confidence from production quality to purchase protection<br>quality to purchase protection</h4>
-        </div> 
-    </div>
-    <div class="row ">
-        <div class="col-md-6" align="center">
-                <img src="{{ asset('assets/images/trade1.png') }}">
-        </div>
-        <div class="col-md-6" align="center">
-                <img src="{{ asset('assets/images/trade2.png') }}">
-        </div>
-    </div>
-</section>
-<section id="trade" style="margin-top:10px;" class="container-fluid" >
-   
-    <div class="row ">
-        <div class="col-md-6" align="center">
-                <h5 class="heading_name">Civil and Mechanical Engineering Machinery <br>and Equipments</h5>
-                <button class="btn btn-default" style="text-align:center;background: orange;margin-right: 203px;margin-top: 16px;">Explore more</button> 
-               
-        </div>
-        <div class="col-md-6" align="center">
-        <h5 class="heading_name">Civil and Mechanical Engineering Machinery <br>and Equipments</h5>
-        <button class="btn btn-default" style="background: orange;margin-right: 203px;margin-top: 16px;">Explore more</button> 
-       
-        </div>
-        
-
-    </div>
-    </section>
-@endif  
-<section id="electrical_tab" class="container" style="margin-top: <?php if($display==1) echo "30px"; else echo  "375px";?>">
-    <div class="row">
-        <div class="col-md-6">
-        <img src="{{ asset('assets/images/electrical.png') }}" style="width:90%">
-        </div>
-        <div class="col-md-6" style="text-align: justify">
-                <h6 style="color: #F99E00">-Electrical-</h6>
-                <h4 class="category_name">Electrical Lab<br>
-                Testing Equipment Manufacturer,</h4>
-                <span style="line-height:2">ATICO Export is one of the largest Electrical Lab Testing Equipment Manufacturers, Suppliers and Exporters in India. We are a leading corporation for all types of scientific lab equipment throughout the world. With years of experience in this domain, we have become highly skilled in designing, developing and manufacturing almost all types of scientific and educational laboratory equipment and instruments. ATICO Export is one of the best electrical lab testing equipment manufacturers around the globe that has set standards in research, development and manufacturing high quality products.</span>
-                
-                <button class="btn btn-default" style='border: 1px solid #eeee;margin-top:20px;'>Send Query <img src="{{ asset('assets/images/arrow-left.png') }}"></button>
-               
-            </div>
-    </div>
-    <div class="row" style="margin-top:30px;">
-       
-        <div class="col-md-6" style="text-align: justify">
-                <h6 style="color: #F99E00">-Research-</h6>
-                <h4 class="category_name">Research Lab<br>
-                Equipment Manufacturers </h4>
-                <span style="line-height:2">ATICO Exports have emerged out as one of the leading Research Lab Equipment manufacturers, suppliers and exporters in India, offering a wide range of Scientific Equipment and laboratory Instruments. We have a diverse and flawless array of Research Laboratory Equipment. In spite of the cut throat competition, we have always succeeded to achieve client’s satisfaction by using a simple formula of manufacturing and supplying world class and best quality products in cost efficient manner.</span>
-                <div style="display:flex;margin-top:10px;">
-                <div class="col-md-6" style="text-align: justify">
-                <ul>
-                    <li class="li-icon" align="left">Heating Mantles</li>
-                    <li class="li-icon" align="left">Histology Equipment</li>
-                    <li class="li-icon" align="left">Tissue Embedding Station</li>
-                    <li class="li-icon" align="left">Lab Test Chambers</li>
-                </ul>
-                </div>
-                
-                <div class="col-md-6" style="text-align: justify">
-                <ul>
-                    <li class="li-icon" align="left">Cooling Equipment</li>
-                    <li class="li-icon" align="left">Microtome Equipment</li>
-                    <li class="li-icon" align="left">Slide Strainers</li>
-                    <li class="li-icon" align="left">Electrophoresis</li>
-                </ul>
-                </div>
-                </div>
-                <button class="btn btn-default" style='border: 1px solid #eeee;margin-top:20px;'>Send Query <img src="{{ asset('assets/images/arrow-left.png') }}"></button>
-               
-        </div>
-        <div class="col-md-6">
-        <img src="{{ asset('assets/images/research.png') }}" style="width:85%">
-        </div>    
-    </div>
-
-</section>
-<section id="our_categories" class="container-fluid" style="min-height:450px;margin-top:30px;background:url({{ asset('assets/images/trade.png') }});background-color:#01193D;" >
-    <div class="row" style="margin-top:20px">
-        <div class="col-md-12" style="text-align: center;margin-top:30px;">
-            <h6 style="color: #F99E00">-Category-</h6>
-            <h4 class="category_name" style="color:#fff;">Our Category</h4>
-        </div> 
-    </div>
-    <div class="container">
-    <div class="row ">
-        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/etel.png') }});min-height:250px;width:23%;margin-right:2%;">
-               <label style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
-        </div>
-        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/cele.png') }});min-height:250px;width:23%;margin-right:2%;">
-                <label  style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
-        </div>
-        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/rle.png') }});min-height:250px;width:23%;margin-right:2%;">
-        <label  style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
-        </div>
-        <div class="col-md-3" align="center" style="background:url({{ asset('assets/images/etle.png') }});min-height:250px;width:23%;margin-right:2%;">
-        <label  style="margin-top:212px;color:#fff;font-weight:500;">Engineering Training Lab Equipment</label>
-        </div>
-
-
-    </div>
-    
-</div>
-</section>
-<section class="container" id="trusted">
-<img src="{{ asset('assets/images/trusted.png') }}" style="width:95%">
-</section>
-<section id="arrows" class="container-fluid">
-        <div class="row">
-               <div class="col-md-12" style="background: url({{ asset('assets/images/call_us.png') }});padding: 50px;">
-               <h4 style="color:#ffff;margin-left: 250px;margin-top: 140px;">Call Us! We are available 24/7</h4>
- <button class="btn btn-default" style="background: orange;margin-right: 900px;float: right;margin-top: -35px;">Contact Us</button> 
-    </div> 
-        </div>
-</section>
-
-<section id="our_categories" style="min-height:450px;" class="container-fluid">
-    <div class="row" style="margin-top:20px">
-        <div class="col-md-12" style="text-align: center;margin-top:30px;">
-            <h6 style="color: #F99E00">-Services-</h6>
-            <h3 class="category_name" >Our Services</h3>
-        </div> 
-    </div>
-    <div class="container">
-    <div class="row ">
-        <div class="col-md-12" align="center" >
-        <img src="{{ asset('assets/images/services.png') }}" style="width:85%">
-        </div>
-        
-
-
-    </div>
-    
-</div>
-</section>
+<style>
+.span_bold {
+  background-color: rgb(25, 71, 209);
+  color: #fff; 
+  padding: 35px 35px; 
+  border-radius: 18px;
+}
+.span_bold span,
+.org_back span {
+    font-weight: 700;
+}
+.span_bold h6,
+.org_back h6 {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #eee;
+}
+.span_bold h3,
+.org_back h3 {
+    font-size: 22px;
+    line-height: 28px;
+    padding: 6px 0;
+}
+.org_back{
+  background: rgb(250, 66, 25);
+  padding: 40px 35px;
+  border-radius: 18px;
+  color: #fff;
+}
+</style>
+@push('scripts')
 <script>
-    $(document).ready(function() {
- $(".catbox").mouseover (function(){
-    var img_src=$(this).attr("data-image");
-    $(this).css("background-image",'url(' + img_src + ')');
-    $(this).find("h5").css("color",'#fff');
-    $(this).find("li").css("color",'#fff');
- });
- $(".catbox").mouseleave (function(){
-    $(this).css("background",'#fff');
-    $(this).find("h5").css("color",'#0530AD');
-    $(this).find("li").css("color",'#000');
- });
- $("#owl-demo,#owl-demo1").owlCarousel({
+(function () {
+  var slider = document.getElementById('aeSlider');
+  if (!slider) return;
+  var slides = Array.prototype.slice.call(slider.querySelectorAll('.ae-slide'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#aeDots button'));
+  var index = 0;
+  var timer;
 
-     navigation : true, // Show next and prev buttons
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    slides.forEach(function (s, n) { s.classList.toggle('is-active', n === index); });
+    dots.forEach(function (d, n) { d.classList.toggle('is-active', n === index); });
+  }
 
-     slideSpeed : 300,
-     paginationSpeed : 400,
+  function start() {
+    stop();
+    timer = setInterval(function () { goTo(index + 1); }, 5000);
+  }
 
-     items : 1, 
-     itemsDesktop : false,
-     itemsDesktopSmall : false,
-     itemsTablet: false,
-     itemsMobile : false
+  function stop() {
+    if (timer) clearInterval(timer);
+  }
 
- });
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goTo(parseInt(dot.getAttribute('data-goto'), 10));
+      start();
+    });
+  });
 
-});
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+  start();
+})();
 </script>
+@endpush
 @endsection

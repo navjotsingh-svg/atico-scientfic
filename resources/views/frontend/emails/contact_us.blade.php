@@ -10,7 +10,7 @@
     <!-- Use the latest (edge) version of IE rendering engine -->
     <meta name="x-apple-disable-message-reformatting">
     <!-- Disable auto-scale in iOS 10 Mail entirely -->
-    <title>Product Query</title>
+    <title>Payment Received</title>
   </head>
   <body style="margin: 0; mso-line-height-rule: exactly; margin-top: 50px !important; margin-bottom: 50px !important;">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
@@ -29,23 +29,14 @@
           </div>
           <div style="background-color: #002c4d; padding: 50px 0px; float: left; width: 100%; text-align: center; margin: 0px 0px 0px 0px;">
           
-            <h4 style="font-size: 15px; font-weight: normal; line-height: 24px; color: white; text-align: left; padding: 0px 18px;">Thankyou for your Query</h4>
+            <h4 style="font-size: 15px; font-weight: normal; color: white; text-align: left; padding: 0px 18px;">Greetings,</h4>
+            <h4 style="font-size: 15px; font-weight: normal; line-height: 24px; color: white; text-align: left; padding: 0px 18px;">Thankyou for your enquiry</h4>
 
-            <h4 style="font-size: 15px; font-weight: normal; color: #f76b2b; padding: 0px 18px; text-align: left; text-align: center; font-weight: 600;">Query DETAILS</h4>
+            <h4 style="font-size: 15px; font-weight: normal; color: #f76b2b; padding: 0px 18px; text-align: left; text-align: center; font-weight: 600;">Enquiry DETAILS</h4>
 
             <div style="padding: 0px 10px;">
               <table style="color: #fff; width: 100%;" cellpadding="0" cellspacing="0">
                 <tbody style="font-weight: 600;">
-                  <tr style="text-transform: capitalize;">
-                    <td style="background-color: #f76b2b; width: 40%; border: 1px solid #e1e1e1; padding: 6px 3px; border-bottom: 0; font-size: 14px;">Product Name</td>
-                    <td style="border: 1px solid #e1e1e1; border-bottom: 0; padding: 10px 10px; font-size: 14px;">{!! $product !!}</td>
-                  </tr>
-
-                  <tr style="text-transform: capitalize;">
-                    <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">Quantity</td>
-                    <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">{!! $quantity !!}</td>
-                  </tr>
-
                   <tr style="text-transform: capitalize;">
                     <td style="background-color: #f76b2b; width: 40%; border: 1px solid #e1e1e1; padding: 6px 3px; border-bottom: 0; font-size: 14px;">Name</td>
                     <td style="border: 1px solid #e1e1e1; border-bottom: 0; padding: 10px 10px; font-size: 14px;">{!! $name !!}</td>
@@ -58,7 +49,7 @@
 
                   <tr style="text-transform: capitalize;">
                     <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">Mobile Number</td>
-                    <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">{!! $phone_number !!}</td>
+                    <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">{!! $mobile_no !!}</td>
                   </tr>
 
                   <tr style="text-transform: capitalize;">
@@ -70,6 +61,13 @@
                     <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">Message</td>
                     <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">{{ $massage }}</td>
                   </tr> 
+                   @if(strlen($file_name))
+                  <tr style="text-transform: capitalize;">
+                    <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">File</td>
+                    <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">
+                      <a style="color:#fff;text-decoration: none;" href="https://www.aticoscientific.com/public<?= $file_name ?>" target="_blank">View Document</a></td>
+                  </tr> 
+                  @endif
                 </tbody>
               </table>
             </div>
@@ -89,7 +87,7 @@
 
           <div style="width: 100%; text-align: center; border-top: 1px solid gray;">
             <p style="font-weight: 600; font-size: 14px; color: #002c4d;">For any query mail us at 
-              <a style="color: #f76b2b;" href="mailto:sales@aticoindia.com" style="font-weight:bold;">sales@aticoindia.com</a>
+              <a style="color: #f76b2b;" href="mailto:sales@aticoscientific.com" style="font-weight:bold;">sales@aticoindia.com</a>
             </p>
           </div>
         </div>

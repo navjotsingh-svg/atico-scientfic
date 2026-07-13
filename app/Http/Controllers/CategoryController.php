@@ -101,11 +101,12 @@ class CategoryController extends Controller
 
         $start = ($page - 1) * $perPage;
         if (isset($inputs['form-search']) && $inputs['form-search'] != '') {
+            //dd($inputs);
             $inputs = array_filter($inputs);
             unset($inputs['_token']);
 
             $data = (new Category)->getCategory($inputs, $start, $perPage);
-
+//dd($data);
             $totalnews = (new Category)->totalCategory($inputs);
             $total = $totalnews->total;
         } else {

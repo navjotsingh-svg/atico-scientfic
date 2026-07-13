@@ -19,6 +19,7 @@ class EnquiryController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
+        $fileUrl = '';
         if ($request->hasFile('file_name')) {
             $file = $request->file('file_name');
             $filename = time() . '_' . $file->getClientOriginalName();
@@ -36,20 +37,22 @@ class EnquiryController extends Controller
             'country' => $enquiry['country'],
             'mobile_no' => $enquiry['mobile_no'],
             'massage' => $enquiry['message'],
-            'file_name' => 'testing'
+            'file_name' => $fileUrl
         ];
 
         $email = $enquiry['email'];
         if ($email) {
-            \Mail::send('frontend.emails.contact_us', $data, function ($message) use ($email) {
-                $message->from('enquiry@tejcargopackersandmovers.com');
-                $message->to('sales@aticoindia.com');
-                $message->subject('Enquiry Submitted');
+            \Mail::send('frontend.emails.contact_us', $data, function ($message) use ($email, $enquiry) {
+               //($message) use ($email){
+                    $message->from('sales@aticoscientific.com',$enquiry['name']);
+                    $message->to('sales@aticoscientific.com');
+                    $message->subject('Enquiry Submitted');
             });
         }
-
-        return back()->with('success', 'We have received your message.');
+        return view('frontend.thankyou');
+//        return back()->with('success', 'Thank you...!!! We have received your inquiry. Our Team will get back to you soon');
     } catch (\Exception $e) {
+        dd($e);
         return back();
     }
 }

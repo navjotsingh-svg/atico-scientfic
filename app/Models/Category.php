@@ -132,7 +132,7 @@ class Category extends Model
          return  $this
             ->leftjoin('group_categories', 'categories.id', '=', 'group_categories.category_id')
             ->leftjoin('groups', 'group_categories.group_id', '=', 'groups.id')
-             ->where('parent_id', 0)
+            // ->where('parent_id', 0)
              ->groupBy('categories.id','categories.name','categories.slug','categories.status','categories.image')
              ->whereRaw($filter)
              ->orderBy($orderEntity, $orderAction)
@@ -465,5 +465,15 @@ class Category extends Model
 
     
 
+    public function subCategories()
+    {
+        return $this->hasMany(
+            \App\Models\Category::class,
+            'parent_id'
+        )
+        ->where('status', 1)
+        ->orderBy('name', 'asc')
+        ->select('id', 'name', 'short_name', 'slug', 'parent_id');
+    }
     
 }

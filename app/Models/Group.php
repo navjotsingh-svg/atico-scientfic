@@ -107,4 +107,16 @@ class Group extends Model
 
     } 
 
+    public function categories()
+    {
+        return $this->belongsToMany(
+            \App\Models\Category::class,
+            'group_categories',
+            'group_id',
+            'category_id'
+        )
+        ->where('status', 1)
+        ->orderBy('name', 'asc')
+        ->select('categories.id', 'categories.slug', 'categories.name', 'categories.short_name', 'categories.description', 'categories.image');
+    }
 }

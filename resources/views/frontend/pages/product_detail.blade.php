@@ -1,267 +1,193 @@
 @extends('frontend.layouts.app')
 @section('content')
 <style>
-    #owl-demo .item img{
-    display: block;
-    width: 100%;
-    height: auto;
-}
-.wpb_wrapper {
-    border: 6px solid #f3f3f3;
-    padding: 10px 5px;
-    text-align: center;
-    min-height: 275px;
-}
-
-.explore_now, .category_name{
-    color: #0530AD;
-    margin-top:10px;
-}
-.support_team{
-    background-color: #0046AE;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.tenders{
-    background-color: #00398E;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.dealership{
-    background-color: #002761;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.contact_us{
-    background-color: #01193D;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.ref_icons {
-    border-radius: 50%;
-    border: 1px solid #E8E8E8;
-    width: 80px;
-    height: 80px;
-    padding: 6px;
-    position: absolute;
-    margin-top: -15px;
-    margin-left: 70px;
-}
-#contact_details{
-    margin-top: 30px;
-}
-#arrows{
-    margin-top:30px;
-}
-.aboutus{
-    display: inline-grid;
-    margin-left: 16px;
-    vertical-align: middle;
-}
-.li-icon{
-    list-style-image: url({{ asset('assets/images/li.png') }})
-}
-.info {
-    border: 1px solid #D0D0D0;
-    padding: 10px;
-    margin-top: 30px;
-}
-.brd-heading{
-    margin-top: 100px;
-    position: absolute;
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-    margin-left: 501px;
-    text-decoration: none;
-}
-.brd-sub-heading{
-    margin-top: 100px;
-    position: absolute;
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-    margin-left: 590px;
-}
-.product_image {
-    padding: 35px;
-    border: 1px solid #DFDFDF;
-}
-.support_icons
-{
-    display:flex;
-    margin-top:30px;
-    margin-left:30px;
-}
-.description_head{
-    margin-top:150px;
-    margin-left:180px;
-    position:absolute;
-}
-.description{
-    margin-top:190px;
-    margin-left:180px;
-    position:absolute;
-    width:70%;
-    line-height:2;
-    text-align:justify;
-        }
-        .details{
-            min-height:500px;
-            background:#F5F5F5;
-        }
-        .related_product{
-            width:24%;
-            margin-right:1%;
-            border:1px solid #D0D0D0;
-            padding:10px;
-            margin-top:30px;
-        }
-        .related_product img{
-            width:300px;
-            height:250px;
-            
-        }
-@media only screen and (max-width: 600px) {
-  
-    .support_icons
-        {
-            display:flex;
-            margin-top:30px;
-            margin-left:5px;
-            font-size:11px;
-        }
-        .support_icons_img{
-            width:50px;
-            margin-left:8px;
-        }
-        .description_head{
-            margin-top:65px;
-            margin-left:40px;
-            position:absolute;
-        }
-        .description{
-            margin-top: 95px;
-            margin-left: 40px;
-            width:85%;
-        }
-        .details{
-            min-height:800px;
-            background:#F5F5F5;
-        }
-        .related_product{
-            width:24%;
-            flex:40%;
-            margin-right:1%;
-            border:1px solid #D0D0D0;
-            padding:0px;
-            margin-top:30px;
-            text-align:center;
-        }
-
-        .related_product img{
-            width:200px;
-            height:150px;
-            
-        }
-        
-  
-}
+#query .modal-header { background: #1947d1; color: #fff; }
+#query button.btn { background-color: #ff6b35; border-color: #ff6b35; color: #fff !important; padding: 10px 20px; }
+#query .close { color: #fff; opacity: 1; background: transparent; border: 0; font-size: 28px; line-height: 1; }
+.ae-panel-card .body table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.ae-panel-card .body table td,
+.ae-panel-card .body table th { border: 1px solid #e6e6e6; padding: 8px; vertical-align: top; }
 </style>
-<div class="ts-titlebar-wrapper ts-bg ts-bgcolor-transparent ts-titlebar-align-left ts-textcolor-white ts-bgimage-yes">
-  <div class="ts-titlebar-wrapper-bg-layer ts-bg-layer"></div>
-  <div class="ts-titlebar entry-header">
-    <div class="ts-titlebar-inner-wrapper">
-      <div class="ts-titlebar-main">
-        <div class="container">
-          <div class="ts-titlebar-main-inner">
-            
-            <div class="breadcrumb-wrapper">
-              <div class="container">
-                <div class="breadcrumb-wrapper-inner">
-                  <!-- Breadcrumb NavXT output --><span><a title="Home" href="{{ route('home') }}" class="home"><span>Home</span></a></span>&nbsp;&nbsp;/&nbsp;&nbsp;<span><a title="{!! $product->name !!}" class="post post-product-archive"><span>{!! $product->name !!}</span></a></span>
+
+<section class="ae-page">
+    <div class="ae-page-inner">
+        <nav class="ae-crumb" aria-label="Breadcrumb">
+            <a href="{{ route('home') }}">Home</a>
+            <span>/</span>
+            <span>{!! $product->name !!}</span>
+        </nav>
+
+        <div class="ae-pdp">
+            <div>
+                <div class="ae-pdp-media">
+                    <img
+                        src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"
+                        alt="{!! strip_tags($product->name) !!}"
+                        fetchpriority="high"
+                        decoding="async"
+                        onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
+                    >
                 </div>
-              </div>
+                <div class="ae-pdp-actions">
+                    <button type="button" class="ae-btn-quote" data-bs-toggle="modal" data-bs-target="#query">
+                        Get Quote
+                    </button>
+                    <a class="ae-btn-ghost" href="tel:+919996186555">Call Us</a>
+                    <p class="ae-help">Need help? <a href="{{ url('/contact-us') }}">Contact our team</a></p>
+                </div>
             </div>
-          </div>
+
+            <div class="ae-pdp-main">
+                @if(count(getAllProductCats($product->id)) > 0)
+                    <div class="ae-pdp-cats">
+                        @foreach(getAllProductCats($product->id) as $cat)
+                            <span>{!! $cat->name !!}</span>@if(!$loop->last) · @endif
+                        @endforeach
+                    </div>
+                @endif
+
+                <h1>{!! $product->name !!}</h1>
+
+                @if(!empty($product['product_code']))
+                    <p class="ae-pdp-code">Product Code: <strong>{!! $product['product_code'] !!}</strong></p>
+                @endif
+
+                <div class="ae-panel-card">
+                    <h2>Product Overview</h2>
+                    <div class="body">
+                        {!! substr(strip_tags($product->description), 0, 280) !!}@if(strlen(strip_tags($product->description)) > 280)…@endif
+                    </div>
+                </div>
+
+                <div class="ae-panel-card" id="description">
+                    <h2>Description</h2>
+                    <div class="body">{!! $product->description !!}</div>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- .ts-titlebar-main -->
+
+        @php $related = getRelatedProducts($product->id); @endphp
+        @if(count($related) > 0)
+            <h2 class="ae-related-title" id="related">Related Products</h2>
+            <div class="ae-card-grid is-3">
+                @foreach($related as $related_product)
+                    <a class="ae-pcard" href="{{ route('product_detail', $related_product->slug) }}">
+                        <div class="ae-pcard-media">
+                            <img
+                                src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"
+                                alt="{!! strip_tags($related_product->name) !!}"
+                                loading="lazy"
+                                onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
+                            >
+                        </div>
+                        <div class="ae-pcard-title">{!! $related_product->name !!}</div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
-    <!-- .ts-titlebar-inner-wrapper -->
-  </div>
-  <!-- .ts-titlebar -->
+</section>
+
+<div class="modal fade" id="query" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">{!! $product->name !!} - Query</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" action="{{ route('product_query.store') }}" method="post">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <div class="row">
+                        <div class="col-12 py-2">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" required class="form-control" value="{{ old('name') }}">
+                            @if($errors->has('name'))
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 py-2">
+                            <label for="email">E-mail:</label>
+                            <input type="email" name="email" class="form-control" required value="{{ old('email') }}">
+                            @if($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 py-2">
+                            <label for="country">Country:</label>
+                            <select name="country" required class="form-control">
+                                <option value="">Select Country</option>
+                                @foreach(getCountries() as $country)
+                                    <option value="{!! $country->name !!}" {{ old('country') == $country->name ? 'selected' : '' }}>{!! $country->name !!}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('country'))
+                                <span class="text-danger">{{ $errors->first('country') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 py-2">
+                            <label for="phone_number">Phone Number:</label>
+                            <input type="number" class="form-control" name="phone_number" required value="{{ old('phone_number') }}">
+                            @if($errors->has('phone_number'))
+                                <span class="text-danger">{{ $errors->first('phone_number') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 py-2">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" min="0" class="form-control" name="quantity" required value="{{ old('quantity') }}">
+                            @if($errors->has('quantity'))
+                                <span class="text-danger">{{ $errors->first('quantity') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 py-2">
+                            <label for="message">Message:</label>
+                            <textarea name="message" id="message" class="form-control" required rows="4">{{ old('message') }}</textarea>
+                            @if($errors->has('message'))
+                                <span class="text-danger">{{ $errors->first('message') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 py-2">
+                            <input type="file" name="file_name" class="form-control">
+                        </div>
+                        <div class="col-12 py-2">
+                            <div class="g-recaptcha" data-sitekey="6LdxTXQoAAAAALx5i79u3FVOWj-Rgh0XguRBmwM_"></div>
+                        </div>
+                        <div class="col-12 py-2 text-center">
+                            <button class="btn" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-        <div class="product_image">
-            <img width="330" height="262" src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"/>
-        </div>
-        </div>
-        <div class="col-md-8">
-        @if(count(getAllProductCats($product->id))>0)
-        @foreach(getAllProductCats($product->id) as $key => $cat)
-            <h6 style="color: #F99E00;margin-top:60px;margin-left:30px;">{!! $cat->name !!}</h6>
-            @endforeach
-            @endif
-                <h3 style="margin-left:30px" class="category_name">{!! $product->name !!}</h3>
-              
-                <p style="margin-left:30px">{!! substr(strip_tags($product->description),0, 200) !!}...</p>
-                <p style='color:#01193D;font-size:20px;margin-left:30px;'>Product Code: {!! $product['product_code'] !!}</p>
-                <button style='color:#fff;font-size:20px;margin-left:30px;' class="btn btn-warning btn-lg col-9">Send Query</button>
-
-            <div class="support_icons">
-                <div class="col-md-4">
-                    <img src="{{ asset('assets/images/dealer.png') }}" class="support_icons_img">
-                    <span>&nbsp;&nbsp;Dealership</span>
-
-                </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('assets/images/support.png') }}" class="support_icons_img">
-                    <span>&nbsp;&nbsp;Support Team</span>
-
-                </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('assets/images/payment.png') }}" class="support_icons_img">
-                    <span>&nbsp;&nbsp;Payment & Shipping</span>
-
-                </div>
-            </div>    
+<div id="successModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Success!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center mb-0" id="modal_success_message">Success</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-block" data-bs-dismiss="modal" data-dismiss="modal">OK</button>
+            </div>
         </div>
     </div>
-
-    
-
 </div>
-<div class="row" style="margin-top:50px;">
-        <div class="col-md-12">
-                <h2 class="category_name text-center">{!! $product->name !!}</h2>
-                <div class="details">
-                    <h4 class="category_name description_head" style="">Description</h4>
-                    <div class="description" > {!! ($product->description) !!}</div>
-                </div>
-        </div>
+@endsection
 
-    </div>
-    <div class="container">
-    <div class="row " style="margin-top:50px;">
-        <div class="col-md-12">
-                <h4 class="category_name">Related Products</h4>
-                <div class="row">
-                    @if(count(getRelatedProducts($product->id))>0)
-                    @foreach(getRelatedProducts($product->id) as $key => $related_product)
-                    <div class="col-md-4 related_product" style="">
-                    <a href="{{ route('product_detail', $related_product->slug) }}"><img  src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"  alt="" onerror="this.onerror=null;this.src='{{ asset("assets/frontend/images/no_product.png") }}';" /></a>
-                    <h5 class="text-center" style="margin-top:20px;"><a href="{{ route('product_detail', $related_product->slug) }}">{!! substr($related_product->name,0, 25) !!}</a></h5>    
-                </div>
-                    @endforeach
-                    @endif
-                    
-                  </div>
-        </div>
-
-    </div>
-    </div>
+@section('script')
+<script type="text/javascript">
+@if (Session::has('errors'))
+$('#query').modal('show');
+@endif
+@if (Session::has('success'))
+$("#modal_success_message").html("{!! Session::get('success') !!}");
+$('#successModal').modal('show');
+@endif
+</script>
 @endsection

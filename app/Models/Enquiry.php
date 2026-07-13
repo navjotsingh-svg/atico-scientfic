@@ -28,7 +28,7 @@ class Enquiry extends Model
         $rules['country'] = 'required'; 
         $rules['mobile_no'] = 'required'; 
         $rules['message'] = 'required';   
-        $rules['g-recaptcha-response'] = 'required';  
+       // $rules['g-recaptcha-response'] = 'required';  
         return \Validator::make($inputs, $rules);
      }
 

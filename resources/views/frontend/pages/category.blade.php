@@ -1,279 +1,135 @@
 @extends('frontend.layouts.app')
 @section('content')
-<style>
-    #owl-demo .item img{
-    display: block;
-    width: 100%;
-    height: auto;
-}
-.wpb_wrapper {
-    border: 6px solid #f3f3f3;
-    padding: 10px 5px;
-    text-align: center;
-    min-height: 275px;
-}
-
-.explore_now, .category_name{
-    color: #0530AD;
-    margin-top:10px;
-}
-.support_team{
-    background-color: #0046AE;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.tenders{
-    background-color: #00398E;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.dealership{
-    background-color: #002761;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.contact_us{
-    background-color: #01193D;
-    color: #FFFFFF;
-    padding: 50px;
-}
-.ref_icons {
-    border-radius: 50%;
-    border: 1px solid #E8E8E8;
-    width: 80px;
-    height: 80px;
-    padding: 6px;
-    position: absolute;
-    margin-top: -15px;
-    margin-left: 70px;
-}
-#contact_details{
-    margin-top: 30px;
-}
-#arrows{
-    margin-top:30px;
-}
-.aboutus{
-    display: inline-grid;
-    margin-left: 16px;
-    vertical-align: middle;
-}
-.li-icon{
-    list-style-image: url({{ asset('assets/images/li.png') }})
-}
-.info {
-    border: 1px solid #D0D0D0;
-    padding: 10px;
-    margin-top: 30px;
-}
-.brd-heading{
-    margin-top: 100px;
-    position: absolute;
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-    margin-left: 501px;
-    text-decoration: none;
-}
-.brd-sub-heading{
-    margin-top: 100px;
-    position: absolute;
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-    margin-left: 590px;
-}
-.desktop_view{
-        display: none;
+@php
+    if (isset($sub_sub_cat)) {
+        $category_detail = $sub_sub_cat;
+    } elseif (isset($sub_cat)) {
+        $category_detail = $sub_cat;
+    } elseif (isset($cat)) {
+        $category_detail = $cat;
+    } else {
+        $category_detail = $category;
     }
-    .related_product{
-           text-align: center;
-            
-        }
-@media only screen and (max-width: 600px) {
-    .brd-heading{
-    margin-top: 100px;
-    position: absolute;
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-    margin-left: 10px;
-    text-decoration: none;
-}
-.brd-sub-heading{
-    margin-top: 100px;
-    position: absolute;
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-    margin-left: 90px;
-}
-    .mobile_view{
-        display: none;
-    }
-    .desktop_view{
-        display: contents;
-    }
-    .product_name{
-        text-align:left !important;
-    }
-    .related_product{
-           text-align: center;
-            flex:40%;
-            
-        }
-}
-</style>
-@if(isset($sub_sub_cat))
-								@php
-								$category_detail = $sub_sub_cat;
-								@endphp
-								@elseif(isset($sub_cat))
-								@php
-								$category_detail = $sub_cat;
-								@endphp
-								@elseif(isset($cat))
-								@php
-								$category_detail = $cat;
-								@endphp
-								@else
-								@php
-								$category_detail = $category;
-								@endphp
-								@endif
-							
-<div class="breadcrumb-wrapper" style="background:url({{ asset('assets/images/category_bg.png') }});min-height:300px;background-color:#000;">
-							<div class="container">
-								<div class="breadcrumb-wrapper-inner">
-									<span><a class="brd-heading" href="{{ route('home') }}" class="home"><span>Home / </span></a></span>
-									<span class="archive post-product-archive current-item brd-sub-heading" >
-										@if(isset($cat))
-										<i class="fa fa-angle-right pl-1" aria-hidden="true"></i> {!! $cat['name'] !!}
-										@else
-										<i class="fa fa-angle-right pl-1" aria-hidden="true"></i> {!! $category['name'] !!}
-										@endif
-									</span>
-									<span class="archive post-product-archive current-item">
-										@if(isset($sub_cat))
-										<i class="fa fa-angle-right pl-1" aria-hidden="true"></i> @if($sub_cat) {!! $sub_cat['name'] !!} @endif
-										@endif
-									</span>
-									<span class="archive post-product-archive current-item">
-										@if(isset($sub_sub_cat['name']))
-										<i class="fa fa-angle-right pl-1" aria-hidden="true"></i> {!! $sub_sub_cat['name'] !!}
-										@endif
-									</span>
-								</div>
-							</div>
-						</div>
-<div class="container">
-    <div class="row">
-    <div class="col-md-3">
-        <div class="info" style="background:#0530AD;color:#fff;">
-           <label> Categories </label>
-           <span class="desktop_view toggle"><img  src="{{ asset('assets/images/toggle.png') }}"></span>
-           </div>
-           <div class="accordion mobile_view" id="accordionExample">
-  
-  
-  
+    $cid = isset($cat) ? $cat['id'] : $category['id'];
+@endphp
 
-                          @if(count(sidebarCategories())>0)
-                          @foreach(sidebarCategories() as $key => $category)
+<section class="ae-page">
+    <div class="ae-page-inner">
+        <nav class="ae-crumb" aria-label="Breadcrumb">
+            <a href="{{ route('home') }}">Home</a>
+            <span>/</span>
+            @if(isset($cat))
+                <span>{!! $cat['name'] !!}</span>
+            @else
+                <span>{!! $category['name'] !!}</span>
+            @endif
+            @if(isset($sub_cat) && $sub_cat)
+                <span>/</span>
+                <span>{!! $sub_cat['name'] !!}</span>
+            @endif
+            @if(isset($sub_sub_cat['name']))
+                <span>/</span>
+                <span>{!! $sub_sub_cat['name'] !!}</span>
+            @endif
+        </nav>
 
-                                                    <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne<?= $key ?>" aria-expanded="false" aria-controls="collapseOne<?= $key ?>">
-      {!! $category->name !!}
-      </button>
-    </h2>
-    <div id="collapseOne<?= $key ?>" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      @foreach($category->sub_cats as $key => $sub_cat)
+        <div class="ae-layout">
+            <aside class="ae-side">
+                <h3 class="ae-side-title">Categories</h3>
+                <ul class="ae-side-list">
+                    @foreach(sidebarCategories() as $sideCat)
+                        <li>
+                            <a href="{{ route('categories', $sideCat->slug) }}">{!! $sideCat->name !!}</a>
+                        </li>
+                        @foreach($sideCat->sub_cats as $sub)
+                            <li>
+                                <a href="{{ route('categories', $sub->slug) }}" style="padding-left:24px;font-weight:500;">{!! $sub->name !!}</a>
+                            </li>
+                        @endforeach
+                    @endforeach
+                </ul>
+            </aside>
 
-<p class="mb-0" style="padding:10px;border-bottom:1px solid #DFDFDF;"><a style="text-decoration:none;color:black;" href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a></p>
-
-@endforeach  </div>
-    </div>
-     </div>
-    @endforeach
-                          @endif
- 
-  </div>
-                        
-        
-        </div>
-        <div class="col-md-9">
-        <div class="info mobile_view">
-            Showing {{ count($categories) }} result
-        </div>
-        <div class="details" style="margin-top:20px;">
-            <div class="row">
-            
-                <div class="col-md-8 product_name" style="text-align:justify;line-height:2;">
-                <h3 class="category_name">{!! $category_detail['name'] !!}</h3>
-                <div class="desktop_view">
-                @if($category_detail['description'] != '')
-						<img width="330" height="262" src="{{ asset($category_detail['image'] ? 'uploads/product_images/'.$category_detail['image'] : 'assets/images/no_product.png') }}" alt="" />
-						@endif
+            <div>
+                <div class="ae-page-head">
+                    <h1>{!! $category_detail['name'] !!}</h1>
+                    <p>Showing {{ count($categories) }} {{ count($categories) === 1 ? 'result' : 'results' }}</p>
                 </div>
-                @if(isset($cat))
-						{!! $cat['description'] !!}
-						@else
-						{!! $category['description'] !!}
-						@endif
+
+                <div class="ae-search-box">
+                    <input type="text" id="search" placeholder="Search category…">
+                    <input type="hidden" id="cat_id" value="{{ $cid }}">
+                    <div id="suggesstion-box2">
+                        <ul id="sdata2"></ul>
+                    </div>
                 </div>
-                <div class="col-md-4 mobile_view">
-                @if($category_detail['description'] != '')
-						<img width="330" height="262" src="{{ asset($category_detail['image'] ? 'uploads/product_images/'.$category_detail['image'] : 'assets/images/no_product.png') }}" alt="" />
-						@endif
-                </div>
+
+                @if(count($categories) > 0)
+                    <div class="ae-card-grid">
+                        @foreach($categories as $item)
+                            <a class="ae-pcard" href="{{ route('categories', $item->slug) }}">
+                                <div class="ae-pcard-media">
+                                    <img
+                                        src="{{ asset($item->image ? 'uploads/product_images/'.$item->image : 'assets/images/no_product.png') }}"
+                                        alt="{!! strip_tags($item->name) !!}"
+                                        loading="lazy"
+                                        onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
+                                    >
+                                </div>
+                                <div class="ae-pcard-title">{!! $item->name !!}</div>
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="ae-empty">
+                        <img src="{{ asset('assets/images/not_found.jpg') }}" alt="Not found" style="max-width:280px;">
+                    </div>
+                @endif
+
+                @if(!empty($category_detail['description']))
+                    <div class="ae-panel-card" style="margin-top:22px;">
+                        <h2>About {!! $category_detail['name'] !!}</h2>
+                        <div class="body">
+                            @if(!empty($category_detail['image']))
+                                <img
+                                    src="{{ asset('uploads/product_images/'.$category_detail['image']) }}"
+                                    alt=""
+                                    style="float:right;max-width:220px;margin:0 0 12px 16px;border:1px solid #e5e7eb;border-radius:8px;"
+                                >
+                            @endif
+                            @if(isset($cat))
+                                {!! $cat['description'] !!}
+                            @else
+                                {!! $category['description'] !!}
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
-
-            <div class="row multi-columns-row themestek-boxes-row-wrapper">
-					@if(count($categories)>0)
-					@foreach($categories as $key => $category)
-					<div class="related_product ts-box-col-wrapper col-lg-3 col-sm-6 col-md-4 col-xs-12 category_box" style="border:1px solid #DFDFDF !important;width:24%;margin-right:1%;margin-top:10px;" >
-						<article class="themestek-box themestek-box-service ts-servicebox-style-3 category_border">
-							<div class="themestek-post-item">
-								<span class="themestek-item-thumbnail category_box">
-									<span class="themestek-item-thumbnail-inner">
-										<a href="{{ route('categories', $category->slug) }}"><img width="200" height="162" src="{{ asset($category->image ? 'uploads/product_images/'.$category->image : 'assets/images/no_product.png') }}"  alt=""onerror="this.onerror=null;this.src='{{ asset("assets/images/no_product.png") }}';"/></a>
-									</span>
-								</span>
-								<div class="themestek-box-content">
-									<div class="themestek-box-content-inner">
-										<div class="themestek-pf-box-title">
-											<!-- <div class="ts-ihbox-icon ts-large-icon ts-icon-skincolor">
-														<i class="ts-labtechco-business-icon ts-labtechco-business-icon-flask"></i>
-											</div> -->
-											<a align="center" href="{{ route('categories', $category->slug) }}">{!! $category->name !!}</a>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-					</div>
-					@endforeach
-					@else
-					<div class="col-12 text-center">
-						<img src="{{ asset('assets/images/not_found.jpg') }}" class="img-fluid">
-					</div>
-					@endif
-					
-				</div>
-                
-        </div>
         </div>
     </div>
-</div>                        
+</section>
+
+<style>
+#sdata2 { list-style:none; margin:6px 0 0; padding:0; background:#111; border-radius:8px; overflow:hidden; }
+#sdata2 li { border-bottom:1px solid #333; }
+#sdata2 li a { display:block; padding:8px 12px; color:#fff; text-decoration:none; font-size:13px; }
+#sdata2 li a:hover { background:var(--ae-blue); }
+#suggesstion-box2 { display:none; }
+</style>
+
 <script>
-    $(".toggle").click(function(){
-        if($(".accordion").hasClass("mobile_view"))
-            $(".accordion").removeClass("mobile_view");
-        else
-            $(".accordion").addClass("mobile_view")
+$("#search").keyup(function() {
+    $("#suggesstion-box2").hide();
+    if ($(this).val().length == 0) return false;
+    $.ajax({
+        type: "GET",
+        url: "{{ route('get_categories') }}/" + $(this).val() + "/" + $("#cat_id").val(),
+        success: function(data) {
+            $("#suggesstion-box2").show();
+            $("#sdata2").html(data);
+        }
     });
+});
 </script>
 @endsection
