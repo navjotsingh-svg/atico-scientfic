@@ -23,7 +23,7 @@
       'title' => 'Scientific Lab Equipments',
       'subtitle' => 'Biotechnology Lab Solutions',
       'text' => 'AUTOCLAVE – BIOSAFE CABINET – LAMINAR AIR FLOW – FUME HOOD – CLEAN AIR SYSTEM – ROTARY EVAPORATOR – OVEN – INCUBATOR – STORAGE CABINETS – WATER BATHS – LABORATORY FURNITURE',
-      'link' => url('/category/laboratory-research-equipment'),
+      'link' => route('products.index'),
     ],
     [
       'image' => asset('assets/images/export-slides/Image3.webp'),
@@ -31,7 +31,7 @@
       'title' => 'TVET Lab Equipments',
       'subtitle' => 'Workshop Machines & CNC Solutions',
       'text' => 'ATICO creates tools for use in TVET Colleges. Mechanical, civil, workshop machinery, hand tools, plumbing and electrical engineering labs. Polytechnics and ITIs trust our durable and precisely made products which meet global criteria.',
-      'link' => url('/category/educational-trainers'),
+      'link' => route('products.index'),
     ],
     [
       'image' => asset('assets/images/export-slides/Image4.webp'),
@@ -39,7 +39,7 @@
       'title' => 'Science Stem Kits',
       'subtitle' => 'Physics, Chemistry & Biology Experiments',
       'text' => 'PHYSICS EXPERIMENTS KITS - SCIENCE EXPERIMENTS KITS – CHEMISTRY – BIOLOGY – MICROSCOPE – LABORATORY GLASSWARE – GENERAL LABWARE – CHEMISTRY EXPERIMENTS KITS – BIOLOGY EXPERIMENTS KITS',
-      'link' => url('/category/educational-lab-equipment'),
+      'link' => route('products.index'),
     ],
     [
       'image' => asset('assets/images/export-slides/Image5.webp'),
@@ -47,7 +47,7 @@
       'title' => 'Civil Engineering Lab',
       'subtitle' => 'Testing Machines & Materials Analysis',
       'text' => 'TESTING MACHINES – METALLURGICAL LAB EQUIPMENTS – MINING LAB EQUIPMENTS – SURVEY – MECHANICAL TESTING - CEMENT – SOIL – CONCRETE – BITUMEN – AGGREGATE',
-      'link' => url('/category/civil-engineering-instruments'),
+      'link' => route('products.index'),
     ],
     [
       'image' => asset('assets/images/export-slides/Image6.webp'),
@@ -55,7 +55,7 @@
       'title' => 'Analytical & Laboratory Equipment',
       'subtitle' => 'Your Trusted Partner in India',
       'text' => 'HPLC – ATOMIC ABSORPTION SPECTROPHOTOMETER – SPECTROPHOTOMETER - PH METER – COLORIMETER - CONDUCTIVITY METER - TDS METER - COLONY COUNTER – GAS CHROMATOGRAPH – KARL FISHER TITRATOR',
-      'link' => url('/category/testing-lab-machines'),
+      'link' => route('products.index'),
     ],
     [
       'image' => asset('assets/images/export-slides/Image7.webp'),
@@ -63,7 +63,7 @@
       'title' => 'Electronics Lab Trainers',
       'subtitle' => 'Electrical Engineering Solutions',
       'text' => 'ATICO is a pioneer in manufacturing educational trainer kits. Analog & Digital Lab Trainer | Electrical Machine Trainer | Power Electronics Trainer | Basic Electricity Trainer | Embedded Trainer | PLC Trainer | Process Control Trainer',
-      'link' => url('/category/educational-trainers'),
+      'link' => route('products.index'),
     ],
     [
       'image' => asset('assets/images/export-slides/Image8.webp'),
@@ -71,11 +71,16 @@
       'title' => 'Technical Training Equipments',
       'subtitle' => 'Engineering Lab Solutions',
       'text' => 'FLUID MECHANICS – CHEMICAL ENGINEERING – HEAT TRANSFER LAB – THERMAL ENGINEERING – HVAC – HYDRAULICS – AEROSPACE – AGRICULTURE – ENVIRONMENTAL – MARINE',
-      'link' => url('/category/engineering-lab-equipment'),
+      'link' => route('products.index'),
     ],
   ];
 
-  $countries = ['Afghanistan','Albania','Algeria','Australia','Bahrain','Bangladesh','Belgium','Brazil','Canada','Egypt','Ghana','India','Indonesia','Kenya','Malaysia','Nigeria','Qatar','Saudi Arabia','South Africa','UAE','UK','USA','Zambia'];
+  $countries = [
+    'Afghanistan','Albania','Algeria','American Samoa','Andorra','Angola','Anguilla','Antigua & Barbuda',
+    'Argentina','Armenia','Aruba','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh',
+    'Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bonaire',
+    'Bosnia & Herzegovina','Botswana','Brazil','British Indian Ocean Ter',
+  ];
 @endphp
 
 <section class="ae-slider" id="aeSlider">
@@ -155,7 +160,7 @@
           support has made us a <span class="font-bold text-white">Government of India</span> recognised export house. Our goods have reached <span class="font-bold text-white">all continents</span>. With 
           <span class="font-bold text-white">40+ employees</span> who are involved in activities related to production, inspections and dispatch we assure you <span class="font-bold text-white">world class healthcare products</span> 
           delivered to your doorstep. Each employee has in-depth knowledge about the product and has years of experience to back that knowledge.</p>
-        <a class="ae-cta" href="{{ url('/category/pharmacy-lab-equipment') }}">View Medical Range →</a></div>
+        <a style="color: #fff; text-decoration: none;" href="{{ route('products.index') }}">View Medical Range →</a></div>
       </div>
     </div>
 
@@ -172,7 +177,7 @@
           <span class="font-bold text-white">quality raw material</span> and <span class="font-bold text-white">advanced technologies</span>. The relevant features of our products are premium quality, fine finish, 
           dimensional accuracy, easy to operate, rugged construction and many more. We have been able to garner huge market for our products. Join us as we continue to innovate and set new standards in the industry. 
           Discover the difference with ATICO EXPORT – Where <span class="font-bold text-white">Quality Meets Excellence</span>.</p>
-        <a style="color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;" href="{{ url('/category/civil-engineering-instruments') }}">View Engineering Labs →</a>
+        <a style="color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;" href="{{ route('products.index') }}">View Engineering Labs →</a>
       </div>
     </div>
 
@@ -188,7 +193,7 @@
         our widely used educational science teaching kits include school biology lab equipment, school physics lab equipment, school chemistry lab equipment, school mathematics lab kits, school lab microscopes and slides,
          laboratory glassware, school science lab plasticware, geography lab models, high school science kits, and more.<br><br>We are among the top <span class="font-bold">Chemistry Lab Equipment manufacturers, Physics Lab 
           Equipment manufacturers, Biology Lab Equipment manufacturers, Chemistry Lab Equipment exporters, Physics Lab Equipment exporters, and Biology Lab Equipment exporters</span>, supplying a wide range of laboratory instruments globally.</p>
-        <a class="ae-cta" href="{{ url('/category/educational-lab-equipment') }}">View Educational Lab Equipments Range →</a>
+        <a style="color: #fff; text-decoration: none;" href="{{ route('products.index') }}">View Educational Lab Equipments Range →</a>
       </div>
     </div>
 
@@ -202,7 +207,7 @@
            engineering training equipment includes <span class="font-bold">automobile engine equipment</span>, <span class="font-bold">integrated circuits trainers</span>, 
            <span class="font-bold">hydraulic bench</span>, <span class="font-bold">heat transfer systems</span>, <span class="font-bold">air compressor rigs</span>, and <span class="font-bold">fluid 
             mechanics equipment</span>.<br><br>We are recognised among the top laboratory glassware manufacturers in India, offering precision-engineered solutions.</p>
-        <a style="color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;" href="{{ url('/category/testing-lab-machines') }}">View Engineering Lab Equipment →</a>
+        <a style="color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;" href="{{ route('products.index') }}">View Engineering Lab Equipment →</a>
       </div>
     </div>
     <div class="ae-solution">
@@ -212,7 +217,7 @@
         <h3>Schools and Science College Lab Equipment</h3>
         <p>We are a <span class="font-bold">INDIA based</span> school science equipment company. We supply <span class="font-bold">high quality
          and affordable</span> <span class="font-bold">laboratory equipment</span> to schools, colleges, industry &amp; individuals.</p>
-        <a class="ae-cta" href="{{ url('/category/educational-lab-equipment') }}">View Educational Lab Equipments Range →</a>
+        <a  style="color: #fff; text-decoration: none;" href="{{ route('products.index') }}">View Educational Lab Equipments Range →</a>
       </div>
     </div>
   </div>
@@ -228,7 +233,7 @@
     @if($groups->count())
       <div class="ae-card-grid is-3 mb-4">
         @foreach($groups as $group)
-          <a class="ae-pcard" href="{{ route('categories', $group->route) }}">
+          <a class="ae-pcard" href="{{ route('products.index') }}">
             <div class="ae-pcard-media">
               <img
                 src="{{ asset($group->image ? 'uploads/product_images/'.$group->image : 'assets/images/no_product.png') }}"
@@ -244,7 +249,7 @@
     @elseif($latest_cats->count())
       <div class="ae-card-grid is-3 mb-4">
         @foreach($latest_cats as $cat)
-          <a class="ae-pcard" href="{{ route('categories', $cat->slug) }}">
+          <a class="ae-pcard" href="{{ route('products.index') }}">
             <div class="ae-pcard-media">
               <img
                 src="{{ asset($cat->image ? 'uploads/product_images/'.$cat->image : 'assets/images/no_product.png') }}"
@@ -259,7 +264,7 @@
       </div>
     @endif
 
-    @if($products->count())
+    <!-- @if($products->count())
       <h3 class="ae-title text-center" style="font-size:1.35rem;margin-top:28px;">Featured Products</h3>
       <div class="ae-card-grid">
         @foreach($products as $item)
@@ -279,7 +284,7 @@
     @endif
   </div>
 </section>
-@endif
+@endif -->
 
 <section class="ae-stats">
   <div class="ae-container">
@@ -287,7 +292,7 @@
       <div><strong>15000+</strong><span>Products</span></div>
       <div><strong>300+</strong><span>Clients</span></div>
       <div><strong>40+</strong><span>Turnkey Projects</span></div>
-      <div><strong>35+</strong><span>Countries</span></div>
+      <div><strong>100+</strong><span>Countries</span></div>
     </div>
   </div>
 </section>
@@ -311,77 +316,167 @@
   </div>
 </section>
 
-<section class="ae-section" style="background:#f9fafb;">
-  <div class="ae-container">
-    <h2 class="ae-title text-center">We Serve 35+ Countries</h2>
-    <p class="text-center mb-4" style="color:#6b7280;">Atico exports laboratory equipment and scientific instruments globally</p>
-    <div class="ae-countries mb-4">
-      <div class="ae-countries-track">
-        @foreach(array_merge($countries, $countries) as $country)
+<section class="ae-countries-sec">
+  <div class="ae-countries-head">
+    <h2>We Serve 100+ Countries</h2>
+    <p>Atico exports laboratory equipment and scientific instruments globally</p>
+  </div>
+
+  <div class="ae-countries-marquee">
+    <div class="ae-countries-fade is-left"></div>
+    <div class="ae-countries-fade is-right"></div>
+    <div class="ae-countries-track">
+      @foreach(array_merge($countries, $countries) as $i => $country)
+        <div class="ae-country-chip {{ $i % 2 === 0 ? 'is-blue' : 'is-orange' }}">
           <span>{{ $country }}</span>
+        </div>
+      @endforeach
+    </div>
+  </div>
+
+  <p class="ae-countries-more">
+    And many more countries worldwide.
+    <a href="{{ url('/contact-us') }}">Contact us</a> to know more.
+  </p>
+
+  <div class="ae-countries-features">
+    <div class="ae-countries-feature">
+      <div class="ae-countries-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      </div>
+      <h3>Worldwide Shipping</h3>
+      <p>Shipping costs depend on consignment size and other factors. Please contact us for more details.</p>
+    </div>
+    <div class="ae-countries-feature">
+      <div class="ae-countries-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg>
+      </div>
+      <h3>Bulk Orders</h3>
+      <p>Special discounts available on bulk orders. We have delivered bulk orders to more than 60 countries worldwide.</p>
+    </div>
+    <div class="ae-countries-feature">
+      <div class="ae-countries-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+      </div>
+      <h3>Best Quality</h3>
+      <p>High-quality products at competitive prices. No complaints recorded in the past three decades.</p>
+    </div>
+    <div class="ae-countries-feature">
+      <div class="ae-countries-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h3>Secure Payments</h3>
+      <p>We accept Wire Transfer, Telegraphic Transfer, Letter of Credit, PayPal, etc. Please contact us for more details.</p>
+    </div>
+  </div>
+</section>
+
+@php
+  $testimonials = [
+    [
+      'name' => 'Nur Mohammed',
+      'title' => 'Procurement Partner',
+      'company' => 'Top Lab Solution, Malaysia',
+      'text' => 'We had a good experience with the stirrer machine, and the glassware quality was excellent. The products met our operational and quality expectations.',
+    ],
+    [
+      'name' => 'Jacob',
+      'title' => 'Business Partner',
+      'company' => 'Chemical and Glassware (Pty) Ltd, South Africa',
+      'text' => 'We have been working with Atico for more than 20 years. After visiting their manufacturing facility and discussing future projects, I am confident and excited about our continued collaboration. We appreciate the hospitality and professionalism of the team.',
+    ],
+    [
+      'name' => 'Mohammed Al Hussaini',
+      'title' => 'Education Supplies Consultant',
+      'company' => 'Qatar',
+      'text' => 'Atico is a reliable supplier for school science laboratory equipment. Their products are suitable for educational institutions and meet required standards.',
+    ],
+    [
+      'name' => 'Clark',
+      'title' => 'Laboratory Equipment Distributor',
+      'company' => 'Uganda',
+      'text' => 'It was a very positive experience visiting the company. We appreciate the hospitality and the detailed information provided regarding laboratory equipment.',
+    ],
+    [
+      'name' => 'Sri Niwas',
+      'title' => 'Trading Partner',
+      'company' => 'Maluri General Trading LLC, UAE',
+      'text' => 'Atico provides high-quality laboratory equipment with a strong focus on customer satisfaction. Their consistency and reliability stand out in the market.',
+    ],
+    [
+      'name' => 'Lablink',
+      'title' => 'International Partner',
+      'company' => 'Cyprus',
+      'text' => 'Visiting the manufacturing facility was a valuable experience. We were impressed by the professionalism, product quality, and hospitality during the office visit and conference.',
+    ],
+  ];
+@endphp
+<section class="ae-reviews" id="aeReviews">
+  <div class="ae-reviews-inner">
+    <div class="ae-reviews-head">
+      <h2>Client <span class="is-blue">Testimonies</span> &amp; <span class="is-orange">Success</span></h2>
+      <p>Hear from our valued clients about their experience working with us</p>
+      <div class="ae-reviews-rule"></div>
+    </div>
+
+    <div class="ae-reviews-track" id="aeReviewsTrack" aria-live="polite"></div>
+
+    <div class="ae-reviews-nav">
+      <button type="button" class="ae-reviews-btn is-prev" id="aeReviewsPrev" aria-label="Previous testimonial">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div class="ae-reviews-dots" id="aeReviewsDots">
+        @foreach($testimonials as $i => $t)
+          <button type="button" class="{{ $i === 0 ? 'is-active' : '' }}" data-goto="{{ $i }}" aria-label="Go to testimonial {{ $i + 1 }}"></button>
         @endforeach
       </div>
-    </div>
-    <div class="ae-feature-row">
-      <div class="ae-feature"><h4>Worldwide Shipping</h4><p>Shipping costs depend on consignment size. Contact us for details.</p></div>
-      <div class="ae-feature"><h4>Bulk Orders</h4><p>Special discounts available on bulk orders worldwide.</p></div>
-      <div class="ae-feature"><h4>Best Quality</h4><p>High-quality products at competitive prices.</p></div>
-      <div class="ae-feature"><h4>Secure Payments</h4><p>Wire Transfer, TT, Letter of Credit, PayPal and more.</p></div>
+      <button type="button" class="ae-reviews-btn is-next" id="aeReviewsNext" aria-label="Next testimonial">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
     </div>
   </div>
 </section>
+<script type="application/json" id="aeReviewsData">{!! json_encode($testimonials, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 
-<section class="ae-section">
-  <div class="ae-container">
-    <h2 class="ae-title text-center">Client Testimonies &amp; Success</h2>
-    <p class="text-center mb-4" style="color:#6b7280;">Hear from our valued clients about their experience working with us</p>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <div class="ae-testimonial">
-          <p>“We had a good experience with the stirrer machine, and the glassware quality was excellent. The products met our operational and quality expectations.”</p>
-          <h5>Nur Mohammed</h5>
-          <small>Procurement Partner, Top Lab Solution, Malaysia</small>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="ae-testimonial">
-          <p>“We have been working with Atico for more than 20 years. After visiting their manufacturing facility, I am confident about our continued collaboration.”</p>
-          <h5>Jacob</h5>
-          <small>Business Partner, Chemical and Glassware (Pty) Ltd, South Africa</small>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="ae-testimonial">
-          <p>“Atico is a reliable supplier for school science laboratory equipment. Their products are suitable for educational institutions and meet required standards.”</p>
-          <h5>Mohammed Al Hussaini</h5>
-          <small>Education Supplies Consultant, Qatar</small>
-        </div>
-      </div>
+@php
+  $homeFaqs = [
+    [
+      'question' => 'What types of laboratory equipment does Atico Export manufacture and supply?',
+      'answer' => 'Atico Export manufactures and supplies a wide range of scientific, educational, engineering, and testing laboratory equipment. These include school and college lab equipment, research instruments, engineering training systems, laboratory glassware, microscopes, and quality control instruments.',
+    ],
+    [
+      'question' => 'Is Atico Export an ISO-certified manufacturer and global exporter?',
+      'answer' => 'Yes, Atico Export is an ISO 9001–certified laboratory equipment manufacturer in India and a trusted global exporter. Atico supplies institutions across numerous countries with export-ready documentation and logistics support.',
+    ],
+    [
+      'question' => 'Does Atico Export provide customised equipment for tenders and OEM requirements?',
+      'answer' => 'Yes, Atico Export offers custom specifications, OEM and private-label manufacturing, and supplies equipment as per international tenders, including MOE tender specifications.',
+    ],
+  ];
+@endphp
+<section class="ae-faqs" id="aeFaqs">
+  <div class="ae-faqs-inner">
+    <div class="ae-faqs-head">
+      <h2>Frequently Asked <span>Questions about Atico</span></h2>
+      <div class="ae-faqs-rule"></div>
     </div>
-  </div>
-</section>
-
-@if($faqs->count())
-<section class="ae-section ae-faq" style="background:#f9fafb;">
-  <div class="ae-container" style="max-width:860px;">
-    <h2 class="ae-title text-center">Frequently Asked <span>Questions about Atico</span></h2>
-    <div class="accordion" id="aeFaq">
-      @foreach($faqs->take(5) as $index => $faq)
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="faqHeading{{ $faq->id }}">
-            <button class="accordion-button {{ $index ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $faq->id }}">
-              {{ $faq->name }}
-            </button>
-          </h2>
-          <div id="faqCollapse{{ $faq->id }}" class="accordion-collapse collapse {{ $index ? '' : 'show' }}" data-bs-parent="#aeFaq">
-            <div class="accordion-body">{!! $faq->description !!}</div>
+    <div class="ae-faqs-list">
+      @foreach($homeFaqs as $index => $faq)
+        <div class="ae-faq-item {{ $index === 0 ? 'is-open' : '' }}">
+          <button type="button" class="ae-faq-trigger" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
+            <h3>{{ $faq['question'] }}</h3>
+            <span class="ae-faq-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="ae-faq-panel">
+            <p>{{ $faq['answer'] }}</p>
           </div>
         </div>
       @endforeach
     </div>
   </div>
 </section>
-@endif
 
 <section class="ae-section">
   <div class="ae-container">
@@ -449,37 +544,175 @@
 <script>
 (function () {
   var slider = document.getElementById('aeSlider');
-  if (!slider) return;
-  var slides = Array.prototype.slice.call(slider.querySelectorAll('.ae-slide'));
-  var dots = Array.prototype.slice.call(document.querySelectorAll('#aeDots button'));
-  var index = 0;
-  var timer;
+  if (slider) {
+    var slides = Array.prototype.slice.call(slider.querySelectorAll('.ae-slide'));
+    var dots = Array.prototype.slice.call(document.querySelectorAll('#aeDots button'));
+    var index = 0;
+    var timer;
 
-  function goTo(i) {
-    index = (i + slides.length) % slides.length;
-    slides.forEach(function (s, n) { s.classList.toggle('is-active', n === index); });
-    dots.forEach(function (d, n) { d.classList.toggle('is-active', n === index); });
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      slides.forEach(function (s, n) { s.classList.toggle('is-active', n === index); });
+      dots.forEach(function (d, n) { d.classList.toggle('is-active', n === index); });
+    }
+
+    function start() {
+      stop();
+      timer = setInterval(function () { goTo(index + 1); }, 5000);
+    }
+
+    function stop() {
+      if (timer) clearInterval(timer);
+    }
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goTo(parseInt(dot.getAttribute('data-goto'), 10));
+        start();
+      });
+    });
+
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+    start();
+  }
+})();
+
+(function () {
+  var dataEl = document.getElementById('aeReviewsData');
+  var track = document.getElementById('aeReviewsTrack');
+  var dotsWrap = document.getElementById('aeReviewsDots');
+  if (!dataEl || !track || !dotsWrap) return;
+
+  var items = [];
+  try { items = JSON.parse(dataEl.textContent || '[]'); } catch (e) { items = []; }
+  if (!items.length) return;
+
+  var index = 0;
+  var autoplay = true;
+  var timer = null;
+  var mobile = window.innerWidth < 768;
+  var starSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#facc15" stroke="#fa4219" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>';
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function cardHtml(item, pos) {
+    var center = mobile ? pos === 0 : pos === 1;
+    var sideClass = '';
+    if (!mobile) {
+      if (pos === 0) sideClass = 'is-side-left';
+      else if (pos === 2) sideClass = 'is-side-right';
+      else sideClass = 'is-center';
+    } else {
+      sideClass = 'is-center';
+    }
+    return (
+      '<div class="ae-review-slot ' + sideClass + '">' +
+        '<article class="ae-review-card' + (center ? ' is-active' : '') + '">' +
+          '<div class="ae-review-stars">' + starSvg + starSvg + starSvg + starSvg + starSvg + '</div>' +
+          '<p>“' + escapeHtml(item.text) + '”</p>' +
+          '<div class="ae-review-bar' + (center ? ' is-full' : '') + '"></div>' +
+          '<div class="ae-review-author">' +
+            '<h4>' + escapeHtml(item.name) + '</h4>' +
+            '<span class="role">' + escapeHtml(item.title) + '</span>' +
+            '<span class="company">' + escapeHtml(item.company) + '</span>' +
+          '</div>' +
+        '</article>' +
+      '</div>'
+    );
+  }
+
+  function render() {
+    var html = '';
+    if (mobile) {
+      html = cardHtml(items[index], 0);
+    } else {
+      for (var a = 0; a < 3; a++) {
+        var i = (index + a) % items.length;
+        html += cardHtml(items[i], a);
+      }
+    }
+    track.innerHTML = html;
+    Array.prototype.forEach.call(dotsWrap.querySelectorAll('button'), function (dot, n) {
+      dot.classList.toggle('is-active', n === index);
+    });
+  }
+
+  function go(i) {
+    index = (i + items.length) % items.length;
+    render();
   }
 
   function start() {
     stop();
-    timer = setInterval(function () { goTo(index + 1); }, 5000);
+    timer = setInterval(function () {
+      if (autoplay) go(index + 1);
+    }, 6000);
   }
 
   function stop() {
     if (timer) clearInterval(timer);
+    timer = null;
   }
 
-  dots.forEach(function (dot) {
+  document.getElementById('aeReviewsPrev').addEventListener('click', function () {
+    autoplay = false;
+    go(index - 1);
+    setTimeout(function () { autoplay = true; }, 100);
+  });
+  document.getElementById('aeReviewsNext').addEventListener('click', function () {
+    autoplay = false;
+    go(index + 1);
+    setTimeout(function () { autoplay = true; }, 100);
+  });
+  Array.prototype.forEach.call(dotsWrap.querySelectorAll('button'), function (dot) {
     dot.addEventListener('click', function () {
-      goTo(parseInt(dot.getAttribute('data-goto'), 10));
-      start();
+      autoplay = false;
+      go(parseInt(dot.getAttribute('data-goto'), 10));
+      setTimeout(function () { autoplay = true; }, 100);
     });
   });
 
-  slider.addEventListener('mouseenter', stop);
-  slider.addEventListener('mouseleave', start);
+  window.addEventListener('resize', function () {
+    var nextMobile = window.innerWidth < 768;
+    if (nextMobile !== mobile) {
+      mobile = nextMobile;
+      render();
+    }
+  });
+
+  var section = document.getElementById('aeReviews');
+  section.addEventListener('mouseenter', function () { autoplay = false; });
+  section.addEventListener('mouseleave', function () { autoplay = true; });
+
+  render();
   start();
+})();
+
+(function () {
+  var list = document.querySelector('#aeFaqs .ae-faqs-list');
+  if (!list) return;
+  list.addEventListener('click', function (e) {
+    var btn = e.target.closest('.ae-faq-trigger');
+    if (!btn || !list.contains(btn)) return;
+    var item = btn.closest('.ae-faq-item');
+    var wasOpen = item.classList.contains('is-open');
+    Array.prototype.forEach.call(list.querySelectorAll('.ae-faq-item'), function (el) {
+      el.classList.remove('is-open');
+      var t = el.querySelector('.ae-faq-trigger');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+    if (!wasOpen) {
+      item.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
 })();
 </script>
 @endpush

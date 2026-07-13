@@ -1262,6 +1262,20 @@ function decreaseWords($content)
 function sidebarCategories()
 {
     $cats = \App\Models\SidebarCategory::join('categories', 'sidebar_categories.category_id', '=', 'categories.id')->select('categories.name', 'categories.slug', 'categories.id')->get();
+    if ($cats->isEmpty()) {
+        $cats = \App\Models\Category::where('status', 1)->where('parent_id', 0)->orderBy('name', 'asc')->select('name', 'slug', 'id')->get();
+    }
+    if ($cats->isEmpty()) {
+        $cats = \App\Models\Group::where('status', 1)->orderBy('sort', 'asc')->get()->map(function ($group) {
+            return (object) [
+                'name' => $group->name,
+                'slug' => $group->route,
+                'id' => $group->id,
+                'sub_cats' => collect(),
+            ];
+        });
+        return $cats;
+    }
     foreach ($cats as $key => $value) {
         $value['sub_cats'] = \App\Models\Category::where('parent_id', $value->id)->select('categories.name', 'categories.slug', 'categories.id')->get();
     }

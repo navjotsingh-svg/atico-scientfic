@@ -112,14 +112,111 @@ class HomeController extends Controller{
     }
 
 
+    //Products catalog (aticoexports-style category grid)
+    public function productsCatalog()
+    {
+        try {
+            $categories = Category::where('status', 1)
+                ->where('parent_id', 0)
+                ->orderBy('name', 'asc')
+                ->select('id', 'name', 'slug', 'image')
+                ->get();
+
+            if ($categories->isEmpty()) {
+                $categories = collect($this->defaultProductCategories())->map(function ($item) {
+                    return (object) $item;
+                });
+            }
+
+            $sideCategories = sidebarCategories();
+            if ($sideCategories->isEmpty()) {
+                $sideCategories = collect($categories)->map(function ($item) {
+                    return (object) [
+                        'name' => $item->name,
+                        'slug' => $item->slug,
+                        'id' => $item->id ?? null,
+                        'sub_cats' => collect(),
+                    ];
+                });
+            }
+
+            return view('frontend.pages.products_index', compact('categories', 'sideCategories'));
+        } catch (\Exception $e) {
+            return back();
+        }
+    }
+
+    /**
+     * Fallback catalogue matching aticoexports.com/products when local categories are empty.
+     */
+    protected function defaultProductCategories()
+    {
+        $slides = [
+            'assets/images/export-slides/Image1.webp',
+            'assets/images/export-slides/Image2.webp',
+            'assets/images/export-slides/Image3.webp',
+            'assets/images/export-slides/Image4.webp',
+            'assets/images/export-slides/Image5.webp',
+            'assets/images/export-slides/Image6.webp',
+            'assets/images/export-slides/Image7.webp',
+            'assets/images/export-slides/Image8.webp',
+        ];
+
+        $names = [
+            ['Automobile Engineering Lab Equipment', 'automobile-engineering-lab-equipment'],
+            ['Automotive and Transportation Technology', 'automotive-and-transportation-technology'],
+            ['Biology Lab Equipment', 'biology-lab-equipment'],
+            ['Biomedical Lab Equipment', 'biomedical-lab-equipment'],
+            ['Chemical Engineering Lab Equipment', 'chemical-engineering-lab-equipment'],
+            ['Chemistry Lab Equipment', 'chemistry-lab-equipment'],
+            ['Civil Engineering Lab Equipment', 'civil-engineering-lab-equipment'],
+            ['Educational Lab Equipment', 'educational-lab-equipment'],
+            ['Educational Lab Trainer Kits', 'educational-lab-trainer-kits'],
+            ['Electrical Engineering Lab Equipment', 'electrical-engineering-lab-equipment'],
+            ['Electronics Lab Trainer Kits', 'electronics-lab-trainer-kits'],
+            ['Engineering Lab Equipments & Kits', 'engineering-lab-equipments-kits'],
+            ['Engineering Lab Trainer Equipments', 'engineering-lab-trainer-equipments'],
+            ['Fluid Mechanics Lab Equipment', 'fluid-mechanics-lab-equipment'],
+            ['Hybrid Electrical Vehicle Hydrogen Fuel Technologies', 'hybrid-electrical-vehicle-hydrogen-fuel-technologies'],
+            ['Laboratory Equipments', 'laboratory-equipments'],
+            ['Laboratory Microscope', 'laboratory-microscope'],
+            ['Material Testing Lab Equipment', 'material-testing-lab-equipment'],
+            ['Mathematics Lab Equipment', 'mathematics-lab-equipment'],
+            ['Mechanical Engineering Lab Equipment', 'mechanical-engineering-lab-equipment'],
+            ['Medical Lab Equipment (Pharmacy Lab Equipment)', 'medical-lab-equipment-pharmacy-lab-equipment'],
+            ['Metallurgical Engineering Lab Equipment', 'metallurgical-engineering-lab-equipment'],
+            ['Mining Laboratory Equipment', 'mining-laboratory-equipment'],
+            ['OilField Petroleum Testing Equipment', 'oilfield-petroleum-testing-equipment'],
+            ['Physics Lab Equipment', 'physics-lab-equipment'],
+            ['Physics Lab Experiments Setup', 'physics-lab-experiments-setup'],
+            ['Research Lab Equipment', 'laboratory-research-equipment'],
+            ['STEM Lab Kits', 'stem-lab-kits'],
+            ['School Science Lab Equipment', 'school-science-lab-equipment'],
+            ['School Science Lab Kits', 'school-science-lab-kits'],
+            ['Specialised Engineering Labs', 'specialised-engineering-labs'],
+            ['Technical Education Equipments', 'technical-education-equipments'],
+            ['Testing Lab Machines', 'testing-lab-machines'],
+            ['Vocational Training Lab Equipment (TVET)', 'vocational-training-lab-equipment-tvet'],
+        ];
+
+        $list = [];
+        foreach ($names as $i => $row) {
+            $list[] = [
+                'id' => $i + 1,
+                'name' => $row[0],
+                'slug' => $row[1],
+                'image' => $slides[$i % count($slides)],
+                'image_is_asset' => true,
+            ];
+        }
+
+        return $list;
+    }
+
     //Products Function
     public function productsPage()
     {
-        try{
-            return view('frontend.pages.products');
-        } catch(\Exception $e){
-            return back();
-        }
+        return $this->productsCatalog();
     }
 
     //Product Detail Function
@@ -269,14 +366,7 @@ class HomeController extends Controller{
             //dd($category);
             $keyword = Category::where('slug', $slug)->where('status', 1)->select('meta_title', 'meta_description', 'meta_tag', 'slug')->first();
             if(!$category){
-                return back();
-               // return redirect()->route('404_page'); 
-               // $category = Category::where('slug', $slug)->first();
-            }
-            else if(!$category){
-               
-                return back();
-                //return redirect()->route('404_page');   
+                return redirect()->route('products.index');
             }
            
             if($category['parent_id'] == 0){

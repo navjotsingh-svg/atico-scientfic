@@ -28,6 +28,7 @@
         <ul class="ae-footer-links">
           <li><a href="{{ url('/') }}"><span>→</span>Home</a></li>
           <li><a href="{{ url('/about-us') }}"><span>→</span>About Us</a></li>
+          <li><a href="{{ route('products.index') }}"><span>→</span>Products</a></li>
           <li><a href="{{ url('/blogs') }}"><span>→</span>Blogs</a></li>
           <li><a href="{{ url('/lab-tenders') }}"><span>→</span>Lab Tenders</a></li>
           <li><a href="{{ url('/contact-us') }}"><span>→</span>Contact</a></li>
@@ -38,13 +39,13 @@
         <h3 class="ae-footer-title">Product Categories</h3>
         <ul class="ae-footer-links">
           @forelse(($navGroups ?? collect())->take(8) as $group)
-            <li><a href="{{ route('categories', $group->route) }}">{!! $group->name !!}</a></li>
+            <li><a href="{{ route('products.index') }}">{!! $group->name !!}</a></li>
           @empty
-            <li><a href="{{ url('/category/educational-lab-equipment') }}">Educational Lab Equipment</a></li>
-            <li><a href="{{ url('/category/biology-lab-equipment') }}">Biology Lab Equipment</a></li>
-            <li><a href="{{ url('/category/chemistry-lab-equipment') }}">Chemistry Lab Equipment</a></li>
-            <li><a href="{{ url('/category/civil-engineering-instruments') }}">Civil Engineering Lab Equipment</a></li>
-            <li><a href="{{ url('/category/engineering-lab-equipment') }}">Engineering Lab Equipment</a></li>
+            <li><a href="{{ route('products.index') }}">Educational Lab Equipment</a></li>
+            <li><a href="{{ route('products.index') }}">Biology Lab Equipment</a></li>
+            <li><a href="{{ route('products.index') }}">Chemistry Lab Equipment</a></li>
+            <li><a href="{{ route('products.index') }}">Civil Engineering Lab Equipment</a></li>
+            <li><a href="{{ route('products.index') }}">Engineering Lab Equipment</a></li>
           @endforelse
         </ul>
       </div>

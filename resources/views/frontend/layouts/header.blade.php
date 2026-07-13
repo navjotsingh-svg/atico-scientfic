@@ -57,25 +57,29 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link {{ ($route ?? '') === 'home' ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url('/about-us') }}">About Us</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Products</a>
+          <li class="nav-item"><a class="nav-link {{ request()->is('about-us') ? 'active' : '' }}" href="{{ url('/about-us') }}">About Us</a></li>
+          <li class="nav-item dropdown ae-products-drop">
+            <a class="nav-link {{ request()->is('products') || request()->is('category*') || request()->is('product*') ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a>
             <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item fw-bold" href="{{ route('products.index') }}">All Products</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
               @foreach(($navGroups ?? getGroups()) as $group)
-                @if(isset($group->categories))
-                  <li>
-                    <a class="dropdown-item" href="{{ route('categories', $group->route) }}">{!! $group->name !!}</a>
+                <li class="{{ isset($group->categories) && count($group->categories) ? 'ae-has-sub' : '' }}">
+                  <a class="dropdown-item" href="{{ route('products.index') }}">{!! $group->name !!}</a>
+                  @if(isset($group->categories) && count($group->categories))
                     <ul class="submenu dropdown-menu">
                       @foreach($group->categories as $category)
                         <li>
-                          <a class="dropdown-item" href="{{ route('categories', $category->slug) }}">
+                          <a class="dropdown-item" href="{{ route('products.index') }}">
                             {!! $category->short_name ?? $category->name !!}
                           </a>
                         </li>
                       @endforeach
                     </ul>
-                  </li>
-                @endif
+                  @endif
+                </li>
               @endforeach
             </ul>
           </li>
@@ -123,13 +127,23 @@ window.addEventListener('load', function () {
     });
   });
 
+  var productsDrop = document.querySelector('.ae-products-drop');
+  var productsLink = productsDrop ? productsDrop.querySelector(':scope > .nav-link') : null;
+  if (productsDrop && productsLink) {
+    productsLink.addEventListener('click', function (e) {
+      if (window.innerWidth >= 992) return;
+      e.preventDefault();
+      productsDrop.classList.toggle('is-open');
+    });
+  }
+
   var searchRoot = document.getElementById('aeSearch');
   var searchBtn = document.getElementById('aeSearchBtn');
   var searchPanel = document.getElementById('aeSearchPanel');
   var searchInput = document.getElementById('aeSearchInput');
   var searchResults = document.getElementById('aeSearchResults');
   var searchTimer = null;
-  var searchUrl = @json(url('/products'));
+  var searchUrl = @json(url('/products/search'));
 
   if (searchRoot && searchBtn && searchPanel && searchInput && searchResults) {
     function closeSearch() {

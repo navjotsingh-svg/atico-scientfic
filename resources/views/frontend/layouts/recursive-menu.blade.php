@@ -1,6 +1,6 @@
 <li>
     <a class="dropdown-item {{ $item->subCategories && $item->subCategories->count() ? 'dropdown-toggle' : '' }}"
-       href="{{ route('categories', $item->slug ?? $item->route) }}">
+       href="{{ route('products.index') }}">
         {!! $item->short_name ?? $item->name !!}
     </a>
 

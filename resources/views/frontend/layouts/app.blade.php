@@ -154,7 +154,7 @@ $navGroups = getGroups();
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=7">
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=13">
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
     @yield('css')

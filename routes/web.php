@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 //Route::delete('enquiry/deleteSelected', 'EnquiryController@deleteSelected')->name('enquiry.deleteSelected');
 
 
-Route::get('/products/{slug?}', [HomeController::class, 'getProducts'])->name('products');
+Route::get('/products', [HomeController::class, 'productsCatalog'])->name('products.index');
+Route::get('/products/search/{slug?}', [HomeController::class, 'getProducts'])->name('products');
 Route::get('/get_categories/{slug?}/{id?}', [HomeController::class, 'getSearchCategories'])->name('get_categories');
 Route::get('/get_categories_product/{slug?}/{id?}', [HomeController::class, 'getSearchCategoriesProducts'])->name('get_categories_product');
 
