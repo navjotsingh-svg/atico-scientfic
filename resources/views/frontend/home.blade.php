@@ -233,7 +233,7 @@
     @if($groups->count())
       <div class="ae-card-grid is-3 mb-4">
         @foreach($groups as $group)
-          <a class="ae-pcard" href="{{ route('products.index') }}">
+          <a class="ae-pcard" href="{{ route('categories', $group->route) }}">
             <div class="ae-pcard-media">
               <img
                 src="{{ asset($group->image ? 'uploads/product_images/'.$group->image : 'assets/images/no_product.png') }}"
@@ -249,7 +249,7 @@
     @elseif($latest_cats->count())
       <div class="ae-card-grid is-3 mb-4">
         @foreach($latest_cats as $cat)
-          <a class="ae-pcard" href="{{ route('products.index') }}">
+          <a class="ae-pcard" href="{{ route('categories', $cat->slug) }}">
             <div class="ae-pcard-media">
               <img
                 src="{{ asset($cat->image ? 'uploads/product_images/'.$cat->image : 'assets/images/no_product.png') }}"
@@ -263,7 +263,8 @@
         @endforeach
       </div>
     @endif
-
+ </div>
+</section>
     <!-- @if($products->count())
       <h3 class="ae-title text-center" style="font-size:1.35rem;margin-top:28px;">Featured Products</h3>
       <div class="ae-card-grid">
@@ -509,7 +510,6 @@
     </div>
   </div>
 </section>
-
 <style>
 .span_bold {
   background-color: rgb(25, 71, 209);

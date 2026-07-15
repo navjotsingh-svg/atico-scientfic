@@ -154,7 +154,7 @@ $navGroups = getGroups();
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=13">
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=15">
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
     @yield('css')
@@ -215,6 +215,7 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+    <script src="{{ asset('assets/js/ae-search.js') }}?v=16" defer></script>
 @if($route == "home" || $route == "product_detail")
     <script src="{{ asset('assets/js/owl.carousel.min531b.js?ver=2.3.4') }}" defer></script>
 @endif

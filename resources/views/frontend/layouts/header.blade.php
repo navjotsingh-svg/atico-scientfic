@@ -67,12 +67,12 @@
               <li><hr class="dropdown-divider"></li>
               @foreach(($navGroups ?? getGroups()) as $group)
                 <li class="{{ isset($group->categories) && count($group->categories) ? 'ae-has-sub' : '' }}">
-                  <a class="dropdown-item" href="{{ route('products.index') }}">{!! $group->name !!}</a>
+                  <a class="dropdown-item" href="{{ route('categories', $group->route) }}">{!! $group->name !!}</a>
                   @if(isset($group->categories) && count($group->categories))
                     <ul class="submenu dropdown-menu">
                       @foreach($group->categories as $category)
                         <li>
-                          <a class="dropdown-item" href="{{ route('products.index') }}">
+                          <a class="dropdown-item" href="{{ route('categories', $category->slug) }}">
                             {!! $category->short_name ?? $category->name !!}
                           </a>
                         </li>
@@ -87,7 +87,7 @@
           <li class="nav-item"><a class="nav-link" href="{{ url('/blogs') }}">Blog</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url('/contact-us') }}">Contact Us</a></li>
           <li class="nav-item">
-            <div class="ae-search" id="aeSearch">
+            <div class="ae-search" id="aeSearch" data-search-url="{{ url('/products/search') }}">
               <button type="button" class="ae-search-btn" id="aeSearchBtn" aria-label="Search" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="m21 21-4.34-4.34"></path>
@@ -134,61 +134,6 @@ window.addEventListener('load', function () {
       if (window.innerWidth >= 992) return;
       e.preventDefault();
       productsDrop.classList.toggle('is-open');
-    });
-  }
-
-  var searchRoot = document.getElementById('aeSearch');
-  var searchBtn = document.getElementById('aeSearchBtn');
-  var searchPanel = document.getElementById('aeSearchPanel');
-  var searchInput = document.getElementById('aeSearchInput');
-  var searchResults = document.getElementById('aeSearchResults');
-  var searchTimer = null;
-  var searchUrl = @json(url('/products/search'));
-
-  if (searchRoot && searchBtn && searchPanel && searchInput && searchResults) {
-    function closeSearch() {
-      searchRoot.classList.remove('is-open');
-      searchPanel.hidden = true;
-      searchBtn.setAttribute('aria-expanded', 'false');
-    }
-    function openSearch() {
-      searchRoot.classList.add('is-open');
-      searchPanel.hidden = false;
-      searchBtn.setAttribute('aria-expanded', 'true');
-      setTimeout(function () { searchInput.focus(); }, 50);
-    }
-
-    searchBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (searchPanel.hidden) openSearch(); else closeSearch();
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!searchRoot.contains(e.target)) closeSearch();
-    });
-
-    searchInput.addEventListener('input', function () {
-      var q = searchInput.value.trim();
-      clearTimeout(searchTimer);
-      if (!q.length) {
-        searchResults.innerHTML = '';
-        searchResults.classList.remove('has-results');
-        return;
-      }
-      searchTimer = setTimeout(function () {
-        searchResults.innerHTML = '<div class="ae-search-loading">Searching...</div>';
-        searchResults.classList.add('has-results');
-        fetch(searchUrl + '/' + encodeURIComponent(q), {
-          headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-          .then(function (res) { return res.text(); })
-          .then(function (html) {
-            searchResults.innerHTML = html && html.trim() ? html : '<div class="ae-search-empty">No results found</div>';
-          })
-          .catch(function () {
-            searchResults.innerHTML = '<div class="ae-search-empty">Unable to search right now</div>';
-          });
-      }, 250);
     });
   }
 });

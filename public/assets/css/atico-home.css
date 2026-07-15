@@ -439,6 +439,30 @@ body {
   background: #f8fafc;
 }
 
+.ae-search-results .ae-search-heading {
+  padding: 10px 6px 6px;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #111827 !important;
+  font-family: var(--font-heading) !important;
+  border-bottom: 0;
+  background: transparent;
+}
+
+.ae-search-results .ae-search-heading strong {
+  font-weight: 800;
+  color: inherit;
+}
+
+.ae-search-results .ae-search-empty-item {
+  padding: 6px;
+  font-size: 13px;
+  color: #9ca3af;
+  border-bottom: 0;
+}
+
 .ae-search-loading,
 .ae-search-empty {
   padding: 10px 6px;

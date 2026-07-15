@@ -38,14 +38,14 @@
       <div>
         <h3 class="ae-footer-title">Product Categories</h3>
         <ul class="ae-footer-links">
-          @forelse(($navGroups ?? collect())->take(8) as $group)
-            <li><a href="{{ route('products.index') }}">{!! $group->name !!}</a></li>
+          @forelse(($navGroups ?? getGroups())->take(8) as $group)
+            <li><a href="{{ route('categories', $group->route) }}">{!! $group->name !!}</a></li>
           @empty
-            <li><a href="{{ route('products.index') }}">Educational Lab Equipment</a></li>
-            <li><a href="{{ route('products.index') }}">Biology Lab Equipment</a></li>
-            <li><a href="{{ route('products.index') }}">Chemistry Lab Equipment</a></li>
-            <li><a href="{{ route('products.index') }}">Civil Engineering Lab Equipment</a></li>
-            <li><a href="{{ route('products.index') }}">Engineering Lab Equipment</a></li>
+            <li><a href="{{ route('categories', 'educational-lab-equipment') }}">Educational Lab Equipment</a></li>
+            <li><a href="{{ route('categories', 'biology-lab-equipment') }}">Biology Lab Equipment</a></li>
+            <li><a href="{{ route('categories', 'chemistry-lab-equipment') }}">Chemistry Lab Equipment</a></li>
+            <li><a href="{{ route('categories', 'civil-engineering-instruments') }}">Civil Engineering Lab Equipment</a></li>
+            <li><a href="{{ route('categories', 'engineering-lab-equipment') }}">Engineering Lab Equipment</a></li>
           @endforelse
         </ul>
       </div>

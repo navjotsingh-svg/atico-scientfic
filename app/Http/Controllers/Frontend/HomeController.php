@@ -25,48 +25,71 @@ class HomeController extends Controller{
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getProducts($slug=''){
-        $links=array();
-         $products = Category::where('status', 1)->where('name','like',"%$slug%")->orderBy('id', 'desc')->get();
-         
-         $links[]="<li>---Categories (".count($products->toArray()).")---</li>";
-         foreach($products->toArray() as $product){
-            $links[]="<li><a href='/category/".$product['slug']."'>".$product['name']."</a></li>";
-         }
-         $products = Product::where('status', 1)->where('name','like',"%$slug%")->orderBy('id', 'desc')->get();
-         
-         $links[]="<li>---Products (".count($products->toArray()).")---</li>";
-         foreach($products->toArray() as $product){
-            $links[]="<li><a href='/product/".$product['slug']."'>".$product['name']."</a></li>";
-         }
-         return ($links);
+        $slug = trim(urldecode($slug));
 
+        $categories = Category::where('status', 1)
+            ->where('name', 'like', '%' . $slug . '%')
+            ->orderBy('name', 'asc')
+            ->limit(12)
+            ->get(['name', 'slug'])
+            ->map(function ($category) {
+                return [
+                    'name' => html_entity_decode(strip_tags($category->name), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+                    'url' => url('/category/' . $category->slug),
+                ];
+            })
+            ->values();
 
+        $products = Product::where('status', 1)
+            ->where('name', 'like', '%' . $slug . '%')
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get(['name', 'slug'])
+            ->map(function ($product) {
+                return [
+                    'name' => html_entity_decode(strip_tags($product->name), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+                    'url' => url('/product/' . $product->slug),
+                ];
+            })
+            ->values();
+
+        return response()->json([
+            'categories' => $categories,
+            'products' => $products,
+        ]);
     }
-     public function getSearchCategories($slug='',$id=''){
-         $products = Category::where('status', 1)->where('name','like',"%$slug%")->where('parent_id',$id)->orderBy('id', 'desc')->get();
-         $links=array();
-         foreach($products->toArray() as $product){
-            $links[]="<li><a href='/category/".$product['slug']."'>".$product['name']."</a></li>";
-         }
-         return ($links);
 
+    public function getSearchCategories($slug='', $id=''){
+        $slug = trim(urldecode($slug));
+        $categories = Category::where('status', 1)
+            ->where('name', 'like', '%' . $slug . '%')
+            ->where('parent_id', $id)
+            ->orderBy('name', 'asc')
+            ->limit(30)
+            ->get(['name', 'slug']);
 
-    }
-
-     public function getSearchCategoriesProducts($slug='',$id=''){
-        $pids = ProductCategory::where("category_id",$id)->get('product_id');
-        $p_ids=array();
-        foreach($pids->toArray() as $pid){
-            $p_ids[]=$pid['product_id'];
+        $html = '';
+        foreach ($categories as $category) {
+            $html .= '<li><a href="' . e(url('/category/' . $category->slug)) . '">' . e(html_entity_decode(strip_tags($category->name), ENT_QUOTES | ENT_HTML5, 'UTF-8')) . '</a></li>';
         }
-         $products = Product::where('status', 1)->where('name','like',"%$slug%")->whereIn('id',$p_ids)->orderBy('id', 'desc')->get();
-         $links=array();
-         foreach($products->toArray() as $product){
-            $links[]="<li><a href='/product/".$product['slug']."'>".$product['name']."</a></li>";
-         }
-         return ($links);
+        return response($html)->header('Content-Type', 'text/html; charset=UTF-8');
+    }
 
+    public function getSearchCategoriesProducts($slug='', $id=''){
+        $slug = trim(urldecode($slug));
+        $p_ids = ProductCategory::where('category_id', $id)->pluck('product_id')->toArray();
+        $products = Product::where('status', 1)
+            ->where('name', 'like', '%' . $slug . '%')
+            ->whereIn('id', $p_ids)
+            ->orderBy('name', 'asc')
+            ->limit(30)
+            ->get(['name', 'slug']);
 
+        $html = '';
+        foreach ($products as $product) {
+            $html .= '<li><a href="' . e(url('/product/' . $product->slug)) . '">' . e(html_entity_decode(strip_tags($product->name), ENT_QUOTES | ENT_HTML5, 'UTF-8')) . '</a></li>';
+        }
+        return response($html)->header('Content-Type', 'text/html; charset=UTF-8');
     }
     public function index()
     {
