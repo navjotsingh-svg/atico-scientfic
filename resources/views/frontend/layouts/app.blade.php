@@ -4,33 +4,33 @@
     $route  = \Route::currentRouteName();    
    $display = '1'; // Default: desktop
 
-$useragent = $_SERVER['HTTP_USER_AGENT'];
+$useragent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 // Tablet check first
 if (
+    $useragent !== '' &&
     preg_match('/ipad|tablet|playbook|silk|kindle|(android(?!.*mobile))/i', $useragent)
 ) {
     $display = '2'; // Tablet
 }
 // Then mobile phone check
 elseif (
+    $useragent !== '' &&
     preg_match('/android|bb\d+|meego.+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|iphone|ipod|iris|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent)
 ) {
     $display = '0'; // Mobile
 }
 $navGroups = getGroups();
+$isHome = $route === 'home';
 @endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{-- Preload only the LCP hero image --}}
-    @if($route == "home")
-        @if($display == 1)
-        <link rel="preload" as="image" href="{{ asset('assets/images/slider/slide1.webp') }}" type="image/webp" fetchpriority="high">
-        @else
-        <link rel="preload" as="image" href="{{ asset('assets/images/slider/slider1mob.webp') }}" type="image/webp" fetchpriority="high">
-        @endif
+    @if($isHome)
+        <link rel="preload" as="image" href="{{ asset('assets/images/export-slides/Image1-mobile.webp') }}" type="image/webp" media="(max-width: 767px)" fetchpriority="high">
+        <link rel="preload" as="image" href="{{ asset('assets/images/export-slides/Image1.webp') }}" type="image/webp" media="(min-width: 768px)" fetchpriority="high">
     @elseif($route == "product_detail" && isset($product))
         <link rel="preload" as="image" href="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}" fetchpriority="high">
     @elseif($route == "categories")
@@ -145,16 +145,19 @@ $navGroups = getGroups();
 
         <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript> -->
-@if($route == "home" || $route == "product_detail")
+@if($route == "product_detail")
         <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min5560.css?ver=5.0.4') }}" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min5560.css?ver=5.0.4') }}"></noscript>
 @endif
         <!-- <link rel='stylesheet'  href="{{ asset('assets/frontend/css/style.css?ver=5.0.1') }}"  media='all' /> -->
         <!-- <link rel='stylesheet'  href="{{ asset('assets/frontend/css/admin-ajax.css?ver=5.0.1') }}"  media='all' /> -->
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=15">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap" media="print" onload="this.media='all'">
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap"></noscript>
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=23">
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
     @yield('css')
@@ -164,8 +167,8 @@ $navGroups = getGroups();
    <meta name="msvalidate.01" content="A37FED68578C80CB5842B7FCBF342AFD" />
 <style>
 :root {
-  --font-heading: "DM Sans", system-ui, sans-serif;
-  --font-body: "Sora", system-ui, sans-serif;
+  --font-heading: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-body: "Sora", system-ui, -apple-system, sans-serif;
 }
 html, body {
   font-family: var(--font-body) !important;
@@ -185,6 +188,20 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
 .VIpgJd-ZVi9od-l4eHX-hSRGPd, .VIpgJd-ZVi9od-l4eHX-hSRGPd:link, .VIpgJd-ZVi9od-l4eHX-hSRGPd:visited, .VIpgJd-ZVi9od-l4eHX-hSRGPd:hover, .VIpgJd-ZVi9od-l4eHX-hSRGPd:active {
     display: none;
 }
+@if($isHome)
+.ae-slider{position:relative;height:56vw;min-height:240px;max-height:72vh;background:#0b1c4d;overflow:hidden}
+.ae-slide{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none}
+.ae-slide.is-active{opacity:1;visibility:visible;pointer-events:auto;z-index:1}
+.ae-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.ae-slide-content{position:absolute;inset:0;z-index:2;display:flex;align-items:center;padding:0 40px}
+@media (max-width:767px){
+  .ae-slider{height:auto;min-height:320px;max-height:none}
+  .ae-slide.is-active{position:relative}
+  .ae-slide img{height:auto;min-height:320px}
+  .ae-slide-content{align-items:flex-end;padding:0 16px 40px}
+}
+@media (min-width:1024px){.ae-slide-content{padding:0 80px}}
+@endif
 </style>
 </head>
 
@@ -214,9 +231,8 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
     <script src="{{ asset('assets/js/ae-search.js') }}?v=16" defer></script>
-@if($route == "home" || $route == "product_detail")
+@if($route == "product_detail")
     <script src="{{ asset('assets/js/owl.carousel.min531b.js?ver=2.3.4') }}" defer></script>
 @endif
     @stack('scripts')
@@ -279,7 +295,8 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
     })();
 
     window.addEventListener('load', function () {
-        let thirdPartyLoaded = false;
+        var thirdPartyLoaded = false;
+        var isMobile = {{ $display == '0' ? 'true' : 'false' }};
 
         function loadThirdParty() {
             if (thirdPartyLoaded) {
@@ -296,6 +313,7 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
             var fa=document.createElement('script');
             fa.src='https://kit.fontawesome.com/6260f12e27.js';
             fa.crossOrigin='anonymous';
+            fa.defer = true;
             document.body.appendChild(fa);
 
             @if($display == 1)
@@ -316,15 +334,17 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
             }
             window.googleTranslateElementInit = googleTranslateElementInit;
             var gt=document.createElement('script');
+            gt.async = true;
             gt.src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
             document.body.appendChild(gt);
         }
 
-        ['scroll', 'click', 'touchstart'].forEach(function(eventName) {
+        ['scroll', 'click', 'touchstart', 'keydown'].forEach(function(eventName) {
             window.addEventListener(eventName, loadThirdParty, { once: true, passive: true });
         });
 
-        setTimeout(loadThirdParty, 1500);
+        // Give mobile more time before third-party scripts compete with LCP/TBT.
+        setTimeout(loadThirdParty, isMobile ? 10000 : 4000);
     });
     </script>
 

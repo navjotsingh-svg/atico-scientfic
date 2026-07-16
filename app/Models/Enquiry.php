@@ -22,13 +22,14 @@ class Enquiry extends Model
 
      public function validate($inputs)
      { 
-             
-        $rules['name'] = 'required';
-        $rules['email'] = 'required';
-        $rules['country'] = 'required'; 
-        $rules['mobile_no'] = 'required'; 
-        $rules['message'] = 'required';   
-       // $rules['g-recaptcha-response'] = 'required';  
+        $rules = [
+            'name' => 'required|string|max:120',
+            'email' => 'required|email|max:150',
+            'country' => 'required|string|max:120',
+            'mobile_no' => 'required|string|max:40',
+            'message' => 'required|string|max:5000',
+        ];
+
         return \Validator::make($inputs, $rules);
      }
 

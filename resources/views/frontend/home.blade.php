@@ -86,7 +86,30 @@
 <section class="ae-slider" id="aeSlider">
   @foreach($slides as $i => $slide)
     <div class="ae-slide {{ $i === 0 ? 'is-active' : '' }}" data-slide="{{ $i }}">
-      <img src="{{ $slide['image'] }}" alt="{{ $slide['title'] }}" @if($i===0) loading="eager" fetchpriority="high" @else loading="lazy" @endif>
+      @if($i === 0)
+        <picture>
+          <source media="(max-width: 767px)" srcset="{{ asset('assets/images/export-slides/Image1-mobile.webp') }}" type="image/webp">
+          <img
+            src="{{ $slide['image'] }}"
+            alt="{{ $slide['title'] }}"
+            width="1500"
+            height="1000"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          >
+        </picture>
+      @else
+        <img
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          data-src="{{ $slide['image'] }}"
+          alt="{{ $slide['title'] }}"
+          width="1500"
+          height="1000"
+          loading="lazy"
+          decoding="async"
+        >
+      @endif
       <div class="ae-slide-overlay"></div>
       <div class="ae-slide-content">
         <div class="ae-slide-copy">
@@ -141,7 +164,7 @@
         <a class="ae-cta-outline" href="{{ url('/contact-us') }}">Contact Us</a>
       </div>
       <div>
-        <img src="{{ asset('assets/images/export-slides/exp_img.webp') }}" alt="Laboratory equipment manufacturer India" loading="lazy">
+        <img src="{{ asset('assets/images/export-slides/exp_img.webp') }}" alt="Laboratory equipment manufacturer India" width="1200" height="800" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -150,7 +173,7 @@
 <section class="ae-section" style="padding-top:20px;">
   <div class="ae-container">
     <div class="ae-solution">
-      <img src="{{ asset('assets/images/export-slides/medical_pro.webp') }}" alt="Hospital and medical equipments" loading="lazy">
+      <img src="{{ asset('assets/images/export-slides/medical_pro.webp') }}" alt="Hospital and medical equipments" width="1500" height="925" loading="lazy" decoding="async">
       <div>
         <div class="span_bold">
         <h6>Hospital And Medical Equipments</h6>
@@ -165,7 +188,7 @@
     </div>
 
     <div class="ae-solution reverse">
-      <img src="{{ asset('assets/images/export-slides/Image5.webp') }}" alt="Civil and mechanical engineering" loading="lazy">
+      <img src="{{ asset('assets/images/export-slides/Image5.webp') }}" alt="Civil and mechanical engineering" width="1500" height="1000" loading="lazy" decoding="async">
       <div class="org_back">
         <h6>Engineering Solutions</h6>
         <h3>Civil and Mechanical Engineering Machinery and Trainers</h3>
@@ -182,7 +205,7 @@
     </div>
 
     <div class="ae-solution">
-      <img src="{{ asset('assets/images/export-slides/labimg.webp') }}" alt="Educational scientific instruments" loading="lazy">
+      <img src="{{ asset('assets/images/export-slides/labimg.webp') }}" alt="Educational scientific instruments" width="1200" height="800" loading="lazy" decoding="async">
       <div class="span_bold">
         <h6>Educational &amp; Scientific Instruments</h6>
         <h3>Educational Lab Equipments Manufacturers, exporter, Wholesaler and Suppliers</h3>
@@ -198,7 +221,7 @@
     </div>
 
     <div class="ae-solution reverse">
-      <img src="{{ asset('assets/images/export-slides/ensimg.webp') }}" alt="Material testing equipments" loading="lazy">
+      <img src="{{ asset('assets/images/export-slides/ensimg.webp') }}" alt="Material testing equipments" width="1200" height="800" loading="lazy" decoding="async">
       <div class="org_back">
         <h6>Engineering Testing Equipment</h6>
         <h3>Material Testing Equipments and Testing Machines Manufacturer</h3>
@@ -211,7 +234,7 @@
       </div>
     </div>
     <div class="ae-solution">
-      <img src="{{ asset('assets/images/export-slides/labimg.webp') }}" alt="Educational scientific instruments" loading="lazy">
+      <img src="{{ asset('assets/images/export-slides/labimg.webp') }}" alt="Educational scientific instruments" width="1200" height="800" loading="lazy" decoding="async">
       <div class="span_bold">
         <h6>Educational Lab Equipment</h6>
         <h3>Schools and Science College Lab Equipment</h3>
@@ -228,7 +251,7 @@
   <div class="ae-container">
     <div class="ae-accent-bar mx-auto"></div>
     <h2 class="ae-title text-center">Our Product Categories</h2>
-    <p class="text-center mb-4" style="color:#6b7280;">Explore laboratory, educational and engineering equipment ranges</p>
+    <p class="text-center mb-4 ae-home-products-sub">Explore laboratory, educational and engineering equipment ranges</p>
 
     @if($groups->count())
       <div class="ae-card-grid is-3 mb-4">
@@ -236,9 +259,12 @@
           <a class="ae-pcard" href="{{ route('categories', $group->route) }}">
             <div class="ae-pcard-media">
               <img
-                src="{{ asset($group->image ? 'uploads/product_images/'.$group->image : 'assets/images/no_product.png') }}"
+                src="{{ $group->image_url ?? asset($group->image ? 'uploads/product_images/'.$group->image : 'assets/images/no_product.png') }}"
                 alt="{!! strip_tags($group->name) !!}"
+                width="400"
+                height="400"
                 loading="lazy"
+                decoding="async"
                 onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
               >
             </div>
@@ -265,27 +291,7 @@
     @endif
  </div>
 </section>
-    <!-- @if($products->count())
-      <h3 class="ae-title text-center" style="font-size:1.35rem;margin-top:28px;">Featured Products</h3>
-      <div class="ae-card-grid">
-        @foreach($products as $item)
-          <a class="ae-pcard" href="{{ url('/product/'.$item->slug) }}">
-            <div class="ae-pcard-media">
-              <img
-                src="{{ asset($item->image ? 'uploads/product_images/'.$item->image : 'assets/images/no_product.png') }}"
-                alt="{!! strip_tags($item->name) !!}"
-                loading="lazy"
-                onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
-              >
-            </div>
-            <div class="ae-pcard-title">{!! $item->name !!}</div>
-          </a>
-        @endforeach
-      </div>
-    @endif
-  </div>
-</section>
-@endif -->
+@endif
 
 <section class="ae-stats">
   <div class="ae-container">
@@ -552,7 +558,16 @@
 
     function goTo(i) {
       index = (i + slides.length) % slides.length;
-      slides.forEach(function (s, n) { s.classList.toggle('is-active', n === index); });
+      slides.forEach(function (s, n) {
+        s.classList.toggle('is-active', n === index);
+        if (n === index) {
+          var img = s.querySelector('img[data-src]');
+          if (img) {
+            img.src = img.getAttribute('data-src');
+            img.removeAttribute('data-src');
+          }
+        }
+      });
       dots.forEach(function (d, n) { d.classList.toggle('is-active', n === index); });
     }
 

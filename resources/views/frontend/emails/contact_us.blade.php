@@ -23,8 +23,8 @@
       <div style="width:700px; min-height: 300px; margin: 0 auto; background-color:white; background-size: cover; background-repeat: no-repeat; background-position: center; background-attachment: fixed;">
         <div style="width: 99%; height: 100%; border: 4px solid #002c4d; margin: 0 auto;">
           <div class="header-logo" style=" width: 100px; margin: 18px auto 10px auto; overflow: hidden; text-align: center;">
-            <a style="margin: 0 auto; display: block; text-align: center;" href="http://aticoindia.com">
-              <img style="max-width: 100%; margin: 0 auto; text-align: center;" src="http://aticoindia.com/assets/frontend/images/logo.png">
+            <a style="margin: 0 auto; display: block; text-align: center;" href="https://aticoscientific.com">
+              <img style="max-width: 100%; margin: 0 auto; text-align: center;" src="{{ asset('assets/images/logo.png') }}">
             </a>
           </div>
           <div style="background-color: #002c4d; padding: 50px 0px; float: left; width: 100%; text-align: center; margin: 0px 0px 0px 0px;">
@@ -65,7 +65,7 @@
                   <tr style="text-transform: capitalize;">
                     <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">File</td>
                     <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">
-                      <a style="color:#fff;text-decoration: none;" href="https://www.aticoscientific.com/public<?= $file_name ?>" target="_blank">View Document</a></td>
+                      <a style="color:#fff;text-decoration: none;" href="{{ url($file_name) }}" target="_blank">View Document</a></td>
                   </tr> 
                   @endif
                 </tbody>

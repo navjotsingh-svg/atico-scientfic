@@ -231,6 +231,8 @@ ul.ts-recent-post-list>li img {
     margin-right: 15px;
     padding: 3px;
     border: 1px solid rgba(255, 255, 255, .24);
+    object-fit: cover;
+    object-position: center;
 }
 
 .ts-noimg, img.size-full, img.size-large, img.wp-post-image {
@@ -1531,7 +1533,9 @@ ul.ts-recent-post-list>li img {
     float: left;
     margin-right: 15px;
     padding: 3px;
-    border: 1px solid rgba(255,255,255,.24)
+    border: 1px solid rgba(255,255,255,.24);
+    object-fit: cover;
+    object-position: center;
 }
 
 ul.ts-recent-post-list>li>a {
@@ -14102,7 +14106,7 @@ color: #575757 !important;
                         <div class="ts-blog-classic-datebox-overlay">
                            <div class="ts-blog-classic-dbox-date">{{ $blog->created_at->format('F d, Y') }}</div>
                         </div>
-                        <div class="ts-featured-wrapper ts-post-featured-wrapper ts-post-format-"><img width="500" height="500" src="{{ asset('uploads/blog_images/'.$blog->image) }}" class="attachment-full size-full wp-post-image" alt=""></div>
+                        <div class="ts-featured-wrapper ts-post-featured-wrapper ts-post-format-"><img src="{{ asset('uploads/blog_images/'.$blog->image) }}" class="attachment-full size-full wp-post-image" alt="{!! strip_tags($blog->name) !!}" style="width:100%;height:auto;object-fit:contain;"></div>
                      </div>
                      <div class="ts-blog-classic-box-content ">
                         <!-- Blog classic meta Start -->
@@ -14263,7 +14267,7 @@ $sum  = $num1 + $num2;
                   
                   @if(count($latest_blogs)>0)
                   @foreach($latest_blogs as $key => $latest_blog)
-                  <li class="ts-recent-post-list-li"><a href="{{ route('blog_detail', $latest_blog->slug) }}"><img width="150" height="150" src="{{ asset('uploads/blog_images/'.$latest_blog->image) }}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" ></a><a href="{{ route('blog_detail', $latest_blog->slug) }}">{!! $latest_blog->name !!}</a><span class="post-date">{{ $latest_blog->created_at->format('F d, Y') }}</span></li>
+                  <li class="ts-recent-post-list-li"><a href="{{ route('blog_detail', $latest_blog->slug) }}"><img src="{{ asset('uploads/blog_images/'.$latest_blog->image) }}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="{!! strip_tags($latest_blog->name) !!}" style="object-fit:cover;object-position:center;"></a><a href="{{ route('blog_detail', $latest_blog->slug) }}">{!! $latest_blog->name !!}</a><span class="post-date">{{ $latest_blog->created_at->format('F d, Y') }}</span></li>
                   @endforeach
                   @endif
                </ul>

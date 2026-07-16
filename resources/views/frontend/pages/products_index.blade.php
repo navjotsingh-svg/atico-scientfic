@@ -13,25 +13,10 @@
     </nav>
 
     <div class="ae-layout">
-      <aside class="ae-side">
-        <h3 class="ae-side-title">Browse Categories</h3>
-        <ul class="ae-side-list">
-          @forelse($sideCategories as $sideCat)
-            <li>
-              <a href="{{ route('categories', $sideCat->slug) }}">{!! $sideCat->name !!}</a>
-            </li>
-            @if(isset($sideCat->sub_cats))
-              @foreach($sideCat->sub_cats as $sub)
-                <li>
-                  <a href="{{ route('categories', $sub->slug) }}" class="is-sub">{!! $sub->name !!}</a>
-                </li>
-              @endforeach
-            @endif
-          @empty
-            <li><span class="ae-side-empty">No categories found</span></li>
-          @endforelse
-        </ul>
-      </aside>
+      @include('frontend.partials.category_sidebar', [
+        'sideCategories' => $sideCategories,
+        'sideTitle' => 'Browse Categories',
+      ])
 
       <div>
         <div class="ae-page-head ae-products-head">

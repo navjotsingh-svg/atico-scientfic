@@ -26,21 +26,7 @@
         </nav>
 
         <div class="ae-layout">
-            <aside class="ae-side">
-                <h3 class="ae-side-title">Categories</h3>
-                <ul class="ae-side-list">
-                    @foreach(sidebarCategories() as $sideCat)
-                        <li>
-                            <a href="{{ route('categories', $sideCat->slug) }}">{!! $sideCat->name !!}</a>
-                        </li>
-                        @foreach($sideCat->sub_cats as $sub)
-                            <li>
-                                <a href="{{ route('categories', $sub->slug) }}" style="padding-left:24px;font-weight:500;">{!! $sub->name !!}</a>
-                            </li>
-                        @endforeach
-                    @endforeach
-                </ul>
-            </aside>
+            @include('frontend.partials.category_sidebar', ['sideTitle' => 'Categories'])
 
             <div>
                 <div class="ae-page-head">

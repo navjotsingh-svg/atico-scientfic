@@ -98,7 +98,9 @@ class HomeController extends Controller{
             $blogs = Blog::where('status', '1')->take(4)->orderBy('id', 'desc')->get();
             $faqs = Faq::where('status', 1)->take(5)->orderBy('id', 'desc')->get();
             $groups = Group::where('status', 1)->take(8)->orderBy('sort', 'asc')->get();
+            $groups = $this->attachRelatedProductImagesToGroups($groups);
             $latest_cats = \App\Models\SidebarCategory::join('categories', 'sidebar_categories.category_id', '=', 'categories.id')->select('categories.name', 'categories.slug', 'categories.id', 'categories.image')->take(8)->get();
+            $latest_cats = $this->attachRelatedProductImagesToCategories($latest_cats);
 
             return view('frontend.home', compact('products', 'blogs', 'faqs', 'groups', 'latest_cats'));
         } catch (\Exception $e) {
@@ -112,6 +114,139 @@ class HomeController extends Controller{
                 'latest_cats' => collect(),
             ]);
         }
+    }
+
+    /**
+     * Prefer a real product photo for each homepage group card.
+     */
+    protected function attachRelatedProductImagesToGroups($groups)
+    {
+        $usedImages = [];
+
+        foreach ($groups as $group) {
+            if (!empty($group->image)) {
+                $usedImages[$group->image] = true;
+                continue;
+            }
+
+            $categoryIds = GroupCategory::where('group_id', $group->id)->pluck('category_id')->toArray();
+            if (empty($categoryIds)) {
+                continue;
+            }
+
+            $childIds = Category::where(function ($query) use ($categoryIds) {
+                $query->whereIn('parent_id', $categoryIds)
+                    ->orWhereIn('second_parent_id', $categoryIds)
+                    ->orWhereIn('third_parent_id', $categoryIds)
+                    ->orWhereIn('four_parent_id', $categoryIds);
+            })->pluck('id')->toArray();
+
+            $allCategoryIds = array_values(array_unique(array_merge($categoryIds, $childIds)));
+            $productImage = $this->firstProductImageForCategories($allCategoryIds, array_keys($usedImages));
+
+            if ($productImage) {
+                $group->image = $productImage;
+                $usedImages[$productImage] = true;
+                continue;
+            }
+
+            $categoryImage = Category::whereIn('id', $categoryIds)
+                ->whereNotNull('image')
+                ->where('image', '!=', '')
+                ->value('image');
+
+            if ($categoryImage) {
+                $group->image = $categoryImage;
+                $usedImages[$categoryImage] = true;
+            }
+        }
+
+        foreach ($groups as $group) {
+            $group->image_url = $this->optimizedProductImageUrl($group->image ?? null);
+        }
+
+        return $groups;
+    }
+
+    /**
+     * Prefer a related product photo when a category has no image of its own.
+     */
+    protected function attachRelatedProductImagesToCategories($categories)
+    {
+        $usedImages = [];
+
+        foreach ($categories as $category) {
+            if (!empty($category->image)) {
+                $usedImages[$category->image] = true;
+                $category->image_url = $this->optimizedProductImageUrl($category->image);
+                continue;
+            }
+
+            $childIds = Category::where(function ($query) use ($category) {
+                $query->where('parent_id', $category->id)
+                    ->orWhere('second_parent_id', $category->id)
+                    ->orWhere('third_parent_id', $category->id)
+                    ->orWhere('four_parent_id', $category->id);
+            })->pluck('id')->toArray();
+
+            $allCategoryIds = array_values(array_unique(array_merge([$category->id], $childIds)));
+            $productImage = $this->firstProductImageForCategories($allCategoryIds, array_keys($usedImages));
+
+            if ($productImage) {
+                $category->image = $productImage;
+                $usedImages[$productImage] = true;
+            }
+
+            $category->image_url = $this->optimizedProductImageUrl($category->image ?? null);
+        }
+
+        return $categories;
+    }
+
+    protected function optimizedProductImageUrl($image)
+    {
+        if (empty($image)) {
+            return asset('assets/images/no_product.png');
+        }
+
+        $thumbRel = 'uploads/product_images/thumbs/' . pathinfo($image, PATHINFO_FILENAME) . '.webp';
+        if (is_file(public_path($thumbRel))) {
+            return asset($thumbRel);
+        }
+
+        return asset('uploads/product_images/' . $image);
+    }
+
+    protected function firstProductImageForCategories(array $categoryIds, array $excludeImages = [])
+    {
+        if (empty($categoryIds)) {
+            return null;
+        }
+
+        $query = Product::join('product_categories', 'products.id', '=', 'product_categories.product_id')
+            ->whereIn('product_categories.category_id', $categoryIds)
+            ->where('products.status', 1)
+            ->whereNotNull('products.image')
+            ->where('products.image', '!=', '');
+
+        if (!empty($excludeImages)) {
+            $query->whereNotIn('products.image', $excludeImages);
+        }
+
+        $image = $query->orderByDesc('products.id')->value('products.image');
+
+        if ($image || empty($excludeImages)) {
+            return $image;
+        }
+
+        // Fallback if every matching product image was already used.
+        return Product::join('product_categories', 'products.id', '=', 'product_categories.product_id')
+            ->whereIn('product_categories.category_id', $categoryIds)
+            ->where('products.status', 1)
+            ->whereNotNull('products.image')
+            ->where('products.image', '!=', '')
+            ->orderByDesc('products.id')
+            ->value('products.image');
     }
 
     public function showCaptchaForm()
