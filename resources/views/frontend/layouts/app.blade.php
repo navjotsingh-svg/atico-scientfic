@@ -157,7 +157,7 @@ $isHome = $route === 'home';
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap"></noscript>
-        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=23">
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=24">
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
     @yield('css')

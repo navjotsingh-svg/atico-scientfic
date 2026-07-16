@@ -1,9 +1,6 @@
 @extends('frontend.layouts.app')
 @section('content')
 <style>
-#query .modal-header { background: #1947d1; color: #fff; }
-#query button.btn { background-color: #ff6b35; border-color: #ff6b35; color: #fff !important; padding: 10px 20px; }
-#query .close { color: #fff; opacity: 1; background: transparent; border: 0; font-size: 28px; line-height: 1; }
 .ae-panel-card .body table { width: 100%; border-collapse: collapse; margin: 12px 0; }
 .ae-panel-card .body table td,
 .ae-panel-card .body table th { border: 1px solid #e6e6e6; padding: 8px; vertical-align: top; }
@@ -88,106 +85,163 @@
     </div>
 </section>
 
-<div class="modal fade" id="query" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title">{!! $product->name !!} - Query</h4>
-                <button type="button" class="close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form enctype="multipart/form-data" action="{{ route('product_query.store') }}" method="post">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <div class="row">
-                        <div class="col-12 py-2">
-                            <label for="name">Name:</label>
-                            <input type="text" name="name" required class="form-control" value="{{ old('name') }}">
-                            @if($errors->has('name'))
-                                <span class="text-danger">{{ $errors->first('name') }}</span>
+<div class="modal fade ae-quote-modal" id="query" tabindex="-1" aria-labelledby="aeQuoteTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content ae-quote-content">
+            <button type="button" class="ae-quote-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+
+            <div class="ae-quote-layout">
+                <aside class="ae-quote-aside">
+                    <p class="ae-quote-kicker">Request a Quote</p>
+                    <h2 id="aeQuoteTitle">Get pricing for this product</h2>
+                    <p class="ae-quote-copy">Share your requirements and our team will respond with a quotation shortly.</p>
+
+                    <div class="ae-quote-product">
+                        <img
+                            src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"
+                            alt="{!! strip_tags($product->name) !!}"
+                            onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
+                        >
+                        <div>
+                            <strong>{!! $product->name !!}</strong>
+                            @if(!empty($product['product_code']))
+                                <span>Code: {!! $product['product_code'] !!}</span>
                             @endif
-                        </div>
-                        <div class="col-12 py-2">
-                            <label for="email">E-mail:</label>
-                            <input type="email" name="email" class="form-control" required value="{{ old('email') }}">
-                            @if($errors->has('email'))
-                                <span class="text-danger">{{ $errors->first('email') }}</span>
-                            @endif
-                        </div>
-                        <div class="col-12 py-2">
-                            <label for="country">Country:</label>
-                            <select name="country" required class="form-control">
-                                <option value="">Select Country</option>
-                                @foreach(getCountries() as $country)
-                                    <option value="{!! $country->name !!}" {{ old('country') == $country->name ? 'selected' : '' }}>{!! $country->name !!}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('country'))
-                                <span class="text-danger">{{ $errors->first('country') }}</span>
-                            @endif
-                        </div>
-                        <div class="col-12 py-2">
-                            <label for="phone_number">Phone Number:</label>
-                            <input type="number" class="form-control" name="phone_number" required value="{{ old('phone_number') }}">
-                            @if($errors->has('phone_number'))
-                                <span class="text-danger">{{ $errors->first('phone_number') }}</span>
-                            @endif
-                        </div>
-                        <div class="col-12 py-2">
-                            <label for="quantity">Quantity:</label>
-                            <input type="number" min="0" class="form-control" name="quantity" required value="{{ old('quantity') }}">
-                            @if($errors->has('quantity'))
-                                <span class="text-danger">{{ $errors->first('quantity') }}</span>
-                            @endif
-                        </div>
-                        <div class="col-12 py-2">
-                            <label for="message">Message:</label>
-                            <textarea name="message" id="message" class="form-control" required rows="4">{{ old('message') }}</textarea>
-                            @if($errors->has('message'))
-                                <span class="text-danger">{{ $errors->first('message') }}</span>
-                            @endif
-                        </div>
-                        <div class="col-12 py-2">
-                            <input type="file" name="file_name" class="form-control">
-                        </div>
-                        <div class="col-12 py-2">
-                            <div class="g-recaptcha" data-sitekey="6LdxTXQoAAAAALx5i79u3FVOWj-Rgh0XguRBmwM_"></div>
-                        </div>
-                        <div class="col-12 py-2 text-center">
-                            <button class="btn" type="submit">Submit</button>
                         </div>
                     </div>
-                </form>
+
+                    <ul class="ae-quote-points">
+                        <li>Fast response from sales team</li>
+                        <li>Export packaging &amp; documentation support</li>
+                        <li>Bulk and tender quotations available</li>
+                    </ul>
+                </aside>
+
+                <div class="ae-quote-form-wrap">
+                    <form class="ae-quote-form" enctype="multipart/form-data" action="{{ route('product_query.store') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                        <div class="ae-quote-grid">
+                            <label class="ae-quote-field">
+                                <span>Full Name *</span>
+                                <input type="text" name="name" required maxlength="120" value="{{ old('name') }}" placeholder="Your name" autocomplete="name">
+                                @error('name') <em>{{ $message }}</em> @enderror
+                            </label>
+
+                            <label class="ae-quote-field">
+                                <span>Email *</span>
+                                <input type="email" name="email" required maxlength="150" value="{{ old('email') }}" placeholder="you@company.com" autocomplete="email">
+                                @error('email') <em>{{ $message }}</em> @enderror
+                            </label>
+
+                            <label class="ae-quote-field">
+                                <span>Country *</span>
+                                <select name="country" required>
+                                    <option value="">Select Country</option>
+                                    @foreach(getCountries() as $country)
+                                        <option value="{!! $country->name !!}" @selected(old('country') == $country->name)>{!! $country->name !!}</option>
+                                    @endforeach
+                                </select>
+                                @error('country') <em>{{ $message }}</em> @enderror
+                            </label>
+
+                            <label class="ae-quote-field">
+                                <span>Phone Number *</span>
+                                <input type="tel" name="phone_number" required maxlength="40" value="{{ old('phone_number') }}" placeholder="Mobile number" autocomplete="tel">
+                                @error('phone_number') <em>{{ $message }}</em> @enderror
+                            </label>
+
+                            <label class="ae-quote-field">
+                                <span>Quantity *</span>
+                                <input type="number" min="1" name="quantity" required value="{{ old('quantity', 1) }}" placeholder="1">
+                                @error('quantity') <em>{{ $message }}</em> @enderror
+                            </label>
+
+                            <label class="ae-quote-field ae-quote-field-full">
+                                <span>Message *</span>
+                                <textarea name="message" id="message" required rows="4" maxlength="5000" placeholder="Tell us quantity, destination, and any specifications…">{{ old('message') }}</textarea>
+                                @error('message') <em>{{ $message }}</em> @enderror
+                            </label>
+
+                            <label class="ae-quote-field ae-quote-field-full">
+                                <span>Attachment <i>(optional)</i></span>
+                                <input type="file" name="file_name" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp">
+                            </label>
+                        </div>
+
+                        <div class="ae-quote-captcha">
+                            <div class="g-recaptcha" data-sitekey="6LdxTXQoAAAAALx5i79u3FVOWj-Rgh0XguRBmwM_"></div>
+                        </div>
+
+                        <button class="ae-quote-submit" type="submit">Submit Quote Request</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="successModal" class="modal fade">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Success!</h4>
-            </div>
-            <div class="modal-body">
-                <p class="text-center mb-0" id="modal_success_message">Success</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success btn-block" data-bs-dismiss="modal" data-dismiss="modal">OK</button>
-            </div>
+<div id="successModal" class="modal fade ae-success-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ae-success-content">
+            <div class="ae-success-icon" aria-hidden="true">✓</div>
+            <h4 class="modal-title">Thank you!</h4>
+            <p class="mb-0" id="modal_success_message">Your quote request has been received.</p>
+            <button class="ae-quote-submit ae-success-ok" type="button" data-bs-dismiss="modal">OK</button>
         </div>
     </div>
 </div>
 @endsection
 
 @section('script')
-<script type="text/javascript">
-@if (Session::has('errors'))
-$('#query').modal('show');
-@endif
-@if (Session::has('success'))
-$("#modal_success_message").html("{!! Session::get('success') !!}");
-$('#successModal').modal('show');
-@endif
+<script>
+(function () {
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function () {
+    var quoteModal = document.getElementById('query');
+    var captchaLoaded = false;
+
+    function loadCaptcha() {
+      if (captchaLoaded || document.querySelector('script[data-ae-recaptcha]')) {
+        captchaLoaded = true;
+        return;
+      }
+      captchaLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://www.google.com/recaptcha/api.js';
+      s.async = true;
+      s.defer = true;
+      s.setAttribute('data-ae-recaptcha', '1');
+      document.body.appendChild(s);
+    }
+
+    function showModal(id) {
+      var el = document.getElementById(id);
+      if (!el || !window.bootstrap || !bootstrap.Modal) return;
+      bootstrap.Modal.getOrCreateInstance(el).show();
+    }
+
+    if (quoteModal) {
+      quoteModal.addEventListener('show.bs.modal', loadCaptcha);
+    }
+
+    @if ($errors->any())
+      loadCaptcha();
+      showModal('query');
+    @endif
+
+    @if (Session::has('success'))
+      var msg = @json(Session::get('success'));
+      var box = document.getElementById('modal_success_message');
+      if (box) box.textContent = msg;
+      showModal('successModal');
+    @endif
+  });
+})();
 </script>
 @endsection

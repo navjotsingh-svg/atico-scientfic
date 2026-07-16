@@ -3906,3 +3906,285 @@ body {
     padding: 56px 0 40px;
   }
 }
+
+/* ===== Product Get Quote modal ===== */
+.ae-quote-modal .modal-dialog {
+  max-width: 920px;
+}
+
+.ae-quote-content {
+  border: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+  position: relative;
+}
+
+.ae-quote-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ae-quote-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.2fr;
+  min-height: 520px;
+}
+
+.ae-quote-aside {
+  background:
+    linear-gradient(160deg, rgba(25, 71, 209, 0.96), rgba(11, 28, 77, 0.94)),
+    #1947d1;
+  color: #fff;
+  padding: 34px 28px;
+}
+
+.ae-quote-kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.85;
+  font-family: var(--font-heading);
+}
+
+.ae-quote-aside h2 {
+  margin: 0 0 10px;
+  font-size: 1.55rem;
+  line-height: 1.25;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  color: #fff;
+}
+
+.ae-quote-copy {
+  margin: 0 0 22px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.ae-quote-product {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 22px;
+}
+
+.ae-quote-product img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.ae-quote-product strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 4px;
+  font-family: var(--font-heading);
+}
+
+.ae-quote-product span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.ae-quote-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ae-quote-points li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ae-quote-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fa4219;
+}
+
+.ae-quote-form-wrap {
+  background: #fff;
+  padding: 28px 26px 24px;
+}
+
+.ae-quote-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+}
+
+.ae-quote-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ae-quote-field-full {
+  grid-column: 1 / -1;
+}
+
+.ae-quote-field span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #334155;
+  font-family: var(--font-heading);
+}
+
+.ae-quote-field span i {
+  font-style: normal;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.ae-quote-field input,
+.ae-quote-field select,
+.ae-quote-field textarea {
+  width: 100%;
+  border: 1px solid #dbe3f0;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: #0f172a;
+  background: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.ae-quote-field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.ae-quote-field input:focus,
+.ae-quote-field select:focus,
+.ae-quote-field textarea:focus {
+  outline: none;
+  border-color: var(--ae-blue);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(25, 71, 209, 0.12);
+}
+
+.ae-quote-field em {
+  color: #dc2626;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.ae-quote-captcha {
+  margin: 14px 0 12px;
+}
+
+.ae-quote-submit {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 18px;
+  background: var(--ae-orange);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ae-quote-submit:hover {
+  background: #e23a14;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(250, 66, 25, 0.28);
+}
+
+.ae-success-content {
+  border: 0;
+  border-radius: 16px;
+  padding: 28px 24px 22px;
+  text-align: center;
+}
+
+.ae-success-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.ae-success-content .modal-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.ae-success-content p {
+  color: #64748b;
+  margin-bottom: 18px;
+}
+
+.ae-success-ok {
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .ae-quote-layout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .ae-quote-aside {
+    padding: 28px 22px 20px;
+  }
+
+  .ae-quote-close {
+    background: rgba(15, 23, 42, 0.55);
+  }
+
+  .ae-quote-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ae-quote-form-wrap {
+    padding: 22px 18px 20px;
+  }
+}
