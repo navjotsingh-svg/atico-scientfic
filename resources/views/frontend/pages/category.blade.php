@@ -43,10 +43,10 @@
                 </div>
 
                 <div class="ae-search-box">
-                    <input type="text" id="search" placeholder="Search category…">
-                    <input type="hidden" id="cat_id" value="{{ $cid }}">
-                    <div id="suggesstion-box2">
-                        <ul id="sdata2"></ul>
+                    <input type="text" id="aeCatSearch" placeholder="Search category…" autocomplete="off">
+                    <input type="hidden" id="aeCatSearchId" value="{{ $cid }}">
+                    <div class="ae-cat-suggest" id="aeCatSuggest">
+                        <ul id="aeCatSuggestList"></ul>
                     </div>
                 </div>
 
@@ -97,25 +97,96 @@
 </section>
 
 <style>
-#sdata2 { list-style:none; margin:6px 0 0; padding:0; background:#111; border-radius:8px; overflow:hidden; }
-#sdata2 li { border-bottom:1px solid #333; }
-#sdata2 li a { display:block; padding:8px 12px; color:#fff; text-decoration:none; font-size:13px; }
-#sdata2 li a:hover { background:var(--ae-blue); }
-#suggesstion-box2 { display:none; }
+.ae-cat-suggest {
+  display: none;
+  margin-top: 8px;
+  position: relative;
+  z-index: 5;
+}
+.ae-cat-suggest.is-open { display: block; }
+.ae-cat-suggest ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #0f172a;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+}
+.ae-cat-suggest li { border-bottom: 1px solid #1e293b; }
+.ae-cat-suggest li:last-child { border-bottom: 0; }
+.ae-cat-suggest a {
+  display: block;
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--font-body);
+}
+.ae-cat-suggest a:hover { background: var(--ae-blue); }
+.ae-cat-suggest .ae-cat-suggest-empty {
+  padding: 12px 14px;
+  color: #94a3b8;
+  font-size: 13px;
+}
 </style>
 
+@push('scripts')
 <script>
-$("#search").keyup(function() {
-    $("#suggesstion-box2").hide();
-    if ($(this).val().length == 0) return false;
-    $.ajax({
-        type: "GET",
-        url: "{{ route('get_categories') }}/" + $(this).val() + "/" + $("#cat_id").val(),
-        success: function(data) {
-            $("#suggesstion-box2").show();
-            $("#sdata2").html(data);
-        }
+(function () {
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function () {
+    var input = document.getElementById('aeCatSearch');
+    var catId = document.getElementById('aeCatSearchId');
+    var box = document.getElementById('aeCatSuggest');
+    var list = document.getElementById('aeCatSuggestList');
+    if (!input || !catId || !box || !list) return;
+
+    var timer = null;
+    var endpoint = @json(url('/get_categories'));
+
+    function hideSuggest() {
+      box.classList.remove('is-open');
+      list.innerHTML = '';
+    }
+
+    function showSuggest(html) {
+      list.innerHTML = html || '<li class="ae-cat-suggest-empty">No categories found</li>';
+      box.classList.add('is-open');
+    }
+
+    input.addEventListener('input', function () {
+      var q = input.value.trim();
+      clearTimeout(timer);
+      if (!q.length) {
+        hideSuggest();
+        return;
+      }
+
+      timer = setTimeout(function () {
+        var url = endpoint.replace(/\/$/, '') + '/' + encodeURIComponent(q) + '/' + encodeURIComponent(catId.value);
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+          .then(function (res) { return res.text(); })
+          .then(function (html) {
+            showSuggest((html || '').trim());
+          })
+          .catch(function () {
+            showSuggest('<li class="ae-cat-suggest-empty">Unable to search right now</li>');
+          });
+      }, 250);
     });
-});
+
+    document.addEventListener('click', function (e) {
+      if (!box.contains(e.target) && e.target !== input) hideSuggest();
+    });
+  });
+})();
 </script>
+@endpush
 @endsection

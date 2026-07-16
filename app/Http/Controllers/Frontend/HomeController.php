@@ -77,7 +77,8 @@ class HomeController extends Controller{
 
     public function getSearchCategoriesProducts($slug='', $id=''){
         $slug = trim(urldecode($slug));
-        $p_ids = ProductCategory::where('category_id', $id)->pluck('product_id')->toArray();
+        $categoryIds = $this->categoryIdsWithDescendants($id);
+        $p_ids = ProductCategory::whereIn('category_id', $categoryIds)->pluck('product_id')->toArray();
         $products = Product::where('status', 1)
             ->where('name', 'like', '%' . $slug . '%')
             ->whereIn('id', $p_ids)
@@ -90,6 +91,33 @@ class HomeController extends Controller{
             $html .= '<li><a href="' . e(url('/product/' . $product->slug)) . '">' . e(html_entity_decode(strip_tags($product->name), ENT_QUOTES | ENT_HTML5, 'UTF-8')) . '</a></li>';
         }
         return response($html)->header('Content-Type', 'text/html; charset=UTF-8');
+    }
+
+    protected function categoryIdsWithDescendants($categoryId)
+    {
+        $ids = [(int) $categoryId];
+        $frontier = [(int) $categoryId];
+
+        for ($depth = 0; $depth < 4 && !empty($frontier); $depth++) {
+            $children = Category::where(function ($query) use ($frontier) {
+                $query->whereIn('parent_id', $frontier)
+                    ->orWhereIn('second_parent_id', $frontier)
+                    ->orWhereIn('third_parent_id', $frontier)
+                    ->orWhereIn('four_parent_id', $frontier);
+            })
+                ->pluck('id')
+                ->map(function ($id) { return (int) $id; })
+                ->all();
+
+            $children = array_values(array_diff($children, $ids));
+            if (empty($children)) {
+                break;
+            }
+            $ids = array_merge($ids, $children);
+            $frontier = $children;
+        }
+
+        return array_values(array_unique($ids));
     }
     public function index()
     {
