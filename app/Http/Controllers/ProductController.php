@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\ProductExport;
 use App\Helper\ImportWord;
 use App\Models\Product;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\ProductOld;
 use App\Models\ProductCodeOld;
 use App\Models\Term;
@@ -685,47 +687,10 @@ class ProductController extends Controller
 
     public function exportProduct()
     {
-        $userData = Product::all();
-        \Excel::create('Product', function($excel) use($userData) {
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
 
-            $excel->sheet('user', function($sheet) use($userData) {
-
-
-             $sheet->cell(1, function($row) { 
-                $row->setBackground('#ee891b'); 
-            });
-
-
-                $excelData = [];
-                $excelData[] = [
-                    'Product Name',
-                    'Categories',
-                    'Product Code',
-                    'Slug',
-                    'Description',
-                    'Status',
-                    'Date',
-                ];
-
-                foreach ($userData as $key => $value) {
-                    $excelData[] = [
-                        $value->name,
-                        getProductCatsName(getProductCats($value->id)),
-                        $value->product_code,
-                        $value->slug,
-                        strip_tags($value->description),
-                        $value->status,
-                        $value->created_at
-                    ];                    
-                }
-
-                $sheet->fromArray($excelData, null, 'A1', true, false);
-
-            });
-
-        })->download('xlsx');
-
+        return Excel::download(new ProductExport, 'products.csv', \Maatwebsite\Excel\Excel::CSV);
     }
-
 
 }

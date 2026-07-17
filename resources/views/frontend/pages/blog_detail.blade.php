@@ -14256,7 +14256,7 @@ $sum  = $num1 + $num2;
               <input type="file" name="file_name" id="file_name" accept=".xls,.xlsx,.pdf">
                                           </div>
                <div class="form-group">
-              <div class="g-recaptcha" data-sitekey="6LdxTXQoAAAAALx5i79u3FVOWj-Rgh0XguRBmwM_"></div>
+              <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
 </div>
               <p><button data-res="<?php echo $sum; ?>" type="submit" style='background: #F99E00;color:#fff;' class="get_quote_btn">send message</button>
               </div>

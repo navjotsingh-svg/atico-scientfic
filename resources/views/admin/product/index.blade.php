@@ -19,7 +19,7 @@
                         {{-- for message rendering --}}
                         @include('admin.layouts.messages')
 
-                        <a href="{!! route('product.excel') !!}" class="btn btn-success"> Export Excel</a>
+                        <a href="{!! route('product.excel') !!}" class="btn btn-success">Export CSV</a>
 
                         <form action="#" method="post">
                             <div class="col-md-3 text-right pull-right padding0 marginbottom10">

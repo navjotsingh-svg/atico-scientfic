@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    /*
+    | Google reCAPTCHA v2
+    | Use Google test keys on localhost. For production, create keys for your
+    | live domain at https://www.google.com/recaptcha/admin and set them in .env
+    */
+    'recaptcha' => [
+        'site_key' => env('RECAPTCHA_SITE_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'),
+    ],
+
 ];

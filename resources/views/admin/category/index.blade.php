@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{!! route('category.excel') !!}" class="btn btn-success"> Export Excel</a>
+                        <a href="{!! route('category.excel') !!}" class="btn btn-success">Export CSV</a>
                         <form action="#" method="post">
                             <div class="col-md-3 text-right pull-right padding0 marginbottom10">
                                 {!! lang('common.per_page') !!}: 

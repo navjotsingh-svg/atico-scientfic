@@ -171,7 +171,7 @@
                         </div>
 
                         <div class="ae-quote-captcha">
-                            <div class="g-recaptcha" data-sitekey="6LdxTXQoAAAAALx5i79u3FVOWj-Rgh0XguRBmwM_"></div>
+                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                         </div>
 
                         <button class="ae-quote-submit" type="submit">Submit Quote Request</button>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\CategoryExport;
 use App\Models\Category;
 use App\Models\ProductCategory;
 use App\Models\Product;
 use App\Models\Group;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -331,50 +333,10 @@ class CategoryController extends Controller
 
     public function exportCategory()
     {
-        $userData = Category::all();//->downloadExcel('categories.XLSX');;
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
 
-        return Excel::download($userData, 'invoices.tsv', \Maatwebsite\Excel\Excel::TSV);
-
-
-        //\Excel::download($userData, 'users.xls');
-
-        // \Excel::store('Category', function($excel) use($userData) {
-
-        //     $excel->sheet('user', function($sheet) use($userData) {
-
-
-        //      $sheet->cell(1, function($row) { 
-        //         $row->setBackground('#ee891b'); 
-        //     });
-
-
-        //         $excelData = [];
-        //         $excelData[] = [
-        //             'Name',
-        //             'Short Name',
-        //             'Description',
-        //             'Slug',
-        //             'Status',
-        //             'Date',
-        //         ];
-
-        //         foreach ($userData as $key => $value) {
-        //             $excelData[] = [
-        //                 $value->name,
-        //                 $value->short_name,
-        //                 strip_tags($value->description),
-        //                 $value->slug,
-        //                 $value->status,
-        //                 $value->created_at
-        //             ];                    
-        //         }
-
-        //         $sheet->fromArray($excelData, null, 'A1', true, false);
-
-        //     });
-
-        // })->download('xlsx','app/downloads');
-
+        return Excel::download(new CategoryExport, 'categories.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 
     public function catNoProduct()
