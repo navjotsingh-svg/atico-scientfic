@@ -99,28 +99,31 @@
                     @endif
                 </p>
 
-                @if($showSubcatSelect)
-                    <div class="ae-subcat-select-wrap">
-                        <label class="ae-subcat-select-label" for="aeSubcatSelect">Filter by subcategory</label>
-                        <select id="aeSubcatSelect" class="ae-subcat-select" aria-label="Filter by subcategory">
-                            <option value="{{ route('categories', $category->slug) }}" @selected(empty($activeSubSlug))>
-                                All {!! strip_tags($category->name) !!}
-                            </option>
-                            @foreach($subcategoryFilters as $filter)
-                                <option
-                                    value="{{ route('categories', $category->slug) }}?sub={{ $filter->slug }}"
-                                    @selected(($activeSubSlug ?? '') === $filter->slug)
-                                >{!! $filter->name !!}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                @endif
+                <div class="ae-listing-toolbar">
+                    @if($showSubcatSelect)
+                        <div class="ae-subcat-select-wrap">
+                            <label class="ae-subcat-select-label" for="aeSubcatSelect">Filter by subcategory</label>
+                            <select id="aeSubcatSelect" class="ae-subcat-select" aria-label="Filter by subcategory">
+                                <option value="{{ route('categories', $category->slug) }}" @selected(empty($activeSubSlug))>
+                                    All {!! strip_tags($category->name) !!}
+                                </option>
+                                @foreach($subcategoryFilters as $filter)
+                                    <option
+                                        value="{{ route('categories', $category->slug) }}?sub={{ $filter->slug }}"
+                                        @selected(($activeSubSlug ?? '') === $filter->slug)
+                                    >{!! $filter->name !!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
 
-                <div class="ae-search-box">
-                    <input type="text" id="aeProdSearch" placeholder="Search product…" autocomplete="off">
-                    <input type="hidden" id="aeProdSearchId" value="{{ $cid }}">
-                    <div class="ae-cat-suggest" id="aeProdSuggest">
-                        <ul id="aeProdSuggestList"></ul>
+                    <div class="ae-search-box">
+                        <label class="ae-search-label" for="aeProdSearch">Search</label>
+                        <input type="text" id="aeProdSearch" placeholder="Search product…" autocomplete="off">
+                        <input type="hidden" id="aeProdSearchId" value="{{ $cid }}">
+                        <div class="ae-cat-suggest" id="aeProdSuggest">
+                            <ul id="aeProdSuggestList"></ul>
+                        </div>
                     </div>
                 </div>
 
@@ -189,39 +192,6 @@
 
 .ae-hub-filter {
   margin-bottom: 16px;
-}
-
-.ae-subcat-select-wrap {
-  margin-bottom: 14px;
-  max-width: 420px;
-}
-
-.ae-subcat-select-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 8px;
-  font-family: var(--font-heading) !important;
-}
-
-.ae-subcat-select {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: var(--font-body);
-  background: #fff;
-  color: #374151;
-  cursor: pointer;
-  appearance: auto;
-}
-
-.ae-subcat-select:focus {
-  outline: none;
-  border-color: var(--ae-blue);
-  box-shadow: 0 0 0 3px rgba(25, 71, 209, 0.12);
 }
 </style>
 
