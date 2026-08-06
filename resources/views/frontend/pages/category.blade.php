@@ -41,7 +41,7 @@
                             @if(!empty($category_detail['image']))
                                 <img
                                     src="{{ asset('uploads/product_images/'.$category_detail['image']) }}"
-                                    alt="" style="max-width: 400px;"
+                                    alt="" style="max-width: 400px; margin-top: 45px;" 
                                     class="ae-page-intro-image"
                                 >
                             @endif

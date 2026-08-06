@@ -85,7 +85,7 @@
                         <div class="body">
                             @if(!empty($aboutCat->image ?? $aboutCat['image'] ?? null))
                                 <img src="{{ asset('uploads/product_images/'.($aboutCat->image ?? $aboutCat['image'])) }}"
-                                    alt="" style="max-width: 400px;" class="ae-page-intro-image">
+                                    alt="" style="max-width: 400px; margin-top: 45px;" class="ae-page-intro-image">
                             @endif
                             {!! $aboutHtml !!}
                         </div>
@@ -105,13 +105,13 @@
                             <label class="ae-subcat-select-label" for="aeSubcatSelect">Filter by subcategory</label>
                             <select id="aeSubcatSelect" class="ae-subcat-select" aria-label="Filter by subcategory">
                                 <option value="{{ route('categories', $category->slug) }}" @selected(empty($activeSubSlug))>
-                                    All {!! strip_tags($category->name) !!}
+                                    All {!! strip_tags($category->name) !!} ({{ $hubProductCount ?? count($products) }})
                                 </option>
                                 @foreach($subcategoryFilters as $filter)
                                     <option
                                         value="{{ route('categories', $category->slug) }}?sub={{ $filter->slug }}"
                                         @selected(($activeSubSlug ?? '') === $filter->slug)
-                                    >{!! $filter->name !!}</option>
+                                    >{!! $filter->name !!} ({{ $filter->product_count ?? 0 }})</option>
                                 @endforeach
                             </select>
                         </div>

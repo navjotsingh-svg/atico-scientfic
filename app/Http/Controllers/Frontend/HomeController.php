@@ -197,6 +197,22 @@ class HomeController extends Controller{
         return array_values(array_unique($ids));
     }
 
+    protected function countActiveProductsInCategoryTree(int $categoryId): int
+    {
+        $categoryIds = $this->categoryIdsWithDescendants($categoryId);
+        $productIds = ProductCategory::whereIn('category_id', $categoryIds)
+            ->pluck('product_id')
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($productIds)) {
+            return 0;
+        }
+
+        return Product::whereIn('id', $productIds)->where('status', 1)->count();
+    }
+
     protected function breadcrumbForCategoryGrid(Category $category): array
     {
         $cat = null;
@@ -286,7 +302,13 @@ class HomeController extends Controller{
             $sub_sub_cat = null;
         }
 
-        $subcategoryFilters = $this->getDirectChildCategories($hubCategory);
+        $subcategoryFilters = $this->getDirectChildCategories($hubCategory)->map(function ($filter) {
+            $filter->product_count = $this->countActiveProductsInCategoryTree((int) $filter->id);
+
+            return $filter;
+        });
+
+        $hubProductCount = $this->countActiveProductsInCategoryTree((int) $hubCategory->id);
 
         $filterRootIds = $this->categoryIdsWithDescendants($hubCategory->id);
         $activeFilter = null;
@@ -333,7 +355,8 @@ class HomeController extends Controller{
             'subcategoryFilters',
             'activeSubSlug',
             'activeFilter',
-            'hubProductListing'
+            'hubProductListing',
+            'hubProductCount'
         )));
     }
 
