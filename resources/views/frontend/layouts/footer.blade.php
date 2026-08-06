@@ -107,6 +107,6 @@
   </div>
 </footer>
 
-<a class="ae-whatsapp" href="https://wa.me/919896793832?text=Hi" target="_blank" rel="noopener" aria-label="WhatsApp">
+<!-- <a class="ae-whatsapp" href="https://wa.me/919896793832?text=Hi" target="_blank" rel="noopener" aria-label="WhatsApp">
   <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp">
-</a>
+</a> -->
