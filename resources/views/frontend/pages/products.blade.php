@@ -1,16 +1,12 @@
 @extends('frontend.layouts.app')
 @section('content')
 @php
-    if (isset($sub_sub_cat)) {
-        $category_detail = $sub_sub_cat;
-    } elseif (isset($sub_cat)) {
-        $category_detail = $sub_cat;
-    } elseif (isset($cat)) {
-        $category_detail = $cat;
-    } else {
-        $category_detail = $category;
-    }
-    $cid = isset($cat) ? $cat['id'] : $category['id'];
+    $hasSubFilters = isset($subcategoryFilters) && $subcategoryFilters->count() > 0;
+    $isHubListing = !empty($hubProductListing);
+    $showSubcatSelect = $hasSubFilters;
+
+    $category_detail = $category;
+    $cid = isset($activeFilter) && $activeFilter ? $activeFilter->id : $category->id;
 @endphp
 
 <section class="ae-page">
@@ -18,10 +14,41 @@
         <nav class="ae-crumb" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
             <span>/</span>
+            <a href="{{ route('products.index') }}">Our Products</a>
+            <span>/</span>
             @if(isset($cat))
-                <span>{!! $cat['name'] !!}</span>
-            @else
-                <span>{!! $category['name'] !!}</span>
+                <a href="{{ route('categories', $cat->slug) }}">{!! $cat->name !!}</a>
+            @elseif(isset($category))
+                <span>{!! $category->name !!}</span>
+            @endif
+            @if($isHubListing || $showSubcatSelect)
+                @if(isset($sub_cat))
+                    <span>/</span>
+                    <a href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a>
+                @elseif(isset($category))
+                    <span>/</span>
+                    <span>{!! $category->name !!}</span>
+                @endif
+                @if(isset($activeFilter) && $activeFilter)
+                    <span>/</span>
+                    <span>{!! $activeFilter->name !!}</span>
+                @endif
+            @elseif($hasSubFilters)
+                @if(isset($sub_cat))
+                    <span>/</span>
+                    <a href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a>
+                @endif
+                @if(isset($activeFilter) && $activeFilter)
+                    <span>/</span>
+                    <span>{!! $activeFilter->name !!}</span>
+                @endif
+            @elseif(isset($sub_cat))
+                <span>/</span>
+                <span>{!! $sub_cat->name !!}</span>
+            @endif
+            @if(!$hasSubFilters && isset($sub_sub_cat))
+                <span>/</span>
+                <span>{!! $sub_sub_cat->name !!}</span>
             @endif
         </nav>
 
@@ -31,8 +58,30 @@
             <div>
                 <div class="ae-page-head">
                     <h1>{!! $category_detail['name'] !!}</h1>
-                    <p>Showing all {{ count($products) }} results</p>
+                    <p>
+                        Showing {{ count($products) }} {{ count($products) === 1 ? 'product' : 'products' }}
+                        @if($showSubcatSelect && empty($activeSubSlug))
+                            from all subcategories
+                        @endif
+                    </p>
                 </div>
+
+                @if($showSubcatSelect)
+                    <div class="ae-subcat-select-wrap">
+                        <label class="ae-subcat-select-label" for="aeSubcatSelect">Filter by subcategory</label>
+                        <select id="aeSubcatSelect" class="ae-subcat-select" aria-label="Filter by subcategory">
+                            <option value="{{ route('categories', $category->slug) }}" @selected(empty($activeSubSlug))>
+                                All {!! strip_tags($category->name) !!}
+                            </option>
+                            @foreach($subcategoryFilters as $filter)
+                                <option
+                                    value="{{ route('categories', $category->slug) }}?sub={{ $filter->slug }}"
+                                    @selected(($activeSubSlug ?? '') === $filter->slug)
+                                >{!! $filter->name !!}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
 
                 <div class="ae-search-box">
                     <input type="text" id="aeProdSearch" placeholder="Search product…" autocomplete="off">
@@ -64,21 +113,42 @@
                     </div>
                 @endif
 
-                @if(isset($sub_sub_cat) && !empty($sub_sub_cat['description']))
+                @php
+                    $aboutCat = null;
+                    $aboutHtml = null;
+                    if ($isHubListing && isset($activeFilter) && $activeFilter && !empty($activeFilter->description)) {
+                        $aboutCat = $activeFilter;
+                        $aboutHtml = $activeFilter->description;
+                    } elseif ($isHubListing && !empty($category->description)) {
+                        $aboutCat = $category;
+                        $aboutHtml = $category->description;
+                    } elseif ($hasSubFilters && !empty($category->description)) {
+                        $aboutCat = $category;
+                        $aboutHtml = $category->description;
+                    } elseif (!empty($category->description)) {
+                        $aboutCat = $category;
+                        $aboutHtml = $category->description;
+                    } elseif (!empty($category_detail['description'])) {
+                        $aboutCat = $category_detail;
+                        $aboutHtml = $category_detail['description'];
+                    }
+                @endphp
+                @if($aboutCat && $aboutHtml)
                     <div class="ae-panel-card" style="margin-top:22px;">
-                        <h2>About {!! $category_detail['name'] !!}</h2>
+                        <h2>About {!! $aboutCat->name ?? $aboutCat['name'] !!}</h2>
                         <div class="body">
-                            @if(!empty($category_detail['image']))
+                            @if(!empty($aboutCat->image ?? $aboutCat['image'] ?? null))
                                 <img
-                                    src="{{ asset('uploads/product_images/'.$category_detail['image']) }}"
+                                    src="{{ asset('uploads/product_images/'.($aboutCat->image ?? $aboutCat['image'])) }}"
                                     alt=""
                                     style="float:right;max-width:220px;margin:0 0 12px 16px;border:1px solid #e5e7eb;border-radius:8px;"
                                 >
                             @endif
-                            {!! $sub_sub_cat['description'] !!}
+                            {!! $aboutHtml !!}
                         </div>
                     </div>
                 @endif
+
             </div>
         </div>
     </div>
@@ -119,6 +189,43 @@
   color: #94a3b8;
   font-size: 13px;
 }
+
+.ae-hub-filter {
+  margin-bottom: 16px;
+}
+
+.ae-subcat-select-wrap {
+  margin-bottom: 14px;
+  max-width: 420px;
+}
+
+.ae-subcat-select-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+  font-family: var(--font-heading) !important;
+}
+
+.ae-subcat-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.ae-subcat-select:focus {
+  outline: none;
+  border-color: var(--ae-blue);
+  box-shadow: 0 0 0 3px rgba(25, 71, 209, 0.12);
+}
 </style>
 
 @push('scripts')
@@ -134,45 +241,55 @@
     var catId = document.getElementById('aeProdSearchId');
     var box = document.getElementById('aeProdSuggest');
     var list = document.getElementById('aeProdSuggestList');
-    if (!input || !catId || !box || !list) return;
 
-    var timer = null;
-    var endpoint = @json(url('/get_categories_product'));
+    if (input && catId && box && list) {
+      var timer = null;
+      var endpoint = @json(url('/get_categories_product'));
 
-    function hideSuggest() {
-      box.classList.remove('is-open');
-      list.innerHTML = '';
-    }
-
-    function showSuggest(html) {
-      list.innerHTML = html || '<li class="ae-cat-suggest-empty">No products found</li>';
-      box.classList.add('is-open');
-    }
-
-    input.addEventListener('input', function () {
-      var q = input.value.trim();
-      clearTimeout(timer);
-      if (!q.length) {
-        hideSuggest();
-        return;
+      function hideSuggest() {
+        box.classList.remove('is-open');
+        list.innerHTML = '';
       }
 
-      timer = setTimeout(function () {
-        var url = endpoint.replace(/\/$/, '') + '/' + encodeURIComponent(q) + '/' + encodeURIComponent(catId.value);
-        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-          .then(function (res) { return res.text(); })
-          .then(function (html) {
-            showSuggest((html || '').trim());
-          })
-          .catch(function () {
-            showSuggest('<li class="ae-cat-suggest-empty">Unable to search right now</li>');
-          });
-      }, 250);
-    });
+      function showSuggest(html) {
+        list.innerHTML = html || '<li class="ae-cat-suggest-empty">No products found</li>';
+        box.classList.add('is-open');
+      }
 
-    document.addEventListener('click', function (e) {
-      if (!box.contains(e.target) && e.target !== input) hideSuggest();
-    });
+      input.addEventListener('input', function () {
+        var q = input.value.trim();
+        clearTimeout(timer);
+        if (!q.length) {
+          hideSuggest();
+          return;
+        }
+
+        timer = setTimeout(function () {
+          var url = endpoint.replace(/\/$/, '') + '/' + encodeURIComponent(q) + '/' + encodeURIComponent(catId.value);
+          fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (res) { return res.text(); })
+            .then(function (html) {
+              showSuggest((html || '').trim());
+            })
+            .catch(function () {
+              showSuggest('<li class="ae-cat-suggest-empty">Unable to search right now</li>');
+            });
+        }, 250);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!box.contains(e.target) && e.target !== input) hideSuggest();
+      });
+    }
+
+    var subcatSelect = document.getElementById('aeSubcatSelect');
+    if (subcatSelect) {
+      subcatSelect.addEventListener('change', function () {
+        if (subcatSelect.value) {
+          window.location.href = subcatSelect.value;
+        }
+      });
+    }
   });
 })();
 </script>

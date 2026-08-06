@@ -1,16 +1,8 @@
 @extends('frontend.layouts.app')
 @section('content')
 @php
-    if (isset($sub_sub_cat)) {
-        $category_detail = $sub_sub_cat;
-    } elseif (isset($sub_cat)) {
-        $category_detail = $sub_cat;
-    } elseif (isset($cat)) {
-        $category_detail = $cat;
-    } else {
-        $category_detail = $category;
-    }
-    $cid = isset($cat) ? $cat['id'] : $category['id'];
+    $category_detail = $category;
+    $cid = $category->id;
 @endphp
 
 <section class="ae-page">
@@ -18,18 +10,20 @@
         <nav class="ae-crumb" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
             <span>/</span>
+            <a href="{{ route('products.index') }}">Our Products</a>
+            <span>/</span>
             @if(isset($cat))
-                <span>{!! $cat['name'] !!}</span>
-            @else
-                <span>{!! $category['name'] !!}</span>
-            @endif
-            @if(isset($sub_cat) && $sub_cat)
+                <a href="{{ route('categories', $cat->slug) }}">{!! $cat->name !!}</a>
                 <span>/</span>
-                <span>{!! $sub_cat['name'] !!}</span>
             @endif
-            @if(isset($sub_sub_cat['name']))
+            @if(isset($sub_cat) && isset($category) && (int) $sub_cat->id !== (int) $category->id)
+                <a href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a>
                 <span>/</span>
-                <span>{!! $sub_sub_cat['name'] !!}</span>
+            @endif
+            @if(isset($category))
+                <span>{!! $category->name !!}</span>
+            @elseif(isset($cat))
+                <span>{!! $cat->name !!}</span>
             @endif
         </nav>
 
@@ -83,11 +77,7 @@
                                     style="float:right;max-width:220px;margin:0 0 12px 16px;border:1px solid #e5e7eb;border-radius:8px;"
                                 >
                             @endif
-                            @if(isset($cat))
-                                {!! $cat['description'] !!}
-                            @else
-                                {!! $category['description'] !!}
-                            @endif
+                            {!! $category_detail['description'] !!}
                         </div>
                     </div>
                 @endif

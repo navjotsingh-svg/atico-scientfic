@@ -1207,6 +1207,35 @@ function getProductCats($product_id)
     return $result;
 }
 
+function getCategoryChain($category)
+{
+    $chain = [];
+    $walker = $category;
+    while ($walker) {
+        array_unshift($chain, $walker);
+        if ((int) $walker->parent_id === 0) {
+            break;
+        }
+        $walker = \App\Models\Category::where('id', $walker->parent_id)->where('status', 1)->first();
+        if (!$walker) {
+            break;
+        }
+    }
+    return $chain;
+}
+
+function getProductBreadcrumbCategories($product_id)
+{
+    $bestChain = [];
+    foreach (getProductCats($product_id) as $cat) {
+        $chain = getCategoryChain($cat);
+        if (count($chain) > count($bestChain)) {
+            $bestChain = $chain;
+        }
+    }
+    return $bestChain;
+}
+
 
 
 function getProductCatsName($categories)
@@ -1277,7 +1306,11 @@ function sidebarCategories()
         return $cats;
     }
     foreach ($cats as $key => $value) {
-        $value['sub_cats'] = \App\Models\Category::where('parent_id', $value->id)->select('categories.name', 'categories.slug', 'categories.id')->get();
+        $value['sub_cats'] = \App\Models\Category::where('parent_id', $value->id)
+            ->where('status', 1)
+            ->orderBy('name')
+            ->select('categories.name', 'categories.slug', 'categories.id')
+            ->get();
     }
     return $cats;
 }
@@ -1294,6 +1327,7 @@ function getRelatedProducts($product_id)
     $products = \App\Models\Product::whereIn('id', $product_ids)->where('status', 1)->take('8')->get();
     return $products;
 }
+
 function getCountries()
 {
     return App\Models\Country::all();

@@ -1,85 +1,164 @@
 @extends('frontend.layouts.app')
 @section('content')
-<style>
-.ae-panel-card .body table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-.ae-panel-card .body table td,
-.ae-panel-card .body table th { border: 1px solid #e6e6e6; padding: 8px; vertical-align: top; }
-</style>
 
-<section class="ae-page">
+@php
+    $productCats = getProductCats($product->id);
+    $leafCats = collect($productCats)->filter(fn ($c) => (int) $c->parent_id !== 0);
+    $displayCats = $leafCats->isNotEmpty() ? $leafCats : collect($productCats);
+    $breadcrumbCats = getProductBreadcrumbCategories($product->id);
+    $visibleBreadcrumbCats = count($breadcrumbCats) > 3 ? array_slice($breadcrumbCats, -3) : $breadcrumbCats;
+    $breadcrumbCollapsed = count($breadcrumbCats) > 3;
+    $breadcrumbProductName = \Illuminate\Support\Str::limit(strip_tags($product->name), 45);
+    $descPlain = strip_tags((string) $product->description);
+    $descPreview = \Illuminate\Support\Str::limit($descPlain, 220);
+    $hasLongDesc = strlen($descPlain) > 220;
+@endphp
+
+<section class="ae-page ae-pdp-page">
     <div class="ae-page-inner">
-        <nav class="ae-crumb" aria-label="Breadcrumb">
+        <nav class="ae-crumb ae-crumb-pdp" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
-            <span>/</span>
-            <span>{!! $product->name !!}</span>
+            <span class="ae-crumb-sep">/</span>
+            <a href="{{ route('products.index') }}">Our Products</a>
+            @if($breadcrumbCollapsed)
+                <span class="ae-crumb-sep">/</span>
+                <span class="ae-crumb-ellipsis" aria-hidden="true">…</span>
+            @endif
+            @foreach($visibleBreadcrumbCats as $crumbCat)
+                <span class="ae-crumb-sep">/</span>
+                <a href="{{ route('categories', $crumbCat->slug) }}">{!! \Illuminate\Support\Str::limit(strip_tags($crumbCat->name), 30) !!}</a>
+            @endforeach
+            <span class="ae-crumb-sep">/</span>
+            <span class="ae-crumb-current" title="{!! strip_tags($product->name) !!}">{!! $breadcrumbProductName !!}</span>
         </nav>
 
-        <div class="ae-pdp">
-            <div>
-                <div class="ae-pdp-media">
-                    <img
-                        src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"
-                        alt="{!! strip_tags($product->name) !!}"
-                        fetchpriority="high"
-                        decoding="async"
-                        onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
-                    >
-                </div>
-                <div class="ae-pdp-actions">
-                    <button type="button" class="ae-btn-quote" data-bs-toggle="modal" data-bs-target="#query">
-                        Get Quote
-                    </button>
-                    <a class="ae-btn-ghost" href="tel:+919996186555">Call Us</a>
-                    <p class="ae-help">Need help? <a href="{{ url('/contact-us') }}">Contact our team</a></p>
-                </div>
-            </div>
-
-            <div class="ae-pdp-main">
-                @if(count(getAllProductCats($product->id)) > 0)
-                    <div class="ae-pdp-cats">
-                        @foreach(getAllProductCats($product->id) as $cat)
-                            <span>{!! $cat->name !!}</span>@if(!$loop->last) · @endif
-                        @endforeach
-                    </div>
-                @endif
-
-                <h1>{!! $product->name !!}</h1>
-
-                @if(!empty($product['product_code']))
-                    <p class="ae-pdp-code">Product Code: <strong>{!! $product['product_code'] !!}</strong></p>
-                @endif
-
-                <div class="ae-panel-card">
-                    <h2>Product Overview</h2>
-                    <div class="body">
-                        {!! substr(strip_tags($product->description), 0, 280) !!}@if(strlen(strip_tags($product->description)) > 280)…@endif
+        <div class="ae-pdp-hero">
+            <div class="ae-pdp">
+                <div class="ae-pdp-gallery">
+                    <div class="ae-pdp-media">
+                        <img
+                            src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"
+                            alt="{!! strip_tags($product->name) !!}"
+                            fetchpriority="high"
+                            decoding="async"
+                            onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
+                        >
                     </div>
                 </div>
 
-                <div class="ae-panel-card" id="description">
-                    <h2>Description</h2>
-                    <div class="body">{!! $product->description !!}</div>
+                <div class="ae-pdp-info">
+                    <div class="ae-pdp-head">
+                        <div class="ae-pdp-tags">
+                            <span class="ae-pdp-tag is-primary">Manufacturer Direct</span>
+                            @foreach($displayCats as $cat)
+                                <a class="ae-pdp-tag" href="{{ route('categories', $cat->slug) }}">{!! $cat->name !!}</a>
+                            @endforeach
+                        </div>
+
+                        <h1 class="ae-pdp-title">{!! $product->name !!}</h1>
+
+                        @if(!empty($product['product_code']))
+                            <p class="ae-pdp-code">
+                                <span class="ae-pdp-code-label">Product Code</span>
+                                <strong class="ae-pdp-code-value">{!! $product['product_code'] !!}</strong>
+                            </p>
+                        @endif
+                    </div>
+
+                    <div class="ae-pdp-notice">
+                        <p>Available for <strong>bulk tender supply</strong>, exports &amp; turnkey lab projects worldwide.</p>
+                    </div>
+
+                    <div class="ae-pdp-highlights">
+                        <div class="ae-pdp-highlight">
+                            <span class="ae-pdp-highlight-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 7H4V5l2-2h12l2 2v2zm0 2H4v11h16V9zM8 11h8v2H8v-2z" fill="currentColor"/></svg>
+                            </span>
+                            <div class="ae-pdp-highlight-text">
+                                <strong>Bulk Supply</strong>
+                                <span>Tender &amp; export ready</span>
+                            </div>
+                        </div>
+                        <div class="ae-pdp-highlight">
+                            <span class="ae-pdp-highlight-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/></svg>
+                            </span>
+                            <div class="ae-pdp-highlight-text">
+                                <strong>90+ Countries</strong>
+                                <span>Worldwide exports</span>
+                            </div>
+                        </div>
+                        <div class="ae-pdp-highlight">
+                            <span class="ae-pdp-highlight-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" fill="currentColor"/></svg>
+                            </span>
+                            <div class="ae-pdp-highlight-text">
+                                <strong>24-Hour Quote</strong>
+                                <span>Fast BOQ response</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($descPreview)
+                        <div class="ae-pdp-summary" id="aePdpSummary">
+                            <h2>Product Description</h2>
+                            <p class="ae-pdp-summary-text">{!! $descPreview !!}@if($hasLongDesc)<span class="ae-pdp-ellipsis">…</span>@endif</p>
+                            @if($hasLongDesc)
+                                <button type="button" class="ae-pdp-readmore" data-ae-readmore>Read More</button>
+                            @endif
+                        </div>
+                    @endif
+
+                    <div class="ae-pdp-actions">
+                        <button type="button" class="ae-btn-quote ae-btn-quote-lg" data-bs-toggle="modal" data-bs-target="#query">
+                            Enquire Now
+                        </button>
+                        <a class="ae-btn-outline ae-btn-outline-lg" href="{{ url('/contact-us') }}">Contact Us</a>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div class="ae-pdp-spec ae-panel-card" id="description">
+            <h2>Tender Specification Details for Bulk Supplies</h2>
+            <div class="body ae-pdp-spec-body">{!! $product->description !!}</div>
+        </div>
+
+        <div class="ae-pdp-bulk-cta">
+            <div class="ae-pdp-bulk-copy">
+                <span class="ae-pdp-bulk-kicker">Bulk Tender Specialists</span>
+                <h3>Bulk Order of {!! $product->name !!}?</h3>
+                <p>Send us your tender BOQ — we'll respond with a fully compliant manufacturer quote within 24 hours. Trusted by institutional &amp; government buyers worldwide.</p>
+            </div>
+            <button type="button" class="ae-btn-quote ae-btn-quote-lg ae-btn-quote-white" data-bs-toggle="modal" data-bs-target="#query">Get Tender Quote</button>
+        </div>
+
         @php $related = getRelatedProducts($product->id); @endphp
         @if(count($related) > 0)
-            <h2 class="ae-related-title" id="related">Related Products</h2>
-            <div class="ae-card-grid is-3">
-                @foreach($related as $related_product)
-                    <a class="ae-pcard" href="{{ route('product_detail', $related_product->slug) }}">
-                        <div class="ae-pcard-media">
-                            <img
-                                src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"
-                                alt="{!! strip_tags($related_product->name) !!}"
-                                loading="lazy"
-                                onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
-                            >
-                        </div>
-                        <div class="ae-pcard-title">{!! $related_product->name !!}</div>
-                    </a>
-                @endforeach
+            <div class="ae-related-section">
+                <h2 class="ae-related-title" id="related">Related Lab Equipments</h2>
+                <p class="ae-related-lead">Explore more scientific and educational laboratory equipment from Atico Scientific — trusted manufacturer and exporter for schools, colleges, and research institutions.</p>
+                <div class="ae-card-grid is-3">
+                    @foreach($related as $related_product)
+                        @if((int) $related_product->id === (int) $product->id)
+                            @continue
+                        @endif
+                        <a class="ae-pcard" href="{{ route('product_detail', $related_product->slug) }}">
+                            <div class="ae-pcard-media">
+                                <img
+                                    src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"
+                                    alt="{!! strip_tags($related_product->name) !!}"
+                                    loading="lazy"
+                                    onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
+                                >
+                            </div>
+                            <div class="ae-pcard-body">
+                                <div class="ae-pcard-title">{!! $related_product->name !!}</div>
+                                <!-- <span class="ae-pcard-cta">View Product</span> -->
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         @endif
     </div>
@@ -228,6 +307,16 @@
 
     if (quoteModal) {
       quoteModal.addEventListener('show.bs.modal', loadCaptcha);
+    }
+
+    var readMoreBtn = document.querySelector('[data-ae-readmore]');
+    if (readMoreBtn) {
+      readMoreBtn.addEventListener('click', function () {
+        var spec = document.getElementById('description');
+        if (spec) {
+          spec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     }
 
     @if ($errors->any())

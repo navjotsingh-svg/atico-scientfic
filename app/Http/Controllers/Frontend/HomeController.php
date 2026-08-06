@@ -93,6 +93,83 @@ class HomeController extends Controller{
         return response($html)->header('Content-Type', 'text/html; charset=UTF-8');
     }
 
+    protected function categoryHasChildren(Category $category): bool
+    {
+        $id = (int) $category->id;
+
+        return Category::where('status', 1)
+            ->where(function ($query) use ($id) {
+                $query->where('parent_id', $id)
+                    ->orWhere('second_parent_id', $id)
+                    ->orWhere('third_parent_id', $id)
+                    ->orWhere('four_parent_id', $id);
+            })
+            ->exists();
+    }
+
+    protected function getDirectChildCategories(Category $category)
+    {
+        $id = (int) $category->id;
+
+        return Category::where('status', 1)
+            ->where(function ($query) use ($id) {
+                $query->where('parent_id', $id)
+                    ->orWhere('second_parent_id', $id)
+                    ->orWhere('third_parent_id', $id)
+                    ->orWhere('four_parent_id', $id);
+            })
+            ->orderBy('name')
+            ->get();
+    }
+
+    protected function getEducationalLabRoot(): ?Category
+    {
+        return Category::where('slug', 'educational-lab-equipment')->where('status', 1)->first();
+    }
+
+    /**
+     * Show combined product listing (all subcategory products + subcategory select)
+     * for direct children of Educational Lab Equipment, e.g. Biology Lab Equipment.
+     */
+    protected function shouldShowProductHubListing(Category $category): bool
+    {
+        if (!$this->categoryHasChildren($category)) {
+            return false;
+        }
+
+        $eduRoot = $this->getEducationalLabRoot();
+        if (!$eduRoot) {
+            return false;
+        }
+
+        if ((int) $category->id === (int) $eduRoot->id) {
+            return false;
+        }
+
+        return (int) $category->parent_id === (int) $eduRoot->id;
+    }
+
+    protected function isSubcategoryHub(Category $category): bool
+    {
+        return $this->shouldShowProductHubListing($category);
+    }
+
+    protected function findProductListingHub(Category $category): ?Category
+    {
+        $walker = $category;
+        while ($walker) {
+            if ($this->isSubcategoryHub($walker)) {
+                return $walker;
+            }
+            if ((int) $walker->parent_id === 0) {
+                break;
+            }
+            $walker = Category::where('id', $walker->parent_id)->where('status', 1)->first();
+        }
+
+        return null;
+    }
+
     protected function categoryIdsWithDescendants($categoryId)
     {
         $ids = [(int) $categoryId];
@@ -119,6 +196,147 @@ class HomeController extends Controller{
 
         return array_values(array_unique($ids));
     }
+
+    protected function breadcrumbForCategoryGrid(Category $category): array
+    {
+        $cat = null;
+        $sub_cat = null;
+        $sub_sub_cat = null;
+
+        $ancestors = [];
+        $walker = $category;
+        while ($walker && (int) $walker->parent_id !== 0) {
+            $parent = Category::where('id', $walker->parent_id)->where('status', 1)->first();
+            if (!$parent) {
+                break;
+            }
+            $ancestors[] = $parent;
+            $walker = $parent;
+        }
+
+        $eduRoot = null;
+        foreach ($ancestors as $ancestor) {
+            if ($ancestor->slug === 'educational-lab-equipment') {
+                $eduRoot = $ancestor;
+                break;
+            }
+        }
+
+        if ($eduRoot) {
+            if ((int) $category->id === (int) $eduRoot->id) {
+                return compact('cat', 'sub_cat', 'sub_sub_cat');
+            }
+            if ((int) $category->parent_id === (int) $eduRoot->id) {
+                $cat = $eduRoot;
+                return compact('cat', 'sub_cat', 'sub_sub_cat');
+            }
+            $cat = $eduRoot;
+            $sub_cat = Category::where('id', $category->parent_id)->where('status', 1)->first();
+            return compact('cat', 'sub_cat', 'sub_sub_cat');
+        }
+
+        if (count($ancestors) >= 2) {
+            $cat = $ancestors[1];
+            $sub_cat = $ancestors[0];
+        } elseif (count($ancestors) === 1) {
+            $cat = $ancestors[0];
+        }
+
+        return compact('cat', 'sub_cat', 'sub_sub_cat');
+    }
+
+    protected function resolveCategoryBreadcrumb(Category $category): array
+    {
+        $cat = null;
+        $sub_cat = null;
+        $sub_sub_cat = null;
+
+        if ((int) $category->parent_id === 0) {
+            $cat = $category;
+        } else {
+            $parent = Category::find($category->parent_id);
+            if ($parent && (int) $parent->parent_id === 0) {
+                $cat = $parent;
+                $sub_cat = $category;
+            } elseif ($parent) {
+                $grandparent = Category::find($parent->parent_id);
+                $cat = $grandparent ?: $parent;
+                $sub_cat = $parent;
+                $sub_sub_cat = $category;
+            } else {
+                $sub_cat = $category;
+            }
+        }
+
+        return compact('cat', 'sub_cat', 'sub_sub_cat');
+    }
+
+    protected function loadCategoryProducts(Category $hubCategory, ?string $activeSubSlug = null, ?Category $viewCategory = null)
+    {
+        $viewCategory = $viewCategory ?: $hubCategory;
+        $breadcrumb = $this->resolveCategoryBreadcrumb($viewCategory);
+        $cat = $breadcrumb['cat'];
+        $sub_cat = $breadcrumb['sub_cat'];
+        $sub_sub_cat = $breadcrumb['sub_sub_cat'];
+
+        $hubParent = Category::where('id', $hubCategory->parent_id)->where('status', 1)->first();
+        if ($hubParent) {
+            $cat = $hubParent;
+            $sub_cat = $hubCategory;
+            $sub_sub_cat = null;
+        }
+
+        $subcategoryFilters = $this->getDirectChildCategories($hubCategory);
+
+        $filterRootIds = $this->categoryIdsWithDescendants($hubCategory->id);
+        $activeFilter = null;
+        $hubTreeIds = $filterRootIds;
+
+        if ($activeSubSlug) {
+            $activeFilter = Category::where('slug', $activeSubSlug)
+                ->where('status', 1)
+                ->first();
+            if ($activeFilter && in_array((int) $activeFilter->id, $hubTreeIds, true) && (int) $activeFilter->id !== (int) $hubCategory->id) {
+                $filterRootIds = $this->categoryIdsWithDescendants($activeFilter->id);
+            } else {
+                $activeFilter = null;
+            }
+        }
+
+        $product_ids = ProductCategory::whereIn('category_id', $filterRootIds)
+            ->pluck('product_id')
+            ->unique()
+            ->values()
+            ->all();
+
+        $products = Product::whereIn('id', $product_ids)
+            ->where('status', 1)
+            ->select('products.name', 'products.image', 'products.slug', 'products.description')
+            ->orderBy('products.name')
+            ->get();
+
+        $keyword = Category::where('id', $viewCategory->id)
+            ->select('meta_title', 'meta_description', 'meta_tag', 'slug')
+            ->first();
+
+        $categories = collect();
+        $category = $hubCategory;
+        $displayCategory = $activeFilter ?: $hubCategory;
+        $hubProductListing = $subcategoryFilters->isNotEmpty();
+
+        return view('frontend.pages.products', array_merge($breadcrumb, compact(
+            'products',
+            'categories',
+            'category',
+            'displayCategory',
+            'keyword',
+            'subcategoryFilters',
+            'activeSubSlug',
+            'activeFilter',
+            'hubProductListing'
+        )));
+    }
+
     public function index()
     {
         try {
@@ -575,18 +793,33 @@ class HomeController extends Controller{
                 
             }
             else {
-                $sub_cats = Category::where('parent_id', $category['id'])->select('id')->get();
-                if(count($sub_cats) > 0){
-                    $category_ids = Category::where('slug', $slug)->where('status', 1)->pluck('id')->toArray();
-                    $cat = Category::whereIn('id', $category_ids)->where('description', '!=', '')->first();
-                    $categories = Category::whereIn('parent_id', $category_ids)->where('status', 1)->get();
-                    if(count($categories)>0){
-                        $sub_cat = Category::where('id', $categories[0]['parent_id'])->first();
-                    }
+                if ($this->shouldShowProductHubListing($category)) {
+                    $activeSubSlug = request()->query('sub');
+
+                    return $this->loadCategoryProducts($category, $activeSubSlug, $category);
                 }
-                else{
-                   
-                    $category_ids = Category::where('slug', $slug)->where('status', 1)->pluck('id')->toArray();
+
+                if ($this->categoryHasChildren($category)) {
+                    $categories = $this->getDirectChildCategories($category);
+                    $breadcrumb = $this->breadcrumbForCategoryGrid($category);
+                    $cat = $breadcrumb['cat'];
+                    $sub_cat = $breadcrumb['sub_cat'];
+                    $sub_sub_cat = $breadcrumb['sub_sub_cat'];
+
+                    return view('frontend.pages.category', compact('categories', 'cat', 'sub_cat', 'sub_sub_cat', 'category', 'keyword'));
+                }
+
+                $hub = $this->findProductListingHub($category);
+                if ($hub && (int) $hub->id !== (int) $category->id) {
+                    return $this->loadCategoryProducts($hub, $category->slug, $category);
+                }
+
+                $parent = Category::where('id', $category->parent_id)->where('status', 1)->first();
+                if ($parent && $this->isSubcategoryHub($parent)) {
+                    return $this->loadCategoryProducts($parent, $category->slug, $category);
+                }
+
+                $category_ids = Category::where('slug', $slug)->where('status', 1)->pluck('id')->toArray();
                 
                     $cat = Category::whereIn('id', $category_ids)->where('description', '!=', '')->first();
                     if($cat){
@@ -608,7 +841,6 @@ class HomeController extends Controller{
                     ->get();
  
                     return view('frontend.pages.products', compact('products', 'cat', 'sub_cat', 'sub_sub_cat', 'category', 'keyword'));
-                }
             }
             
          
