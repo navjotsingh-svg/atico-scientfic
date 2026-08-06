@@ -58,13 +58,46 @@
             <div>
                 <div class="ae-page-head">
                     <h1>{!! $category_detail['name'] !!}</h1>
-                    <p>
-                        Showing {{ count($products) }} {{ count($products) === 1 ? 'product' : 'products' }}
-                        @if($showSubcatSelect && empty($activeSubSlug))
-                            from all subcategories
-                        @endif
-                    </p>
                 </div>
+
+                @php
+                    $aboutCat = null;
+                    $aboutHtml = null;
+                    if ($isHubListing && isset($activeFilter) && $activeFilter && !empty($activeFilter->description)) {
+                        $aboutCat = $activeFilter;
+                        $aboutHtml = $activeFilter->description;
+                    } elseif ($isHubListing && !empty($category->description)) {
+                        $aboutCat = $category;
+                        $aboutHtml = $category->description;
+                    } elseif ($hasSubFilters && !empty($category->description)) {
+                        $aboutCat = $category;
+                        $aboutHtml = $category->description;
+                    } elseif (!empty($category->description)) {
+                        $aboutCat = $category;
+                        $aboutHtml = $category->description;
+                    } elseif (!empty($category_detail['description'])) {
+                        $aboutCat = $category_detail;
+                        $aboutHtml = $category_detail['description'];
+                    }
+                @endphp
+                @if($aboutCat && $aboutHtml)
+                    <div class="ae-panel-card ae-page-intro">
+                        <div class="body">
+                            @if(!empty($aboutCat->image ?? $aboutCat['image'] ?? null))
+                                <img src="{{ asset('uploads/product_images/'.($aboutCat->image ?? $aboutCat['image'])) }}"
+                                    alt="" style="max-width: 400px;" class="ae-page-intro-image">
+                            @endif
+                            {!! $aboutHtml !!}
+                        </div>
+                    </div>
+                @endif
+
+                <p class="ae-page-count">
+                    Showing {{ count($products) }} {{ count($products) === 1 ? 'product' : 'products' }}
+                    @if($showSubcatSelect && empty($activeSubSlug))
+                        from all subcategories
+                    @endif
+                </p>
 
                 @if($showSubcatSelect)
                     <div class="ae-subcat-select-wrap">
@@ -110,42 +143,6 @@
                 @else
                     <div class="ae-empty">
                         <img src="{{ asset('assets/images/not_found.jpg') }}" alt="Not found" style="max-width:280px;">
-                    </div>
-                @endif
-
-                @php
-                    $aboutCat = null;
-                    $aboutHtml = null;
-                    if ($isHubListing && isset($activeFilter) && $activeFilter && !empty($activeFilter->description)) {
-                        $aboutCat = $activeFilter;
-                        $aboutHtml = $activeFilter->description;
-                    } elseif ($isHubListing && !empty($category->description)) {
-                        $aboutCat = $category;
-                        $aboutHtml = $category->description;
-                    } elseif ($hasSubFilters && !empty($category->description)) {
-                        $aboutCat = $category;
-                        $aboutHtml = $category->description;
-                    } elseif (!empty($category->description)) {
-                        $aboutCat = $category;
-                        $aboutHtml = $category->description;
-                    } elseif (!empty($category_detail['description'])) {
-                        $aboutCat = $category_detail;
-                        $aboutHtml = $category_detail['description'];
-                    }
-                @endphp
-                @if($aboutCat && $aboutHtml)
-                    <div class="ae-panel-card" style="margin-top:22px;">
-                        <h2>About {!! $aboutCat->name ?? $aboutCat['name'] !!}</h2>
-                        <div class="body">
-                            @if(!empty($aboutCat->image ?? $aboutCat['image'] ?? null))
-                                <img
-                                    src="{{ asset('uploads/product_images/'.($aboutCat->image ?? $aboutCat['image'])) }}"
-                                    alt=""
-                                    style="float:right;max-width:220px;margin:0 0 12px 16px;border:1px solid #e5e7eb;border-radius:8px;"
-                                >
-                            @endif
-                            {!! $aboutHtml !!}
-                        </div>
                     </div>
                 @endif
 

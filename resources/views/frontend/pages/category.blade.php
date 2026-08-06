@@ -33,8 +33,24 @@
             <div>
                 <div class="ae-page-head">
                     <h1>{!! $category_detail['name'] !!}</h1>
-                    <p>Showing {{ count($categories) }} {{ count($categories) === 1 ? 'result' : 'results' }}</p>
                 </div>
+
+                @if(!empty($category_detail['description']))
+                    <div class="ae-panel-card ae-page-intro">
+                        <div class="body">
+                            @if(!empty($category_detail['image']))
+                                <img
+                                    src="{{ asset('uploads/product_images/'.$category_detail['image']) }}"
+                                    alt="" style="max-width: 400px;"
+                                    class="ae-page-intro-image"
+                                >
+                            @endif
+                            {!! $category_detail['description'] !!}
+                        </div>
+                    </div>
+                @endif
+
+                <p class="ae-page-count">Showing {{ count($categories) }} {{ count($categories) === 1 ? 'result' : 'results' }}</p>
 
                 <div class="ae-search-box">
                     <input type="text" id="aeCatSearch" placeholder="Search category…" autocomplete="off">
@@ -66,21 +82,6 @@
                     </div>
                 @endif
 
-                @if(!empty($category_detail['description']))
-                    <div class="ae-panel-card" style="margin-top:22px;">
-                        <h2>About {!! $category_detail['name'] !!}</h2>
-                        <div class="body">
-                            @if(!empty($category_detail['image']))
-                                <img
-                                    src="{{ asset('uploads/product_images/'.$category_detail['image']) }}"
-                                    alt=""
-                                    style="float:right;max-width:220px;margin:0 0 12px 16px;border:1px solid #e5e7eb;border-radius:8px;"
-                                >
-                            @endif
-                            {!! $category_detail['description'] !!}
-                        </div>
-                    </div>
-                @endif
             </div>
         </div>
     </div>
