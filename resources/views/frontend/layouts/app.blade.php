@@ -317,12 +317,12 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
             document.body.appendChild(fa);
 
             @if($display == 1)
-            var tawk=document.createElement('script');
-            tawk.async=true;
-            tawk.src='https://embed.tawk.to/665438669a809f19fb3576de/1husfok80';
-            tawk.charset='UTF-8';
-            tawk.setAttribute('crossorigin','*');
-            document.body.appendChild(tawk);
+           // var tawk=document.createElement('script');
+           // tawk.async=true;
+           // tawk.src='https://embed.tawk.to/665438669a809f19fb3576de/1husfok80';
+          //  tawk.charset='UTF-8';
+          //  tawk.setAttribute('crossorigin','*');
+          //  document.body.appendChild(tawk);
             @endif
 
             function googleTranslateElementInit() {
