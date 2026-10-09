@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\PageMeta;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +23,23 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->ensureOpenSslCaBundle();
+
+        View::composer('frontend.layouts.app', function ($view) {
+            $data = $view->getData();
+            if (!empty($data['keyword'])) {
+                return;
+            }
+
+            try {
+                $meta = PageMeta::forRoute(Route::currentRouteName());
+            } catch (\Throwable $e) {
+                $meta = null;
+            }
+
+            if ($meta) {
+                $view->with('keyword', $meta);
+            }
+        });
     }
 
     /**

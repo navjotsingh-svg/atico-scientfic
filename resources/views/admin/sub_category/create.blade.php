@@ -112,7 +112,7 @@ $route  = \Route::currentRouteName();
                                        <input type="file" name="image" class="form-control" >
                                         @if(!empty($result->image))
                                             <div class="form-group">
-                                                <img src="{{ asset('uploads/product_images/'.$result->image) }}" class="img-responsive" style="max-height: 70px;">
+                                                {!! optimized_img('uploads/product_images/'.$result->image, trim(strip_tags($result->name ?? 'Record')).' photo', ['lazy' => true, 'class' => 'img-responsive', 'style' => 'max-height:70px']) !!}
                                             </div>
                                             @endif
                                         </div>

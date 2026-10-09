@@ -36,13 +36,7 @@
             <div class="ae-pdp">
                 <div class="ae-pdp-gallery">
                     <div class="ae-pdp-media">
-                        <img
-                            src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"
-                            alt="{!! strip_tags($product->name) !!}"
-                            fetchpriority="high"
-                            decoding="async"
-                            onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
-                        >
+                        {!! optimized_img($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png', trim(strip_tags($product->name)).' product photo', ['lazy' => false, 'fetchpriority' => 'high', 'fallback' => 'assets/frontend/images/no_product.png']) !!}
                     </div>
                 </div>
 
@@ -121,7 +115,7 @@
 
         <div class="ae-pdp-spec ae-panel-card" id="description">
             <h2>Tender Specification Details for Bulk Supplies</h2>
-            <div class="body ae-pdp-spec-body">{!! $product->description !!}</div>
+            <div class="body ae-pdp-spec-body">{!! optimize_content_images($product->description) !!}</div>
         </div>
 
         <div class="ae-pdp-bulk-cta">
@@ -145,12 +139,7 @@
                         @endif
                         <a class="ae-pcard" href="{{ route('product_detail', $related_product->slug) }}">
                             <div class="ae-pcard-media">
-                                <img
-                                    src="{{ asset($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png') }}"
-                                    alt="{!! strip_tags($related_product->name) !!}"
-                                    loading="lazy"
-                                    onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
-                                >
+                                {!! optimized_img($related_product->image ? 'uploads/product_images/'.$related_product->image : 'assets/frontend/images/no_product.png', trim(strip_tags($related_product->name)).' product photo', ['lazy' => true, 'fallback' => 'assets/frontend/images/no_product.png']) !!}
                             </div>
                             <div class="ae-pcard-body">
                                 <div class="ae-pcard-title">{!! $related_product->name !!}</div>
@@ -176,11 +165,7 @@
                     <p class="ae-quote-copy">Share your requirements and our team will respond with a quotation shortly.</p>
 
                     <div class="ae-quote-product">
-                        <img
-                            src="{{ asset($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png') }}"
-                            alt="{!! strip_tags($product->name) !!}"
-                            onerror="this.onerror=null;this.src='{{ asset('assets/frontend/images/no_product.png') }}';"
-                        >
+                        {!! optimized_img($product->image ? 'uploads/product_images/'.$product->image : 'assets/frontend/images/no_product.png', trim(strip_tags($product->name)).' product photo', ['lazy' => true, 'fallback' => 'assets/frontend/images/no_product.png']) !!}
                         <div>
                             <strong>{!! $product->name !!}</strong>
                             @if(!empty($product['product_code']))

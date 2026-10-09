@@ -208,7 +208,7 @@ $('body').on('click', 'a.dEdit', function(event) { //due to ajax data request wi
         if ( obj.status == 1) 
         {
             var imgsrc = obj.data;
-            $this.html("<img src='" + path + imgsrc + "' />");
+            $this.html("<img src='" + path + imgsrc + "' alt='Uploaded image preview' width='70' height='70' loading='lazy' />");
             if(realod)
             {
                 window.location.reload();

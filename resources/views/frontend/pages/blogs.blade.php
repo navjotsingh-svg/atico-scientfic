@@ -268,20 +268,22 @@
 
 </style>
 
-<div class="breadcrumb-wrapper">
-                            <div class="container">
-                                <div class="breadcrumb-wrapper-inner">
-                                    <span><a class="brd-heading" href="{{ route('home') }}" class="home"><span>Home / Blogs</span></a></span>
-                                    
-                                </div>
-                            </div>
-                        </div>
-<div class="container mt-5 ">
-                                          <div class="row">
+<section class="ae-page">
+  <div class="ae-page-inner">
+    <nav class="ae-crumb" aria-label="Breadcrumb">
+      <a href="{{ route('home') }}">Home</a>
+      <span>/</span>
+      <span>Blog</span>
+    </nav>
+    <div class="ae-page-head">
+      <h1>Blog</h1>
+      <p>Guides, updates and insights on laboratory and educational equipment.</p>
+    </div>
+    <div class="row">
                                              @if(count($blogs)>0)
                                              @foreach($blogs as $key => $blog)
                                              <div class="col-md-3 blog">
-                                                 <a href="{{ route('blog_detail', $blog->slug) }}"><img class="blog-card-img" src="{{ asset($blog->image ? 'uploads/blog_images/'.$blog->image  : 'assets/images/no_product.png') }}" onerror="this.onerror=null;this.src='{{ asset("assets/images/no_product.png") }}';" alt="{!! strip_tags($blog->name) !!}" loading="lazy" /></a>
+                                                 <a href="{{ route('blog_detail', $blog->slug) }}">{!! optimized_img($blog->image ? 'uploads/blog_images/'.$blog->image : 'assets/images/no_product.png', trim(strip_tags($blog->name)).' article photo', ['lazy' => true, 'class' => 'blog-card-img', 'fallback' => 'assets/images/no_product.png']) !!}</a>
                                              
                                              <div class="themestek-box-content">
                                                          <div class="ts-entry-meta-wrapper">
@@ -301,8 +303,9 @@
                                                    </div>
                                              @endforeach
                                              @endif
-                                          </div>  
-                                          </div>       
+    </div>
+  </div>
+</section>       
 <script>
     $(".toggle").click(function(){
         if($(".accordion").hasClass("mobile_view"))

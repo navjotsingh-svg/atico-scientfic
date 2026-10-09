@@ -86,8 +86,8 @@
       </div>
     </div>
     <div class="ab-intro-media">
-      <img src="{{ asset('assets/images/about-us1.jpg') }}" alt="Atico Scientific laboratory manufacturing" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('assets/images/export-slides/Image1.webp') }}';">
-      <img src="{{ asset('assets/images/about-us2.jpg') }}" alt="Educational and scientific lab equipment" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('assets/images/export-slides/Image5.webp') }}';">
+      {!! optimized_img('assets/images/about-us1.jpg', 'Atico Scientific laboratory manufacturing', ['lazy' => true, 'fallback' => 'assets/images/export-slides/Image1.webp']) !!}
+      {!! optimized_img('assets/images/about-us2.jpg', 'Educational and scientific lab equipment', ['lazy' => true, 'fallback' => 'assets/images/export-slides/Image5.webp']) !!}
     </div>
   </div>
 </section>
@@ -159,7 +159,7 @@
       <a class="ab-link" href="{{ route('products.index') }}">Explore educational ranges →</a>
     </div>
     <div class="ab-feature-card">
-      <img src="{{ asset('assets/images/export-slides/Image4.webp') }}" alt="School science and STEM laboratory equipment" loading="lazy">
+      {!! optimized_img('assets/images/export-slides/Image4.webp', 'School science and STEM laboratory equipment', ['lazy' => true]) !!}
       <div>
         <h3>Hands-on learning first</h3>
         <p>Equipment intended for daily lab periods — not display shelves — with practical packaging for institutional supply.</p>

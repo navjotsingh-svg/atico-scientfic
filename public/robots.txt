@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /*?search=
+Disallow: /?sort=
+Disallow: /?*filter=
+Sitemap: https://aticoscientific.com/sitemap.xml

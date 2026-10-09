@@ -4694,7 +4694,7 @@ div#vmap {
 .page-header{
 	margin: 0 0 20px;
 }
-.fa-file-text-o{
+nav.main-menu .fa-file-text-o{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4703,7 +4703,12 @@ div#vmap {
 	font-size: 18px!important;
 	padding: .7em 0;
 }
-.fa-retweet, .fa-list-alt, .fa-folder-o, .fa-cutlery, .fa-plus, .fa-map-marker{
+nav.main-menu .fa-retweet,
+nav.main-menu .fa-list-alt,
+nav.main-menu .fa-folder-o,
+nav.main-menu .fa-cutlery,
+nav.main-menu .fa-plus,
+nav.main-menu .fa-map-marker{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4712,7 +4717,7 @@ div#vmap {
 	font-size: 18px!important;
 	padding: .7em 0;
 }
-.fa-user{
+nav.main-menu .fa-user{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4722,7 +4727,7 @@ div#vmap {
 	padding: .7em 0;
 }
 
-.fa-shopping-cart{
+nav.main-menu .fa-shopping-cart{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4732,7 +4737,7 @@ div#vmap {
 	padding: .7em 0;
 }
 
-.fa-credit-card{
+nav.main-menu .fa-credit-card{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4780,7 +4785,7 @@ top: 2px;
 left: -5px;
 }
 
-.fa-pencil-square-o{
+nav.main-menu .fa-pencil-square-o{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4791,7 +4796,7 @@ left: -5px;
 }
 
 
-.fa-gift{
+nav.main-menu .fa-gift{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4800,7 +4805,7 @@ left: -5px;
 	font-size: 18px!important;
 	padding: .7em 0;
 }
-.fa-question-circle{
+nav.main-menu .fa-question-circle{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4809,7 +4814,7 @@ left: -5px;
 	font-size: 18px!important;
 	padding: .7em 0;
 }
-.fa-ticket{
+nav.main-menu .fa-ticket{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4818,7 +4823,7 @@ left: -5px;
 	font-size: 18px!important;
 	padding: .7em 0;
 }
-.fa-bell-o{
+nav.main-menu .fa-bell-o{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -4827,7 +4832,7 @@ left: -5px;
 	font-size: 18px!important;
 	padding: .7em 0;
 }
-.fa-file{
+nav.main-menu .fa-file{
 	position: relative;
 	display: table-cell;
 	width: 60px;
@@ -5042,7 +5047,7 @@ nav.main-menu>ul {
     position: relative !important;
 }
 
-.fa-money {
+nav.main-menu .fa-money {
     position: relative;
     display: table-cell;
     width: 60px;
@@ -5052,7 +5057,7 @@ nav.main-menu>ul {
     padding: .7em 0;
 }
 
-.fa-phone{
+nav.main-menu .fa-phone{
 	position: relative;
     display: table-cell;
     width: 60px;
@@ -5061,7 +5066,7 @@ nav.main-menu>ul {
     font-size: 18px!important;
     padding: .7em 0;
 }
-.fa-th-list{
+nav.main-menu .fa-th-list{
 	position: relative;
     display: table-cell;
     width: 60px;

@@ -29,21 +29,16 @@
             @php
               $isAsset = !empty($item->image_is_asset);
               if ($isAsset) {
-                  $img = asset($item->image);
+                  $img = $item->image;
               } elseif (!empty($item->image)) {
-                  $img = asset('uploads/product_images/'.$item->image);
+                  $img = 'uploads/product_images/'.$item->image;
               } else {
-                  $img = asset('assets/images/export-slides/Image'.(($loop->index % 8) + 1).'.webp');
+                  $img = 'assets/images/export-slides/Image'.(($loop->index % 8) + 1).'.webp';
               }
             @endphp
             <a class="ae-cat-card" href="{{ route('categories', $item->slug) }}">
               <div class="ae-cat-card-media">
-                <img
-                  src="{{ $img }}"
-                  alt="{!! strip_tags($item->name) !!}"
-                  loading="lazy"
-                  onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
-                >
+                {!! optimized_img($img, trim(strip_tags($item->name)).' category', ['lazy' => true, 'fallback' => 'assets/images/no_product.png']) !!}
               </div>
               <div class="ae-cat-card-title">{!! $item->name !!}</div>
             </a>

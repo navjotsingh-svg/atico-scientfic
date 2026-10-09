@@ -25,11 +25,11 @@
         </a>
     </td>
 
-    <td><img src="{{ asset('uploads/blog_images/'.$detail->image) }}" class="img-responsive" width="70" height="70" ></td> 
+    <td>{!! optimized_img($detail->image ? 'uploads/blog_images/'.$detail->image : 'assets/images/no_product.png', trim(strip_tags($detail->name ?? 'Blog')).' photo', ['lazy' => true, 'class' => 'img-responsive', 'fallback' => 'assets/images/no_product.png']) !!}</td> 
 
     <td class="text-center">
         <a href="javascript:void(0);" class="toggle-status" data-message="{!! lang('messages.change_status') !!}" data-route="{!! route('blog.toggle', $detail->id) !!}">
-        <img src="{{'/assets/images/' . $detail->status . '.gif'}}"> 
+        {!! status_img($detail->status) !!} 
         </a>
     </td>
     <td class="text-center col-md-1">

@@ -1,3 +1,5 @@
+picture { display: contents; }
+
 :root {
   --ae-blue: #1947d1;
   --ae-orange: #fa4219;

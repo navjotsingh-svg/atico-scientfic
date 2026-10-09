@@ -77,7 +77,7 @@
                                         </div>  
                                         @if(!empty($result->image))
                                             <div class="form-group"> 
-                                                <img src="{{asset('uploads/blog_images/'.$result->image)}}" class="img-responsive" width="70" height="70">
+                                                {!! optimized_img('uploads/blog_images/'.$result->image, trim(strip_tags($result->name ?? 'Blog')).' photo', ['lazy' => true, 'class' => 'img-responsive']) !!}
                                             </div>
                                         @endif     
                                         

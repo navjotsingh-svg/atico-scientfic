@@ -14106,7 +14106,7 @@ color: #575757 !important;
                         <div class="ts-blog-classic-datebox-overlay">
                            <div class="ts-blog-classic-dbox-date">{{ $blog->created_at->format('F d, Y') }}</div>
                         </div>
-                        <div class="ts-featured-wrapper ts-post-featured-wrapper ts-post-format-"><img src="{{ asset('uploads/blog_images/'.$blog->image) }}" class="attachment-full size-full wp-post-image" alt="{!! strip_tags($blog->name) !!}" style="width:100%;height:auto;object-fit:contain;"></div>
+                        <div class="ts-featured-wrapper ts-post-featured-wrapper ts-post-format-">{!! optimized_img('uploads/blog_images/'.$blog->image, trim(strip_tags($blog->name)).' featured photo', ['lazy' => false, 'fetchpriority' => 'high', 'class' => 'attachment-full size-full wp-post-image', 'style' => 'width:100%;height:auto;object-fit:contain;']) !!}</div>
                      </div>
                      <div class="ts-blog-classic-box-content ">
                         <!-- Blog classic meta Start -->
@@ -14121,7 +14121,7 @@ color: #575757 !important;
                         </div>
                         <!-- Blog classic meta End -->
                         <div class="entry-content" style="color: black;">
-                           {!! $blog->description !!}
+                           {!! optimize_content_images($blog->description) !!}
                         </div>
                         <!-- .entry-content -->
                      </div>
@@ -14146,7 +14146,7 @@ color: #575757 !important;
                            <li class="comment even thread-even depth-1" id="comment-3">
                               <div id="div-comment-3" class="comment-body">
                                  <div class="comment-author vcard">
-                                    <img alt='' src="{{ asset('assets/frontend/images/user-img1.png') }}" class='avatar avatar-100 photo' />      
+                                    {!! optimized_img('assets/frontend/images/user-img1.png', trim(strip_tags($blog_comment->name)).' avatar', ['lazy' => true, 'class' => 'avatar avatar-100 photo']) !!}      
                                  </div>
                                  <div class="comment-meta commentsetadata">
                                     <cite class="ts-comment-owner fn">{!! $blog_comment->name !!}</cite> <span class="says">says:</span>
@@ -14267,7 +14267,7 @@ $sum  = $num1 + $num2;
                   
                   @if(count($latest_blogs)>0)
                   @foreach($latest_blogs as $key => $latest_blog)
-                  <li class="ts-recent-post-list-li"><a href="{{ route('blog_detail', $latest_blog->slug) }}"><img src="{{ asset('uploads/blog_images/'.$latest_blog->image) }}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="{!! strip_tags($latest_blog->name) !!}" style="object-fit:cover;object-position:center;"></a><a href="{{ route('blog_detail', $latest_blog->slug) }}">{!! $latest_blog->name !!}</a><span class="post-date">{{ $latest_blog->created_at->format('F d, Y') }}</span></li>
+                  <li class="ts-recent-post-list-li"><a href="{{ route('blog_detail', $latest_blog->slug) }}">{!! optimized_img('uploads/blog_images/'.$latest_blog->image, trim(strip_tags($latest_blog->name)).' thumbnail', ['lazy' => true, 'class' => 'attachment-thumbnail size-thumbnail wp-post-image', 'style' => 'object-fit:cover;object-position:center;']) !!}</a><a href="{{ route('blog_detail', $latest_blog->slug) }}">{!! $latest_blog->name !!}</a><span class="post-date">{{ $latest_blog->created_at->format('F d, Y') }}</span></li>
                   @endforeach
                   @endif
                </ul>

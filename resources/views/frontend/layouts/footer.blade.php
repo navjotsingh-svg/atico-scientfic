@@ -1,6 +1,6 @@
 <footer class="ae-footer">
   <div class="ae-footer-bg" aria-hidden="true">
-    <img src="{{ asset('assets/images/footer-bg.webp') }}" alt="" loading="lazy">
+    {!! optimized_img('assets/images/footer-bg.webp', 'Laboratory and workshop background', ['lazy' => true]) !!}
   </div>
 
   <div class="ae-footer-inner">
@@ -93,7 +93,7 @@
     <div class="ae-footer-bottom-inner">
       <div class="ae-footer-brand">
         <a href="{{ url('/') }}">
-          <img src="{{ asset('assets/images/logo_footer.png') }}" alt="Atico Scientific" width="120" height="40" loading="lazy">
+          {!! optimized_img('assets/images/logo_footer.png', 'Atico Scientific logo', ['lazy' => true]) !!}
         </a>
         <p>Copyright © {{ date('Y') }} <a href="{{ url('/') }}">Atico Scientific</a> All Rights Reserved</p>
       </div>
@@ -108,5 +108,5 @@
 </footer>
 
 <!-- <a class="ae-whatsapp" href="https://wa.me/919896793832?text=Hi" target="_blank" rel="noopener" aria-label="WhatsApp">
-  <img src="{{ asset('assets/images/whatsapp.png') }}" alt="WhatsApp">
+  {!! optimized_img('assets/images/whatsapp.png', 'WhatsApp chat', ['lazy' => true]) !!}
 </a> -->

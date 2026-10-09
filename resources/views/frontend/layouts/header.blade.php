@@ -47,7 +47,7 @@
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid px-0 d-flex align-items-center justify-content-between" style="max-width:1400px;margin:0 auto;width:100%;">
       <a class="navbar-brand m-0" href="{{ url('/') }}">
-        <img class="logo" src="{{ asset('assets/images/logo.png') }}" alt="Atico Scientific" width="140" height="42" decoding="async">
+        {!! optimized_img('assets/images/logo.png', 'Atico Scientific logo', ['lazy' => false, 'class' => 'logo', 'fetchpriority' => 'high']) !!}
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@
             </div>
           </li>
           <li class="nav-item d-none d-xl-flex align-items-center gap-2 ms-2">
-            <img src="{{ asset('assets/images/call.png') }}" alt="" width="22" height="22" loading="lazy">
+            {!! optimized_img('assets/images/call.png', 'Telephone', ['lazy' => false, 'style' => 'width:22px;height:22px;']) !!}
             <a class="ae-phones" href="tel:+919996186555">
               <small>Talk to Us:</small>
               <strong>+91 99961 86555</strong>

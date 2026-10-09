@@ -30,7 +30,7 @@
         
         <td class="text-center">
             <a href="javascript:void(0);" class="toggle-status" data-message="{!! lang('messages.change_status') !!}" data-route="{!! route('product_review.toggle', $detail->id) !!}">
-            <img src="{{'/assets/images/' . $detail->status . '.gif'}}"> 
+            {!! status_img($detail->status) !!} 
        
             </a>
         </td>

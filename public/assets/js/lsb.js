@@ -252,7 +252,7 @@
         '</div>' +
         '<div class="lsb-image-container">' +
         '<div class="lsb-no-image-found"><div class="no-found-msg">Sorry, no image found.</div></div>' +
-        '<img class="lsb-image lsb-noimage">' +
+        '<img class="lsb-image lsb-noimage" alt="Enlarged photograph" width="1" height="1">' +
         '</div>' +
         '<div class="waitingicon">' +
         waitingIconCircle +
@@ -542,9 +542,11 @@
       }
 
       //Load image.
-      var $img = $('<img />').attr('src', imageObj.href).on('load', function () {
-        // Set image.
+      var $img = $('<img alt="Enlarged photograph" />').attr('src', imageObj.href).on('load', function () {
         $lsbImage.attr('src', $img.attr('src'));
+        $lsbImage.attr('alt', imageObj.title || 'Enlarged photograph');
+        $lsbImage.attr('width', this.naturalWidth || 1);
+        $lsbImage.attr('height', this.naturalHeight || 1);
         if (settings.showImageTitle) {
           // Set image title.
           $lsbTitle.text(imageObj.alt);

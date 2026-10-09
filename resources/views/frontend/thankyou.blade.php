@@ -55,7 +55,7 @@
     </style>
     <section>
     <div class="thank-you-container">
-        <img src="https://img.icons8.com/emoji/96/000000/check-mark-emoji.png" alt="Thank You">
+        <img src="https://img.icons8.com/emoji/96/000000/check-mark-emoji.png" alt="Check mark confirming your inquiry was received" width="96" height="96">
         <h1>Thank You!</h1>
         <p>We have received your inquiry. Our Team will get back to you soon</p>
         <a href="/">Go to Homepage</a>

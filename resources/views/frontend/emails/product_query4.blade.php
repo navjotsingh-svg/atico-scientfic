@@ -24,7 +24,7 @@
         <div style="width: 99%; height: 100%; border: 4px solid #002c4d; margin: 0 auto;">
           <div class="header-logo" style=" width: 100px; margin: 18px auto 10px auto; overflow: hidden; text-align: center;">
             <a style="margin: 0 auto; display: block; text-align: center;" href="http://aticoindia.com">
-              <img style="max-width: 100%; margin: 0 auto; text-align: center;" src="http://aticoindia.com/assets/frontend/images/logo.png">
+              <img style="max-width: 100%; margin: 0 auto; text-align: center;" src="http://aticoindia.com/assets/frontend/images/logo.png" alt="Atico Scientific logo" width="180" height="48">
             </a>
           </div>
           <div style="background-color: #002c4d; padding: 50px 0px; float: left; width: 100%; text-align: center; margin: 0px 0px 0px 0px;">

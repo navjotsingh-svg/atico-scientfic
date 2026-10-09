@@ -1562,3 +1562,269 @@ function getSeoModule(){
     }
     return $data;
 }
+
+function public_image_info(string $path): array
+{
+    static $cache = [];
+
+    $path = html_entity_decode(trim($path), ENT_QUOTES);
+    $remote = false;
+
+    if (preg_match('#^https?://#i', $path) || str_starts_with($path, '//')) {
+        $parsed = parse_url(str_starts_with($path, '//') ? 'https:'.$path : $path);
+        $host = strtolower((string) ($parsed['host'] ?? ''));
+        $appHost = strtolower((string) parse_url((string) config('app.url'), PHP_URL_HOST));
+        $localHosts = array_filter([$appHost, '127.0.0.1', 'localhost', 'aticoscientific.com', 'www.aticoscientific.com']);
+        if ($host === '' || ! in_array($host, $localHosts, true)) {
+            return [
+                'remote' => true,
+                'relative' => $path,
+                'src' => $path,
+                'webp' => null,
+                'width' => null,
+                'height' => null,
+                'exists' => false,
+                'is_webp' => false,
+            ];
+        }
+        $path = $parsed['path'] ?? '';
+        $remote = false;
+    }
+
+    $path = ltrim(str_replace('\\', '/', urldecode($path)), '/');
+    $path = preg_replace('/\?.*$/', '', $path) ?? $path;
+
+    if (isset($cache[$path])) {
+        return $cache[$path];
+    }
+
+    $absolute = public_path($path);
+    $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    $raster = in_array($extension, ['jpg', 'jpeg', 'png', 'gif'], true);
+    $webpRelative = $raster ? preg_replace('/\.(jpe?g|png|gif)$/i', '.webp', $path) : ($extension === 'webp' ? $path : null);
+    $webpAbsolute = $webpRelative ? public_path($webpRelative) : null;
+    $hasSiblingWebp = $raster && $webpAbsolute && is_file($webpAbsolute) && filesize($webpAbsolute) > 0;
+
+    $measure = null;
+    if ($hasSiblingWebp) {
+        $measure = $webpAbsolute;
+    } elseif (is_file($absolute)) {
+        $measure = $absolute;
+    }
+
+    $width = null;
+    $height = null;
+    if ($measure) {
+        $info = @getimagesize($measure);
+        if (is_array($info)) {
+            $width = (int) $info[0];
+            $height = (int) $info[1];
+        }
+    }
+
+    return $cache[$path] = [
+        'remote' => $remote,
+        'relative' => $path,
+        'src' => public_image_url($path),
+        'webp' => $hasSiblingWebp ? public_image_url($webpRelative) : (($extension === 'webp' && is_file($absolute)) ? public_image_url($path) : null),
+        'width' => $width,
+        'height' => $height,
+        'exists' => is_file($absolute) || $hasSiblingWebp,
+        'is_webp' => $extension === 'webp',
+    ];
+}
+
+function public_image_url(string $relative): string
+{
+    $parts = explode('/', str_replace('\\', '/', $relative));
+    $encoded = implode('/', array_map(static function ($part) {
+        return rawurlencode(rawurldecode($part));
+    }, $parts));
+
+    return asset($encoded);
+}
+
+function optimized_img(string $path, string $alt, array $options = []): string
+{
+    $info = public_image_info($path);
+    $alt = trim(preg_replace('/\s+/', ' ', strip_tags(html_entity_decode($alt, ENT_QUOTES))) ?? '');
+    if ($alt === '') {
+        $alt = 'Atico Scientific laboratory equipment';
+    }
+
+    $lazy = array_key_exists('lazy', $options) ? (bool) $options['lazy'] : true;
+    $attrs = [
+        'alt' => $alt,
+        'decoding' => $options['decoding'] ?? 'async',
+        'loading' => $lazy ? 'lazy' : 'eager',
+    ];
+
+    $width = $info['width'] ?: ($options['width'] ?? null);
+    $height = $info['height'] ?: ($options['height'] ?? null);
+    $fallback = null;
+    if (! empty($options['fallback'])) {
+        $fallback = public_image_info($options['fallback']);
+        $width = $width ?: ($fallback['width'] ?? null);
+        $height = $height ?: ($fallback['height'] ?? null);
+        $attrs['onerror'] = 'this.onerror=null;this.src='.json_encode($fallback['src'], JSON_UNESCAPED_SLASHES).';';
+    }
+    if ($width) {
+        $attrs['width'] = (int) $width;
+    }
+    if ($height) {
+        $attrs['height'] = (int) $height;
+    }
+    if (! empty($options['fetchpriority'])) {
+        $attrs['fetchpriority'] = $options['fetchpriority'];
+    }
+    if (! empty($options['class'])) {
+        $attrs['class'] = $options['class'];
+    }
+    if (! empty($options['style'])) {
+        $attrs['style'] = $options['style'];
+    }
+
+    $sources = [];
+    if (! empty($options['sources']) && is_array($options['sources'])) {
+        foreach ($options['sources'] as $source) {
+            if (empty($source['path'])) {
+                continue;
+            }
+            $sourceInfo = public_image_info($source['path']);
+            $sources[] = '<source'.(! empty($source['media']) ? ' media="'.e($source['media']).'"' : '').' srcset="'.e($sourceInfo['webp'] ?: $sourceInfo['src']).'" type="image/webp">';
+        }
+    }
+
+    $src = $info['src'];
+    if (! $info['remote'] && ! empty($info['webp']) && empty($info['is_webp'])) {
+        $sources[] = '<source srcset="'.e($info['webp']).'" type="image/webp">';
+    }
+
+    $attrs['src'] = $src;
+    $html = '<img';
+    foreach ($attrs as $name => $value) {
+        $html .= ' '.$name.'="'.e((string) $value).'"';
+    }
+    $html .= '>';
+
+    if ($sources) {
+        return '<picture>'.implode('', $sources).$html.'</picture>';
+    }
+
+    return $html;
+}
+
+function status_img($status): string
+{
+    $active = (string) $status === '1';
+
+    return optimized_img(
+        'assets/images/'.$status.'.gif',
+        $active ? 'Active status' : 'Inactive status',
+        ['lazy' => true]
+    );
+}
+
+function remote_image_size(string $url): array
+{
+    static $cache = null;
+    $file = storage_path('app/remote-image-sizes.json');
+    if ($cache === null) {
+        $decoded = is_file($file) ? json_decode((string) file_get_contents($file), true) : [];
+        $cache = is_array($decoded) ? $decoded : [];
+    }
+    if (isset($cache[$url]) && is_array($cache[$url])) {
+        return $cache[$url];
+    }
+
+    $info = @getimagesize($url);
+    $size = [
+        'width' => is_array($info) ? (int) $info[0] : null,
+        'height' => is_array($info) ? (int) $info[1] : null,
+    ];
+    if ($size['width'] && $size['height']) {
+        $cache[$url] = $size;
+        @file_put_contents($file, json_encode($cache));
+    }
+
+    return $size;
+}
+
+function optimize_content_images(?string $html): string
+{
+    if ($html === null || $html === '' || stripos($html, '<img') === false) {
+        return (string) $html;
+    }
+
+    $updated = preg_replace_callback('/<img\b([^>]*)\/?>/i', function (array $match) {
+        $attrs = [];
+        if (preg_match_all('/([^\s=\/]+)\s*=\s*("([^"]*)"|\'([^\']*)\'|([^\s>]+))/', $match[1], $found, PREG_SET_ORDER)) {
+            foreach ($found as $attribute) {
+                if (array_key_exists(3, $attribute) && $attribute[3] !== '') {
+                    $value = $attribute[3];
+                } elseif (array_key_exists(4, $attribute)) {
+                    $value = $attribute[4];
+                } else {
+                    $value = $attribute[5] ?? '';
+                }
+                $attrs[strtolower($attribute[1])] = html_entity_decode($value, ENT_QUOTES);
+            }
+        }
+
+        $src = $attrs['src'] ?? '';
+        if ($src === '') {
+            return $match[0];
+        }
+
+        $alt = trim(strip_tags($attrs['alt'] ?? ''));
+        if ($alt === '') {
+            $alt = 'Laboratory equipment photograph';
+        }
+
+        $info = public_image_info($src);
+        if ($info['remote']) {
+            $remoteWidth = $attrs['width'] ?? null;
+            $remoteHeight = $attrs['height'] ?? null;
+            $remotePath = parse_url($src, PHP_URL_PATH) ?: '';
+            if ($remotePath !== '' && str_contains($remotePath, 'uploads/')) {
+                $local = public_image_info($remotePath);
+                $remoteWidth = $remoteWidth ?: ($local['width'] ?? null);
+                $remoteHeight = $remoteHeight ?: ($local['height'] ?? null);
+            }
+            if ((!$remoteWidth || !$remoteHeight) && preg_match('/(\d{2,4})x(\d{2,4})(?=\.[a-z]+(?:$|\?))/i', $src, $sizeMatch)) {
+                $remoteWidth = $remoteWidth ?: $sizeMatch[1];
+                $remoteHeight = $remoteHeight ?: $sizeMatch[2];
+            }
+            if (!$remoteWidth || !$remoteHeight) {
+                $measured = remote_image_size($src);
+                $remoteWidth = $remoteWidth ?: ($measured['width'] ?? null);
+                $remoteHeight = $remoteHeight ?: ($measured['height'] ?? null);
+            }
+            $attrs['alt'] = $alt;
+            $attrs['loading'] = $attrs['loading'] ?? 'lazy';
+            $attrs['decoding'] = $attrs['decoding'] ?? 'async';
+            if ($remoteWidth) {
+                $attrs['width'] = (int) $remoteWidth;
+            }
+            if ($remoteHeight) {
+                $attrs['height'] = (int) $remoteHeight;
+            }
+            $tag = '<img';
+            foreach ($attrs as $name => $value) {
+                $tag .= ' '.$name.'="'.e($value).'"';
+            }
+
+            return $tag.'>';
+        }
+
+        return optimized_img($info['relative'], $alt, [
+            'lazy' => ($attrs['loading'] ?? 'lazy') !== 'eager',
+            'class' => $attrs['class'] ?? null,
+            'style' => $attrs['style'] ?? null,
+            'width' => $attrs['width'] ?? null,
+            'height' => $attrs['height'] ?? null,
+        ]);
+    }, $html);
+
+    return is_string($updated) ? $updated : $html;
+}

@@ -1,6 +1,6 @@
 <section class="title-bar">
     <div class="logo">
-        <h1><a href="{!! route('dashboard') !!}"><img src="" alt="" />Atico India</a></h1>
+        <h1><a href="{!! route('dashboard') !!}">Atico Scientific</a></h1>
     </div>
     <!-- <div class="full-screen">
         <section class="full-top">

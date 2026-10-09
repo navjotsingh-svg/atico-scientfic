@@ -15,10 +15,22 @@ use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
+use App\Http\Controllers\PageMetaController;
 
 
 
 use Illuminate\Support\Facades\Route;
+
+Route::get('/sitemap.xml', function () {
+    $path = public_path('sitemap.xml');
+    if (! is_file($path)) {
+        abort(404);
+    }
+
+    return response()->file($path, [
+        'Content-Type' => 'application/xml; charset=UTF-8',
+    ]);
+})->name('sitemap');
 //Route::delete('enquiry/{id}', 'EnquiryController@destroy')->name('enquiry.destroy');
 //Route::delete('enquiry/deleteSelected', 'EnquiryController@deleteSelected')->name('enquiry.deleteSelected');
 
@@ -397,6 +409,9 @@ Route::group(['middleware' => 'auth', 'after' => 'no-cache'], function () {
             Route::any('faq/paginate/{page?}', [FaqController::class, 'FaqPaginate'])->name('faq.paginate');
             Route::any('faq/toggle/{id?}', [FaqController::class, 'FaqToggle'])->name('faq.toggle');
             Route::any('faq/drop/{page?}', [FaqController::class, 'drop'])->name('faq.drop');
+
+            Route::get('page-meta', [PageMetaController::class, 'index'])->name('page_meta.index');
+            Route::post('page-meta', [PageMetaController::class, 'update'])->name('page_meta.update');
 
 
             /*Route::any('faq/paginate/{page?}', ['as' => 'faq.paginate',

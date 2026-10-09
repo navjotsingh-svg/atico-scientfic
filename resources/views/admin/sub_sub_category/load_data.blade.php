@@ -24,13 +24,13 @@
     <td>{!! $detail->cat_name !!}</td>
     <td>{!! $detail->main_cat_name !!}</td>
     <td>{!! $detail->slug !!}</td>
-    <td><img src="{{ asset('uploads/product_images/'.$detail->image) }}" class="img-fluid" style="max-height: 50px;"></td>
+    <td>{!! optimized_img($detail->image ? 'uploads/product_images/'.$detail->image : 'assets/images/no_product.png', trim(strip_tags($detail->name ?? 'Record')).' photo', ['lazy' => true, 'class' => 'img-fluid', 'style' => 'max-height:50px', 'fallback' => 'assets/images/no_product.png']) !!}</td>
 
   
 
     <td class="text-center">
         <a href="javascript:void(0);" class="toggle-status" data-message="{!! lang('messages.change_status') !!}" data-route="{!! route('sub_sub_category.toggle', $detail->id) !!}">
-        <img src="{{'/assets/images/' . $detail->status . '.gif'}}"> 
+        {!! status_img($detail->status) !!} 
        
         </a>
     </td>

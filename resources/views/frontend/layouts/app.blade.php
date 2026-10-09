@@ -24,6 +24,14 @@ $navGroups = getGroups();
 $isHome = $route === 'home';
 @endphp
 <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NFHT2HBC');</script>
+<!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -40,46 +48,52 @@ $isHome = $route === 'home';
         <link rel="preload" as="image" href="{{ asset('assets/images/category_bg.webp') }}" type="image/webp" fetchpriority="high">
         @endif
     @endif
-      @if(isset($keyword)) 
-      @if($keyword->meta_title)
-      <title>{{ $keyword->meta_title }}</title>
-      @else
-      @if($route == "home")
-      <title>Scientific Lab Equipment Manufacturer and Supplier In India</title>
-      @endif
-      @endif
-      @if($keyword->meta_description)
-      <meta name="description" content="{{ $keyword->meta_description }}"/>
-      @else
-      @if($route == "home")
-      <meta name="description" content="Atico Scientific leading laboratory equipment manufacturer, reliable supplier and exporter of lab equipment at best prices. ISO 9001:2015 Quality Systems Certified."/>
-      @endif
-      @endif
-      @if($keyword->meta_tag)
-      <!--<meta name="keywords" content="{{ $keyword->meta_tag }}"/>-->
-      @else
-      <!--<meta name="keywords" content="Educational Lab Manufacturers, Educational Lab Equipments manufacturer, Educational Scientific Instruments Exporters, Educational Scientific Lab Equipments, Scientific Educational Lab Equipments, Scientific Equipments Manufacturers, Scientific Instruments Manufacturers India, Scientific Lab Equipment Suppliers, Scientific Lab Instruments Manufacturers, Scientific Lab Equipments Manufacturer India,School Science Lab Equipments manufacturer, School Science Lab Equipment manufacturers, Physics Lab Equipment manufacturers,Physics Lab Equipment manufacturer, Chemistry Lab Equipments manufacturer,Chemistry Lab Equipment manufacturers, Biology Lab Equipment manufacturer, Biology Lab Equipments manufacturer, Mechanical Lab Equipments Manufacturer, Fluid Mechanics Lab Equipments manufacturer, Fluid Mechanics Lab Equipment manufacturers,Engineering Lab Equipments manufacturer, Engineering Lab Equipment manufacturers, Technical Educational Equipment Manufacturer, Technical Educational Equipment Manufacturers, Vocational Training Lab Equipments Manufacturers, Vocational Training Lab Equipment Manufacturers, Civil Engineering Lab Equipment manufacturers,Civil Engineering Lab Equipments manufacturers, Chemical Engineering Lab Equipment manufacturers, Chemical Engineering Lab Equipments manufacturer,Laboratory Glassware manufacturers,Material Testing Lab Equipment manufacturer,Material Testing Lab Equipment manufacturers TVET Lab Equipement manufacturers"/>-->
-      @endif
-      @else
-      @if($route == "home")
-      <title>Scientific Lab Equipment Manufacturer and Supplier In India</title>
-      <!-- <meta name="description" content="{{ isset(getSeoModule()['meta_description']) ? getSeoModule()['meta_description'] : 'Atico India is a leading educational Lab Equipment manufacturer in Ambala, India. We are a national and international supplier. Contact us for school science equipment bulk orders.' }}"/>-->
-     <meta name="description" content="Atico Scientific leading laboratory equipment manufacturer, reliable supplier and exporter of lab equipment at best prices. ISO 9001:2015 Quality Systems Certified."/>
-    
-      @endif
-
-       @if($route == "lab_tender_page")
-      <title>{{ isset(getSeoModule()['meta_title']) ? getSeoModule()['meta_title'] : 'Educational, Scientific, and Workshop Vocational Training Lab Equipment for Ministry of Education Tenders - Atico India' }}</title>
-      <!-- <meta name="description" content="{{ isset(getSeoModule()['meta_description']) ? getSeoModule()['meta_description'] : 'Atico India is a leading educational Lab Equipment manufacturer in Ambala, India. We are a national and international supplier. Contact us for school science equipment bulk orders.' }}"/>-->
-     <meta name="description" content="We have a wide range of Education, Scientific, and Workshop Tools for Ministry of Education Lab Tenders. Contact us for a quotation."/>
-    
-      @endif
-      @if($route == "engineering_lab_tender_page")
-      <title>{{ isset(getSeoModule()['meta_title']) ? getSeoModule()['meta_title'] : 'Educational, Scientific, and Workshop Vocational Training Lab Equipment for Ministry of Education Tenders - Atico India' }}</title>
-      <!-- <meta name="description" content="{{ isset(getSeoModule()['meta_description']) ? getSeoModule()['meta_description'] : 'Atico India is a leading educational Lab Equipment manufacturer in Ambala, India. We are a national and international supplier. Contact us for school science equipment bulk orders.' }}"/>-->
-     <meta name="description" content="We have a wide range of Education, Scientific, and Workshop Tools for Ministry of Education Lab Tenders. Contact us for a quotation."/>
-    
-      @endif
+      @php
+        $seoFallbacks = [
+          'home' => [
+            'Scientific Lab Equipment Manufacturer and Supplier In India',
+            'Atico Scientific leading laboratory equipment manufacturer, reliable supplier and exporter of lab equipment at best prices. ISO 9001:2015 Quality Systems Certified.',
+          ],
+          'about_us_page' => [
+            'About Atico Scientific | Laboratory Equipment Manufacturer',
+            'Atico Scientific manufactures and exports laboratory equipment for schools, colleges, research labs and vocational institutes.',
+          ],
+          'contact_us_page' => [
+            'Contact Us | Atico Scientific',
+            'Contact Atico Scientific for quotations, tenders, dealerships and laboratory equipment support worldwide.',
+          ],
+          'blog_page' => [
+            'Blog | Atico Scientific',
+            'News, guides and updates from Atico Scientific on laboratory and educational equipment.',
+          ],
+          'products.index' => [
+            'Our Products | Atico Scientific',
+            'Browse laboratory and educational equipment manufactured and exported by Atico Scientific.',
+          ],
+          'lab_tender_page' => [
+            'Educational, Scientific, and Workshop Vocational Training Lab Equipment for Ministry of Education Tenders - Atico India',
+            'We have a wide range of Education, Scientific, and Workshop Tools for Ministry of Education Lab Tenders. Contact us for a quotation.',
+          ],
+          'engineering_lab_tender_page' => [
+            'Engineering Lab Equipment for Ministry of Education Tenders - Atico Scientific',
+            'Engineering, scientific and workshop laboratory equipment for education tenders. Contact Atico Scientific for a quotation.',
+          ],
+        ];
+        $seoTitle = isset($keyword) ? trim((string) ($keyword->meta_title ?? '')) : '';
+        $seoDescription = isset($keyword) ? trim((string) ($keyword->meta_description ?? '')) : '';
+        if ($seoTitle === '' && isset($seoFallbacks[$route])) {
+          $seoTitle = $seoFallbacks[$route][0];
+        }
+        if ($seoDescription === '' && isset($seoFallbacks[$route])) {
+          $seoDescription = $seoFallbacks[$route][1];
+        }
+        if ($seoTitle === '') {
+          $seoTitle = 'Atico Scientific';
+        }
+      @endphp
+      <title>{{ $seoTitle }}</title>
+      @if($seoDescription !== '')
+      <meta name="description" content="{{ $seoDescription }}"/>
       @endif
       
       @if($route == "home")
@@ -206,6 +220,10 @@ li.li-icon.inter { font-size: 13px; line-height: 30px; }
 </head>
 
 <body class="home page-template page-template-page-template page-template-blank-page page-template-page-templateblank-page-php page page-id-832 woocommerce woocommerce-no-js wpb-js-composer js-comp-ver-5.7 vc_responsive">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NFHT2HBC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
   
     <div class="page">
         <!-- Header -->

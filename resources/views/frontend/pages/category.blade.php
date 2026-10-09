@@ -39,13 +39,9 @@
                     <div class="ae-panel-card ae-page-intro">
                         <div class="body">
                             @if(!empty($category_detail['image']))
-                                <img
-                                    src="{{ asset('uploads/product_images/'.$category_detail['image']) }}"
-                                    alt="" style="max-width: 400px; margin-top: 45px;" 
-                                    class="ae-page-intro-image"
-                                >
+                                {!! optimized_img('uploads/product_images/'.$category_detail['image'], trim(strip_tags($category_detail['name'] ?? 'Category')).' image', ['lazy' => true, 'class' => 'ae-page-intro-image', 'style' => 'max-width:400px;margin-top:45px;']) !!}
                             @endif
-                            {!! $category_detail['description'] !!}
+                            {!! optimize_content_images($category_detail['description']) !!}
                         </div>
                     </div>
                 @endif
@@ -65,12 +61,7 @@
                         @foreach($categories as $item)
                             <a class="ae-pcard" href="{{ route('categories', $item->slug) }}">
                                 <div class="ae-pcard-media">
-                                    <img
-                                        src="{{ asset($item->image ? 'uploads/product_images/'.$item->image : 'assets/images/no_product.png') }}"
-                                        alt="{!! strip_tags($item->name) !!}"
-                                        loading="lazy"
-                                        onerror="this.onerror=null;this.src='{{ asset('assets/images/no_product.png') }}';"
-                                    >
+                                    {!! optimized_img($item->image ? 'uploads/product_images/'.$item->image : 'assets/images/no_product.png', trim(strip_tags($item->name)).' category', ['lazy' => true, 'fallback' => 'assets/images/no_product.png']) !!}
                                 </div>
                                 <div class="ae-pcard-title">{!! $item->name !!}</div>
                             </a>
@@ -78,7 +69,7 @@
                     </div>
                 @else
                     <div class="ae-empty">
-                        <img src="{{ asset('assets/images/not_found.jpg') }}" alt="Not found" style="max-width:280px;">
+                        {!! optimized_img('assets/images/not_found.jpg', 'No categories found', ['lazy' => true, 'style' => 'max-width:280px;']) !!}
                     </div>
                 @endif
 

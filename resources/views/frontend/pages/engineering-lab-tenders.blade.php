@@ -200,7 +200,7 @@
                 Factory Address:<br> 274, Sector-II, Industrial Growth Center,<br>HSIIDC, Saha,<br> HR, India
             </div>
             </div>
-            <a class="about_scientific inter" href="mailto:sales@aticoscientific.com"><img src="{{ asset('assets/images/email_icon.png') }}" style="width: 30px;margin-right: 10px;"><span class="about_scientific inter"> sales@aticoscientific.com</span></a>
+            <a class="about_scientific inter" href="mailto:sales@aticoscientific.com">{!! optimized_img('assets/images/email_icon.png', 'Email', ['lazy' => true, 'style' => 'width:30px;margin-right:10px;']) !!}<span class="about_scientific inter"> sales@aticoscientific.com</span></a>
             <br>
             <p class="about_scientific inter">Technical Support: <a href="tel:+919896783832"> +91-989-678-3832</a></p>
 
@@ -208,7 +208,7 @@
             
         </div>
         <div class="col-md-6">
-            <img src="{{ asset('assets/images/lab-tenders.png') }}" style="width:-webkit-fill-available">
+            {!! optimized_img('assets/images/lab-tenders.png', 'Engineering laboratory tender equipment', ['lazy' => true, 'style' => 'width:-webkit-fill-available']) !!}
         </div>
     </div>
 </div>                     

@@ -190,6 +190,15 @@
             </ul>
         </li>
 
+        <li>
+            <a href="{!! route('page_meta.index') !!}">
+                <i class="fa fa-tag" aria-hidden="true"></i>
+                <span class="nav-text">
+                    Page SEO
+                </span>
+            </a>
+        </li>
+
         <li class="has-subnav">
             <a href="javascript:;">
                 <i class="fa fa-list-alt" aria-hidden="true"></i>

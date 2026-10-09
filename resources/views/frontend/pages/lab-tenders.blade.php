@@ -184,7 +184,7 @@
       </ul>
     </div>
     <div class="lt-intro-card">
-      <img src="{{ asset('assets/images/lab-tenders.png') }}" alt="Laboratory tender equipment" loading="lazy">
+      {!! optimized_img('assets/images/lab-tenders.png', 'Laboratory tender equipment', ['lazy' => true]) !!}
       <div class="lt-intro-meta">
         <h3>Trusted export partner</h3>
         <p>ISO-aligned manufacturing from Ambala, India — built for institutional buyers and long-term supply programmes.</p>

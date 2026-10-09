@@ -30,7 +30,7 @@
 
     <td class="text-center">
         <a href="javascript:void(0);" class="toggle-status" data-message="{!! lang('messages.change_status') !!}" data-route="{!! route('group.toggle', $detail->id) !!}">
-        <img src="{{'/assets/images/' . $detail->status . '.gif'}}">  
+        {!! status_img($detail->status) !!}  
         </a>
     </td>
     <td class="text-center col-md-1">
