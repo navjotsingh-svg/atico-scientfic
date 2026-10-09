@@ -48,7 +48,7 @@
 
 <link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/morris.css') }}">
 <link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/template.css') }}">
-<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/admin-polish.css') }}?v=3">
+<link media="all" type="text/css" rel="stylesheet" href="{{ asset('assets/css/admin-polish.css') }}?v=9">
 
 
 <!-- //charts -->

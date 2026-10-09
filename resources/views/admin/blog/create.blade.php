@@ -1,11 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
-<script type="text/javascript">
-//<![CDATA[
-        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-  //]]>
-</script>
+@include('admin.partials.rich_editor')
 
 @stop
 
@@ -68,7 +63,7 @@
                                         <div class="form-group">
                                             <label for="description">Description</label>
                                             <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            <textarea name="description" class="form-control" rows="20"><?= @$result->description ?></textarea>
+                                            <textarea name="description" class="form-control rich-editor" rows="20"><?= @$result->description ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="image">Image</label>(Height : 100-200px and Width : 200-300px)

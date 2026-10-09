@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\PageMetaController;
+use App\Http\Controllers\EditorImageController;
 
 
 
@@ -58,6 +59,9 @@ Route::group(['middleware' => 'auth', 'after' => 'no-cache'], function () {
             // Change Password Routes
 
             // Category route start
+
+            Route::get('assign-products/search', [CategoryController::class, 'searchProducts'])->name('assign_products.search');
+            Route::post('editor-image', [EditorImageController::class, 'store'])->name('editor.image');
 
             Route::resource('category', CategoryController::class, [
                 'names' => [

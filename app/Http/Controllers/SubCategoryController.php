@@ -69,7 +69,10 @@ class SubCategoryController extends Controller
                 'image'  =>  $image
             ];
             //dd($inputs);
-            (new Category)->store($inputs);
+            $categoryId = (new Category)->store($inputs);
+            if ($request->has('assign_products')) {
+                sync_category_products($categoryId, category_product_ids_from_request($request));
+            }
             return redirect()->route('sub_category.index')
                 ->with('success', lang('messages.created', lang('sub_category.sub_category')));
         }
@@ -190,6 +193,9 @@ class SubCategoryController extends Controller
                 /*'slug' => $slug*/
             ];
             (new Category)->store($inputs, $id);
+            if ($request->has('assign_products')) {
+                sync_category_products($id, category_product_ids_from_request($request));
+            }
             return redirect()->route('sub_category.index')
                 ->with('success', lang('messages.updated', lang('sub_category.sub_category')));
 

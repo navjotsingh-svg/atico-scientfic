@@ -1,10 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script> <script type="text/javascript">
-//<![CDATA[
-bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-//]]>
-</script>
+@include('admin.partials.rich_editor')
 @stop
 @section('content')
 @include('admin.layouts.messages')
@@ -14,7 +10,7 @@ $route  = \Route::currentRouteName();
 <div class="agile-grids">
     <div class="grids">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h1 class="page-header">{!! lang('sub_category.sub_category') !!} <a class="btn btn-sm btn-primary pull-right" href="{!! route('sub_category.index') !!}"> <i class="fa fa-plus fa-fw"></i> All {!! lang('sub_category.sub_category') !!} </a><a style="margin-right: 10px;" href="{{ url()->previous() }}" class="btn btn-sm btn-success pull-right">Back</a></h1>
                 
                 <div class="panel panel-widget forms-panel">
@@ -35,7 +31,7 @@ $route  = \Route::currentRouteName();
                                 @endif
                                 
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <div class="form-group">
                                         <label for="parent_id">Category</label>
                                         <select name="parent_id" class="select2 form-control1">
@@ -88,7 +84,7 @@ $route  = \Route::currentRouteName();
                                       
                                         <div class="form-group">
                                         <label for="description">Description</label>
-                                        <textarea class="form-control" name="description" rows="20"><?= @$result->description ?></textarea>
+                                        <textarea class="form-control rich-editor" name="description" rows="20"><?= @$result->description ?></textarea>
                                         </div>
 
                                         <div class="form-group">
@@ -118,12 +114,13 @@ $route  = \Route::currentRouteName();
                                         </div>
                                        
                                     </div>
-                                    
-                                    
+                                    <div class="col-md-4">
+                                        @include('admin.partials.assign_products')
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <p>&nbsp;</p>
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <button type="submit" class="btn btn-default w3ls-button">Submit</button>
                                     </div>
                                 </div>

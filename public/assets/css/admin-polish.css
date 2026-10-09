@@ -2,6 +2,58 @@
 
 .wrapper picture { display: contents; }
 
+.assign-products {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 14px 12px;
+  position: sticky;
+  top: 12px;
+}
+
+.assign-products h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.assign-products-count,
+.assign-products-empty {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.assign-products-list {
+  max-height: 520px;
+  overflow: auto;
+  margin-top: 8px;
+  border: 1px solid #eee;
+}
+
+.assign-products-list label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 7px 8px;
+  font-weight: 500;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+}
+
+.assign-products-list label.is-hidden {
+  display: none;
+}
+
+.assign-products-list label.is-assigned {
+  background: #f0fdfa;
+}
+
+.assign-products-list input {
+  margin-top: 3px;
+}
+
 .wrapper td img,
 .wrapper .form-group img {
   width: auto !important;
@@ -9,6 +61,26 @@
   max-width: 80px;
   max-height: 70px;
   object-fit: contain;
+}
+
+.wrapper .form-group .ck.ck-editor,
+.wrapper .form-group .ck-editor__main,
+.wrapper .form-group .ck-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+.wrapper .form-group .ck-content img,
+.ck.ck-editor img {
+  max-width: 100% !important;
+  max-height: none !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain;
+}
+
+.ck.ck-balloon-panel {
+  z-index: 10050;
 }
 
 .dashboard-page {
@@ -103,9 +175,10 @@
     color: #fff;
   }
 
-  .wrapper.scrollable {
-    float: none;
-    width: auto;
+  body.dashboard-page .wrapper.scrollable {
+    float: none !important;
+    width: auto !important;
+    max-width: none !important;
     margin-left: 250px;
     min-height: 100vh;
   }
@@ -220,6 +293,34 @@
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 1px 2px rgba(16, 42, 46, 0.04);
+}
+
+.dashboard-page .listing-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 12px;
+}
+
+.dashboard-page .listing-per-page {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.dashboard-page .listing-table,
+.dashboard-page .w3l-table-info > form,
+.dashboard-page #paginate-load {
+  clear: both;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dashboard-page table td.col-md-1,
+.dashboard-page table th.col-md-1 {
+  float: none !important;
+  width: auto !important;
 }
 
 .dashboard-page .agile-tables > .w3l-table-info > h3,

@@ -79,19 +79,21 @@
                             </div>
                         </div>
 
-                        <a href="{!! route('sub_category.excel') !!}" class="btn btn-success"> Export Excel</a>
+                        <div class="listing-toolbar">
+                            <a href="{!! route('sub_category.excel') !!}" class="btn btn-success"> Export Excel</a>
+                            <div class="listing-per-page">
+                                {!! lang('common.per_page') !!}:
+                                <select id="per-page" name="name"><option value="20" selected="selected">20</option><option value="40">40</option><option value="100">100</option><option value="200">200</option><option value="300">300</option></select>
+                            </div>
+                        </div>
 
                         <form action="#" method="post">
-                            <div class="col-md-3 text-right pull-right padding0 marginbottom10">
-                                {!! lang('common.per_page') !!}: 
-                                <form action="#" method="post">
-                                 <select id="per-page" name="name"><option value="20" selected="selected">20</option><option value="40">40</option><option value="100">100</option><option value="200">200</option><option value="300">300</option></select>   
-                                                      </div>
-                            <div class="col-md-3 padding0 marginbottom10">
                             <input name="page" type="hidden" value="search">
                             @csrf
-                                  <table id="paginate-load" data-route="{{ route('sub_category.paginate') }}" class="table table-hover">
-                            </table>
+                            <div class="listing-table">
+                                <table id="paginate-load" data-route="{{ route('sub_category.paginate') }}" class="table table-hover">
+                                </table>
+                            </div>
                         </form>
                     </div>
                     

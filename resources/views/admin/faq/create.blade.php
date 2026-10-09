@@ -1,11 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-<script src="{{ asset('assets/js/nicEdit-latest.js') }}"></script>
-<script type="text/javascript">
-//<![CDATA[
-        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-  //]]>
-</script>
+@include('admin.partials.rich_editor')
 @stop
 @section('content')
 @include('admin.layouts.messages')
@@ -45,7 +40,7 @@ $route  = \Route::currentRouteName();
                                         <div class="form-group">
                                         <label for="description">Description</label>
                                             <sup class="req_field"><i class="fa fa-star" aria-hidden="true"></i></sup>
-                                            <textarea class="form-control" name="description" rows="20"><?= @$result->description ?></textarea>
+                                            <textarea class="form-control rich-editor" name="description" rows="20"><?= @$result->description ?></textarea>
                                             
                                         </div>
 

@@ -1,10 +1,6 @@
 @extends('admin.layouts.master')
 @section('css')
-{!! HTML::script('assets/js/nicEdit-latest.js') !!}  <script type="text/javascript">
-//<![CDATA[
-bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-//]]>
-</script>
+@include('admin.partials.rich_editor')
 @stop
 @section('content')
 @include('admin.layouts.messages')
@@ -53,7 +49,7 @@ $route  = \Route::currentRouteName();
                                         <div class="form-group">
                                             {!! Form::label('description', lang('common.description'), array('class' => '')) !!}
                                             
-                                            {!! Form::textarea('description', null, array('class' => 'form-control', 'rows' => '20')) !!}
+                                            {!! Form::textarea('description', null, array('class' => 'form-control rich-editor', 'rows' => '20')) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('image', lang('common.image'), array('class' => '')) !!}

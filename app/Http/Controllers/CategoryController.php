@@ -72,7 +72,10 @@ class CategoryController extends Controller
                 'image'  =>  $image
             ];
             //dd($inputs);
-            (new Category)->store($inputs);
+            $categoryId = (new Category)->store($inputs);
+            if ($request->has('assign_products')) {
+                sync_category_products($categoryId, category_product_ids_from_request($request));
+            }
             return redirect()->route('category.index')
                 ->with('success', lang('messages.created', lang('category.category')));
         }
@@ -147,6 +150,29 @@ class CategoryController extends Controller
         return view('admin.category.create', compact('result'));
     }
 
+    public function searchProducts(Request $request)
+    {
+        $term = trim((string) $request->query('q', ''));
+        $term = str_replace(['%', '_'], '', $term);
+        if (mb_strlen($term) < 2) {
+            return response()->json([]);
+        }
+
+        $products = Product::query()
+            ->where('status', 1)
+            ->where('name', 'like', '%'.$term.'%')
+            ->orderBy('name')
+            ->limit(40)
+            ->get(['id', 'name']);
+
+        return response()->json($products->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => trim(preg_replace('/\s+/', ' ', strip_tags($product->name))),
+            ];
+        })->values());
+    }
+
     public function update(Request $request, $id = null)
     {
         $result = (new Category)->find($id);
@@ -188,7 +214,10 @@ class CategoryController extends Controller
                 'updated_by' => \Auth::user()->id,
                 /*'slug' => $slug*/
             ];
-            (new Category)->store($inputs, $id);    
+            (new Category)->store($inputs, $id);
+            if ($request->has('assign_products')) {
+                sync_category_products($id, category_product_ids_from_request($request));
+            }
             return redirect()->route('category.index')
                 ->with('success', lang('messages.updated', lang('category.category')));
 

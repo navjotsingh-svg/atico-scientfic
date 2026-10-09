@@ -1828,3 +1828,61 @@ function optimize_content_images(?string $html): string
 
     return is_string($updated) ? $updated : $html;
 }
+
+function category_product_ids_from_request($request): array
+{
+    $list = $request->input('product_ids_list');
+    if (is_string($list)) {
+        return preg_split('/\s*,\s*/', $list, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    }
+
+    $ids = $request->input('product_ids', []);
+
+    return is_array($ids) ? $ids : [];
+}
+
+function sync_category_products($categoryId, $productIds): void
+{
+    $categoryId = (int) $categoryId;
+    if ($categoryId < 1) {
+        return;
+    }
+
+    $valid = collect($productIds)
+        ->map(fn ($id) => (int) $id)
+        ->filter(fn ($id) => $id > 0)
+        ->unique()
+        ->values();
+
+    if ($valid->isNotEmpty()) {
+        $valid = \App\Models\Product::whereIn('id', $valid)->pluck('id')->map(fn ($id) => (int) $id)->values();
+    }
+
+    $remove = \App\Models\ProductCategory::where('category_id', $categoryId);
+    if ($valid->isNotEmpty()) {
+        $remove->whereNotIn('product_id', $valid->all());
+    }
+    $remove->delete();
+
+    $existing = \App\Models\ProductCategory::where('category_id', $categoryId)
+        ->pluck('product_id')
+        ->map(fn ($id) => (int) $id)
+        ->all();
+
+    $now = now();
+    $rows = [];
+    foreach ($valid as $productId) {
+        if (! in_array($productId, $existing, true)) {
+            $rows[] = [
+                'product_id' => $productId,
+                'category_id' => $categoryId,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        }
+    }
+
+    if ($rows) {
+        \App\Models\ProductCategory::insert($rows);
+    }
+}

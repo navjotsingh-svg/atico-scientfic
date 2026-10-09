@@ -33,7 +33,7 @@
        
         </a>
     </td>
-    <td class="text-center col-md-1">
+    <td class="text-center">
         <a class="btn btn-xs btn-primary" href="{{ route('sub_category.edit', [$detail->id]) }}"><i class="fa fa-edit"></i></a>
 
         <a title="{!! lang('common.delete') !!}" class="btn btn-xs btn-danger __drop" data-route="{!! route('sub_category.drop', [$detail->id]) !!}" data-message="{!! lang('messages.sure_delete', string_manip(lang('sub_category.sub_category'))) !!}" href="javascript:void(0)">
