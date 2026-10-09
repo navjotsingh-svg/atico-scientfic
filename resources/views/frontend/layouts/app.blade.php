@@ -24,12 +24,14 @@ $navGroups = getGroups();
 $isHome = $route === 'home';
 @endphp
 <head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <!-- Google Tag Manager. On phones this starts after the page has painted. -->
+@if($display != '0')
+<script>window.__aeGtm=true;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NFHT2HBC');</script>
+@endif
 <!-- End Google Tag Manager -->
 
     <meta charset="UTF-8">
@@ -171,7 +173,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap"></noscript>
-        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=42">
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43">
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
     @yield('css')
@@ -239,19 +241,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!--   <div class="scroll-to-top">
       <i class="fa fa-angle-double-up" aria-hidden="true"></i>
     </div> -->
-    <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/665438669a809f19fb3576de/1husfok80';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+    <!-- Chat loads after the page, so it does not compete with the first screen. -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     
     
@@ -334,17 +324,26 @@ s0.parentNode.insertBefore(s1,s0);
             }
             thirdPartyLoaded = true;
 
+            if (isMobile && !window.__aeGtm) {
+                window.__aeGtm = true;
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i;
+                f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NFHT2HBC');
+            }
+
             @if($display == 1)
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
             var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i;
             f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M8CF5BQ');
             @endif
 
-            var fa=document.createElement('script');
-            fa.src='https://kit.fontawesome.com/6260f12e27.js';
-            fa.crossOrigin='anonymous';
-            fa.defer = true;
-            document.body.appendChild(fa);
+            if (document.querySelector('i.fa, .fa-solid, .fa-regular, .fa-brands')) {
+                var fa=document.createElement('script');
+                fa.src='https://kit.fontawesome.com/6260f12e27.js';
+                fa.crossOrigin='anonymous';
+                fa.defer = true;
+                document.body.appendChild(fa);
+            }
 
             @if($display == 1)
            // var tawk=document.createElement('script');
@@ -373,8 +372,19 @@ s0.parentNode.insertBefore(s1,s0);
             window.addEventListener(eventName, loadThirdParty, { once: true, passive: true });
         });
 
-        // Give mobile more time before third-party scripts compete with LCP/TBT.
+        // Give mobile more time before third-party scripts compete with the first screen.
         setTimeout(loadThirdParty, isMobile ? 10000 : 4000);
+
+        setTimeout(function () {
+            if (window.__aeTawk) return;
+            window.__aeTawk = true;
+            var tawk = document.createElement('script');
+            tawk.async = true;
+            tawk.src = 'https://embed.tawk.to/665438669a809f19fb3576de/1husfok80';
+            tawk.charset = 'UTF-8';
+            tawk.setAttribute('crossorigin', '*');
+            document.body.appendChild(tawk);
+        }, isMobile ? 15000 : 6000);
     });
     </script>
 

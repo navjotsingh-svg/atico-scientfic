@@ -1458,6 +1458,18 @@ body {
   object-fit: cover;
 }
 
+@media (max-width: 767px) {
+  .ae-footer-bg {
+    display: none;
+  }
+
+  .ae-section,
+  .ae-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 640px;
+  }
+}
+
 .ae-footer-inner {
   position: relative;
   z-index: 2;

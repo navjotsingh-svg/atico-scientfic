@@ -582,7 +582,13 @@
 
     slider.addEventListener('mouseenter', stop);
     slider.addEventListener('mouseleave', start);
-    start();
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      var begin = function () { setTimeout(start, 8000); };
+      if (document.readyState === 'complete') begin();
+      else window.addEventListener('load', begin);
+    } else {
+      start();
+    }
   }
 })();
 

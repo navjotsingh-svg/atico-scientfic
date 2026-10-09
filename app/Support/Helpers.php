@@ -1290,6 +1290,18 @@ function decreaseWords($content)
 
 function sidebarCategories()
 {
+    try {
+        return \Illuminate\Support\Facades\Cache::remember('sidebar_categories', 3600, function () {
+            return sidebar_categories_query();
+        });
+    } catch (\Throwable $e) {
+        \Log::error('sidebarCategories failed: '.$e->getMessage());
+        return collect();
+    }
+}
+
+function sidebar_categories_query()
+{
     $cats = \App\Models\SidebarCategory::join('categories', 'sidebar_categories.category_id', '=', 'categories.id')->select('categories.name', 'categories.slug', 'categories.id')->get();
     if ($cats->isEmpty()) {
         $cats = \App\Models\Category::where('status', 1)->where('parent_id', 0)->orderBy('name', 'asc')->select('name', 'slug', 'id')->get();
