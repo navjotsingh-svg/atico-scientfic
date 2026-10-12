@@ -4,7 +4,7 @@
     $route  = \Route::currentRouteName();    
    $display = '1'; // Default: desktop
 
-$useragent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$useragent = (string) request()->userAgent();
 
 // Tablet check first
 if (
@@ -169,11 +169,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <!-- <link rel='stylesheet'  href="{{ asset('assets/frontend/css/admin-ajax.css?ver=5.0.1') }}"  media='all' /> -->
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+        @if($display != '0')
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap"></noscript>
         <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43">
+        @else
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43" media="print" onload="this.media='all'">
+        <noscript><link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43"></noscript>
+        @endif
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
     @yield('css')
@@ -183,9 +188,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
    <meta name="msvalidate.01" content="A37FED68578C80CB5842B7FCBF342AFD" />
 <style>
 :root {
-  --font-heading: "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-body: "Sora", system-ui, -apple-system, sans-serif;
+  --font-heading: {{ $display == '0' ? 'system-ui, -apple-system, sans-serif' : '"DM Sans", system-ui, -apple-system, sans-serif' }};
+  --font-body: {{ $display == '0' ? 'system-ui, -apple-system, sans-serif' : '"Sora", system-ui, -apple-system, sans-serif' }};
 }
+@if($display == '0')
+.ae-topbar{background:#1947d1;color:#fff}
+.ae-topbar .wrap{max-width:1400px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ae-topbar a{color:#fff;text-decoration:none}
+.ae-enquiry{background:#fa4219;color:#fff;padding:6px 12px;border-radius:8px;display:inline-flex;align-items:center;gap:6px}
+.ae-header{background:#fff;border-bottom:1px solid #1947d1;position:sticky;top:0;z-index:40}
+.ae-header .logo{width:140px;height:auto}
+.navbar-toggler{display:inline-flex;align-items:center;border:1px solid #d1d5db;background:#fff;padding:6px 10px;border-radius:6px}
+@media (max-width:991px){
+  .navbar-collapse{display:none !important}
+  .navbar-collapse.show{display:block !important}
+}
+@endif
 html, body {
   font-family: var(--font-body) !important;
   -webkit-font-smoothing: antialiased;
@@ -249,8 +267,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
  
 
+    @if(in_array($route, ['blog_page', 'blog_detail', 'engineering_lab_tender_page'], true))
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+    @endif
+    @if($route == 'product_detail')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    @else
+    <script>
+    document.addEventListener('click', function (event) {
+        var button = event.target.closest('.navbar-toggler');
+        if (!button) return;
+        var menu = document.getElementById('navbarSupportedContent');
+        if (!menu) return;
+        var open = menu.classList.toggle('show');
+        button.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    </script>
+    @endif
     <script src="{{ asset('assets/js/ae-search.js') }}?v=16" defer></script>
 @if($route == "product_detail")
     <script src="{{ asset('assets/js/owl.carousel.min531b.js?ver=2.3.4') }}" defer></script>

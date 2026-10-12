@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Category;
 use App\Models\ProductCategory;
 use App\Models\Product;
@@ -362,6 +363,12 @@ class HomeController extends Controller{
 
     public function index()
     {
+        $cacheKey = 'homepage_html_'.$this->deviceClass();
+        $cached = Cache::get($cacheKey);
+        if (is_string($cached) && $cached !== '') {
+            return response($cached);
+        }
+
         try {
             $products = Product::where('status', 1)->orderBy('id', 'desc')->take(8)->get();
             $blogs = Blog::where('status', '1')->take(4)->orderBy('id', 'desc')->get();
@@ -371,7 +378,10 @@ class HomeController extends Controller{
             $latest_cats = \App\Models\SidebarCategory::join('categories', 'sidebar_categories.category_id', '=', 'categories.id')->select('categories.name', 'categories.slug', 'categories.id', 'categories.image')->take(8)->get();
             $latest_cats = $this->attachRelatedProductImagesToCategories($latest_cats);
 
-            return view('frontend.home', compact('products', 'blogs', 'faqs', 'groups', 'latest_cats'));
+            $html = view('frontend.home', compact('products', 'blogs', 'faqs', 'groups', 'latest_cats'))->render();
+            Cache::put($cacheKey, $html, 600);
+
+            return response($html);
         } catch (\Exception $e) {
             \Log::error('Home page error: '.$e->getMessage());
 
@@ -383,6 +393,22 @@ class HomeController extends Controller{
                 'latest_cats' => collect(),
             ]);
         }
+    }
+
+    /**
+     * Matches the phone and tablet check in the public layout.
+     */
+    protected function deviceClass(): string
+    {
+        $userAgent = (string) request()->userAgent();
+        if ($userAgent !== '' && preg_match('/ipad|tablet|playbook|silk|kindle|(android(?!.*mobile))/i', $userAgent)) {
+            return 'tablet';
+        }
+        if ($userAgent !== '' && preg_match('/android|bb\d+|meego.+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|iphone|ipod|iris|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $userAgent)) {
+            return 'phone';
+        }
+
+        return 'desktop';
     }
 
     /**

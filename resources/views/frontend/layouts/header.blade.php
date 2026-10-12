@@ -47,7 +47,7 @@
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid px-0 d-flex align-items-center justify-content-between" style="max-width:1400px;margin:0 auto;width:100%;">
       <a class="navbar-brand m-0" href="{{ url('/') }}">
-        {!! optimized_img('assets/images/logo.png', 'Atico Scientific logo', ['lazy' => false, 'class' => 'logo', 'fetchpriority' => 'high']) !!}
+        {!! optimized_img('assets/images/logo.png', 'Atico Scientific logo', ['lazy' => false, 'class' => 'logo']) !!}
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
