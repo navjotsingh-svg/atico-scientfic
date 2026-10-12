@@ -798,6 +798,18 @@ class HomeController extends Controller{
         }
     }
 
+    public function SupplierInGhana(){
+        try{
+            $keyword = (object) [
+                'meta_title' => 'Laboratory Equipment Supplier in Ghana | Atico Scientific',
+                'meta_description' => 'Laboratory equipment supplier & exporter to Ghana for GES schools, GETFund & TVET. GSA-ready, shipped to Tema. Get a quote.'
+            ];
+             return view('frontend.pages.SupplierInGhana', compact('keyword'));
+        } catch(\Exception $e){
+            return back();
+        }
+    }
+
     
 
     //Lab Tender Function

@@ -348,9 +348,89 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 ]
 }
 </script>
-
 @endif
       
+
+@if($route == "laboratory-equipment-supplier-in-ghana")
+    <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-ghana" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://aticoscientific.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Laboratory Equipment Supplier in Ghana",
+"item": "https://aticoscientific.com/laboratory-equipment-supplier-in-ghana"
+}
+]
+}
+</script>
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Do you export lab equipment to Ghana?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we supply Ghana regularly, shipping through the port of Tema."
+}
+},
+{
+"@type": "Question",
+"name": "Are you a manufacturer or a local reseller?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "We're the manufacturer, based in Ambala, India. You buy direct at factory prices and we export straight to you."
+}
+},
+{
+"@type": "Question",
+"name": "Is your equipment GSA / EasyPASS compliant?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we arrange the Certificate of Conformity so your consignment clears Tema."
+}
+},
+{
+"@type": "Question",
+"name": "Can you supply GES, GETFund and CTVET tenders?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. We prepare compliant bids with specifications, pricing and documentation."
+}
+},
+{
+"@type": "Question",
+"name": "Can you match the standards-based / WASSCE science curriculum?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. Tell us the level and subjects and we'll build the exact equipment list."
+}
+},
+{
+"@type": "Question",
+"name": "How long does delivery to Ghana take?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Roughly 4–5 weeks to Tema by sea, plus inland delivery — a firm lead time comes with your quote."
+}
+}
+]
+}
+</script>
+@endif
+
  <style>
   .sfield{
       display:none;
