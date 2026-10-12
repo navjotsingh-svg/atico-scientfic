@@ -17,21 +17,13 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\PageMetaController;
 use App\Http\Controllers\EditorImageController;
+use App\Http\Controllers\SitemapController;
 
 
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/sitemap.xml', function () {
-    $path = public_path('sitemap.xml');
-    if (! is_file($path)) {
-        abort(404);
-    }
-
-    return response()->file($path, [
-        'Content-Type' => 'application/xml; charset=UTF-8',
-    ]);
-})->name('sitemap');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 //Route::delete('enquiry/{id}', 'EnquiryController@destroy')->name('enquiry.destroy');
 //Route::delete('enquiry/deleteSelected', 'EnquiryController@deleteSelected')->name('enquiry.deleteSelected');
 
