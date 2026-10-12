@@ -212,7 +212,7 @@ html, body {
 h1, h2, h3, h4, h5, h6,
 .ae-title, .ae-kicker, .navbar .nav-link,
 .accordion-button {
-  font-family: var(--font-heading) !important;
+  font-family: sans-serif !important;
 }
 .anek-bangla, .inter, .call_anytime, .call_number, .f_cats, .footer_text {
   font-family: var(--font-body) !important;

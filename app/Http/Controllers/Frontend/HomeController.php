@@ -752,6 +752,14 @@ class HomeController extends Controller{
         }
     }
 
+    public function laboratoryEquipmentKenya(){
+        try{
+            return view('frontend.pages.laboratoryEquipmentKenya');
+        } catch(\Exception $e){
+            return back();
+        }
+    }
+
     //Lab Tender Function
     public function labTenderPage()
     {

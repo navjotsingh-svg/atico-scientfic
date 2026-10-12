@@ -28,6 +28,8 @@ Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 //Route::delete('enquiry/deleteSelected', 'EnquiryController@deleteSelected')->name('enquiry.deleteSelected');
 
 
+Route::get('/laboratory-equipment-supplier-in-kenya', [HomeController::class, 'laboratoryEquipmentKenya'])->name('laboratory-equipment-supplier-in-kenya');
+
 Route::get('/products', [HomeController::class, 'productsCatalog'])->name('products.index');
 Route::get('/products/search/{slug?}', [HomeController::class, 'getProducts'])->name('products');
 Route::get('/get_categories/{slug?}/{id?}', [HomeController::class, 'getSearchCategories'])->name('get_categories');
