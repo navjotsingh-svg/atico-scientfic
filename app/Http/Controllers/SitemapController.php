@@ -7,24 +7,25 @@ use App\Models\Category;
 use App\Models\PageMeta;
 use App\Models\Product;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Sitemap\Sitemap;
-use Spatie\Sitemap\Tags\Url;
 
 class SitemapController extends Controller
 {
     public function __invoke()
     {
         $baseUrl = $this->baseUrl();
-        $sitemap = Sitemap::create();
 
-        foreach ($this->pages() as $page) {
-            $sitemap->add(
-                Url::create($baseUrl.$page['path'])
-                    ->setLastModificationDate($page['updated_at'])
-            );
-        }
+        return response()->stream(function () use ($baseUrl) {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 
-        return response($sitemap->render(), 200, [
+            foreach ($this->pages() as $page) {
+                $loc = htmlspecialchars($baseUrl.$page['path'], ENT_XML1 | ENT_QUOTES, 'UTF-8');
+                $lastmod = $page['updated_at']->format('c');
+                echo '<url><loc>'.$loc.'</loc><lastmod>'.$lastmod.'</lastmod></url>'."\n";
+            }
+
+            echo '</urlset>';
+        }, 200, [
             'Content-Type' => 'application/xml; charset=UTF-8',
             'Cache-Control' => 'no-cache, must-revalidate',
         ]);
