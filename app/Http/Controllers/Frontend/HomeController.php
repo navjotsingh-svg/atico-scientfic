@@ -754,11 +754,51 @@ class HomeController extends Controller{
 
     public function laboratoryEquipmentKenya(){
         try{
-            return view('frontend.pages.laboratoryEquipmentKenya');
+            $keyword = (object) [
+                'meta_title' => 'Laboratory Equipment Supplier in Kenya | Atico Scientific',
+                'meta_description' => 'Laboratory equipment supplier in Kenya for CBC/CBE schools and TVET institutions. Explore quality lab equipment with shipping to Mombasa. Request a quote.'
+            ];
+             return view('frontend.pages.laboratoryEquipmentKenya', compact('keyword'));
         } catch(\Exception $e){
             return back();
         }
     }
+
+    public function SupplierInUganda(){
+        try{
+            $keyword = (object) [
+                'meta_title' => 'Laboratory Equipment Supplier in Uganda | Atico Scientific',
+                'meta_description' => 'Laboratory equipment supplier & exporter to Uganda for schools, UgIFT/SEED & TVET. UNBS-ready, shipped via Mombasa. Get a quote.'
+            ];
+             return view('frontend.pages.SupplierInUganda', compact('keyword'));
+        } catch(\Exception $e){
+            return back();
+        }
+    }
+    public function SupplierInNigeria(){
+        try{
+            $keyword = (object) [
+                'meta_title' => 'Laboratory Equipment Supplier in Nigeria | Atico Scientific',
+                'meta_description' => 'Laboratory equipment supplier & exporter to Nigeria for schools, UBEC/TETFund & TVET projects. SONCAP-ready, shipped to Lagos. Get a quote.'
+            ];
+             return view('frontend.pages.SupplierInNigeria', compact('keyword'));
+        } catch(\Exception $e){
+            return back();
+        }
+    }
+    public function SupplierInTanzania(){
+        try{
+            $keyword = (object) [
+                'meta_title' => 'Laboratory Equipment Supplier in Tanzania | Atico Scientific',
+                'meta_description' => 'Laboratory equipment supplier & exporter to Tanzania for CBC schools & TVET. TBS/PVoC-ready, shipped to Dar es Salaam. Get a quote.'
+            ];
+             return view('frontend.pages.SupplierInTanzania', compact('keyword'));
+        } catch(\Exception $e){
+            return back();
+        }
+    }
+
+    
 
     //Lab Tender Function
     public function labTenderPage()

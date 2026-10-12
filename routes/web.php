@@ -29,6 +29,10 @@ Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 
 Route::get('/laboratory-equipment-supplier-in-kenya', [HomeController::class, 'laboratoryEquipmentKenya'])->name('laboratory-equipment-supplier-in-kenya');
+Route::get('/laboratory-equipment-supplier-in-uganda', [HomeController::class, 'SupplierInUganda'])->name('laboratory-equipment-supplier-in-uganda');
+Route::get('/laboratory-equipment-supplier-in-nigeria', [HomeController::class, 'SupplierInNigeria'])->name('laboratory-equipment-supplier-in-nigeria');
+Route::get('/laboratory-equipment-supplier-in-tanzania', [HomeController::class, 'SupplierInTanzania'])->name('laboratory-equipment-supplier-in-tanzania');
+
 
 Route::get('/products', [HomeController::class, 'productsCatalog'])->name('products.index');
 Route::get('/products/search/{slug?}', [HomeController::class, 'getProducts'])->name('products');

@@ -107,6 +107,249 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       @if($route == "product_detail")
       <link rel="canonical" href="https://aticoscientific.com/product/{{ $keyword->slug }}" />
       @endif
+      @if($route == "laboratory-equipment-supplier-in-kenya")
+      <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-kenya" />
+      @endif
+      @if($route == "laboratory-equipment-supplier-in-uganda")
+      <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-uganda" />
+      <script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://aticoscientific.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Laboratory Equipment Supplier in Uganda",
+"item": "https://aticoscientific.com/laboratory-equipment-supplier-in-uganda"
+}
+]
+}
+</script>
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Do you export lab equipment to Uganda?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we supply Uganda regularly, shipping by sea to Mombasa and on to Kampala."
+}
+},
+{
+"@type": "Question",
+"name": "Are you a manufacturer or a local reseller?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "We're the manufacturer, based in Ambala, India. You buy direct at factory prices and we export straight to you."
+}
+},
+{
+"@type": "Question",
+"name": "Is your equipment UNBS / PVoC compliant?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we arrange pre-shipment inspection and the Certificate of Conformity so your consignment clears smoothly."
+}
+},
+{
+"@type": "Question",
+"name": "Can you supply UgIFT / SEED schools and Ministry tenders?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. We prepare compliant bids with specifications, pricing and documentation."
+}
+},
+{
+"@type": "Question",
+"name": "How does delivery work for a landlocked country?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Cargo lands at Mombasa and moves by road/rail to Kampala via the Northern Corridor — we handle the transit documents."
+}
+},
+{
+"@type": "Question",
+"name": "How long does delivery to Uganda take?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Roughly 4–6 weeks including inland transit — a firm date comes with your quote."
+}
+}
+]
+}
+</script>
+      @endif
+    @if($route == "laboratory-equipment-supplier-in-nigeria")
+      <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-nigeria" />
+      <script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://aticoscientific.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Laboratory Equipment Supplier in Nigeria",
+"item": "https://aticoscientific.com/laboratory-equipment-supplier-in-nigeria"
+}
+]
+}
+</script>
+
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Do you export lab equipment to Nigeria?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — Nigeria is one of our biggest markets. We ship regularly into Lagos (Apapa / Tin Can)."
+}
+},
+{
+"@type": "Question",
+"name": "Are you a manufacturer or a local reseller?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "We're the manufacturer, based in Ambala, India. You buy direct at factory prices and we export straight to you."
+}
+},
+{
+"@type": "Question",
+"name": "Is your equipment SON/SONCAP compliant?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we obtain the Product Certificate and SONCAP Certificate so your consignment clears Lagos."
+}
+},
+{
+"@type": "Question",
+"name": "Can you supply UBEC, TETFund and state tenders?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. We prepare compliant bids with specifications, pricing and documentation."
+}
+},
+{
+"@type": "Question",
+"name": "Do you handle the import paperwork (Form M, PC, SC)?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we prepare and share the complete set with your clearing agent."
+}
+},
+{
+"@type": "Question",
+"name": "How long does delivery to Nigeria take?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Roughly 4 - 6 weeks to Lagos by sea, plus inland delivery — a firm lead time comes with your quote."
+}
+}
+]
+}
+</script>
+@endif  
+
+@if($route == "laboratory-equipment-supplier-in-tanzania")
+    <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-tanzania" />
+    <script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://aticoscientific.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Laboratory Equipment Supplier in Tanzania",
+"item": "https://aticoscientific.com/laboratory-equipment-supplier-in-tanzania"
+}
+]
+}
+</script>
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Do you export lab equipment to Tanzania?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — Tanzania is one of our core markets. We ship regularly through Dar es Salaam."
+}
+},
+{
+"@type": "Question",
+"name": "Are you a manufacturer or a local reseller?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "We're the manufacturer, based in Ambala, India. You buy direct at factory prices and we export straight to you."
+}
+},
+{
+"@type": "Question",
+"name": "Is your equipment TBS / PVoC compliant?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we arrange pre-shipment inspection and the Certificate of Conformity so your consignment clears Dar es Salaam."
+}
+},
+{
+"@type": "Question",
+"name": "Can you supply Ministry, PO-RALG and donor-funded tenders?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. We prepare compliant bids with specifications, pricing and documentation."
+}
+},
+{
+"@type": "Question",
+"name": "Can you match the competency-based science syllabi?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. Tell us the forms and subjects and we'll build the exact equipment list."
+}
+},
+{
+"@type": "Question",
+"name": "How long does delivery to Tanzania take?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Roughly 3–4 weeks to Dar es Salaam by sea, plus inland delivery — a firm lead time comes with your quote."
+}
+}
+]
+}
+</script>
+
+@endif
       
  <style>
   .sfield{
