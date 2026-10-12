@@ -16,6 +16,7 @@ class Category extends Model
          'name',
          'parent_id',
          'short_name',
+         'title',
          'sort',
          'second_parent_id',
          'four_parent_id',

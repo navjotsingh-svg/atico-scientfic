@@ -57,7 +57,7 @@
 
             <div>
                 <div class="ae-page-head">
-                    <h1>{!! $category_detail['name'] !!}</h1>
+                    <h1>{{ filled($category_detail['title'] ?? null) ? $category_detail['title'] : $category_detail['name'] }}</h1>
                 </div>
 
                 @php
