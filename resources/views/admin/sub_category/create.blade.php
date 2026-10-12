@@ -81,6 +81,11 @@ $route  = \Route::currentRouteName();
                                         <input type="text" name="short_name" class="form-control" value="<?= @$result->short_name ?>">
                                          </div>
 
+                                        <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" name="title" id="title" class="form-control" value="<?= @$result->title ?>" placeholder="Page heading. Leave blank to use the name.">
+                                        </div>
+
                                       
                                         <div class="form-group">
                                         <label for="description">Description</label>
