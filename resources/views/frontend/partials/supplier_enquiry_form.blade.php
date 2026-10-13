@@ -95,7 +95,48 @@
   color: #065f46;
 }
 .supplier-enquiry-form .field input[type="file"] {
+  width: 100%;
+  max-width: 100%;
   padding: 10px 12px;
   background: #fff;
+}
+.form-sec,
+.form-sec .wrap,
+.form-sec .split,
+.form-sec .grid2,
+.form-wrap,
+.form-grid,
+.field,
+.tbl-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.qbox p,
+.qbox h4 {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 860px) {
+  .form-sec .split,
+  .form-sec .grid2,
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .form-wrap {
+    padding: 18px 14px;
+  }
+  .tbl-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  body {
+    overflow-x: hidden;
+  }
 }
 </style>
