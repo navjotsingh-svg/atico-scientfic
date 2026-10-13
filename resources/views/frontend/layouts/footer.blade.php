@@ -72,7 +72,7 @@
     </div>
     <div class="ae-footer-divider"></div>
     <div class ="country_serve">
-      <h3 class="ae-footer-title">Countries We Serve</h3>
+      <h3 class="ae-footer-title" style="border-bottom: 0px; padding-top: 15px;">Countries We Serve</h3>
       <a href="/laboratory-equipment-supplier-in-kenya">Kenya</a>
       <a href="/laboratory-equipment-supplier-in-uganda">Uganda</a>
       <a href="/laboratory-equipment-supplier-in-nigeria">Nigeria</a>
