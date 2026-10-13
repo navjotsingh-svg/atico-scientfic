@@ -1535,6 +1535,10 @@ body {
     margin: 0 auto;
     width: 100%;
   }
+  .country_serve a{
+    margin-bottom: 12px !important;
+    display: inline-block;
+  }
 }
 
 .ae-faqs {
