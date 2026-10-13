@@ -70,7 +70,6 @@
         </div>
       </div>
     </div>
-
     <div class="ae-footer-divider"></div>
     <div class ="country_serve">
       <h3 class="ae-footer-title">Countries We Serve</h3>
