@@ -112,6 +112,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       @endif
       @if($route == "laboratory-equipment-supplier-in-kenya")
       <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-kenya" />
+      <script type="application/ld+json">
+        {
+        "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://aticoscientific.com/"},
+        {"@type":"ListItem","position":2,"name":"Laboratory Equipment Supplier in Kenya","item":"https://aticoscientific.com/laboratory-equipment-supplier-in-kenya"}
+        ]
+        }
+        </script>
+        <script type="application/ld+json">
+            {
+            "@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+            {"@type":"Question","name":"Do you export lab equipment to Kenya?","acceptedAnswer":{"@type":"Answer","text":"Yes — Kenya is one of our core markets. We ship regularly, usually through the port of Mombasa."}},
+            {"@type":"Question","name":"Are you a manufacturer or a local reseller?","acceptedAnswer":{"@type":"Answer","text":"We're the manufacturer, based in Ambala, India. You buy direct at factory prices and we export straight to you."}},
+            {"@type":"Question","name":"Is your equipment KEBS / PVoC compliant?","acceptedAnswer":{"@type":"Answer","text":"Yes — we arrange pre-shipment inspection and the Certificate of Conformity so your consignment clears Mombasa smoothly."}},
+            {"@type":"Question","name":"Can you match CBC/CBE and TVET equipment lists?","acceptedAnswer":{"@type":"Answer","text":"Yes. Tell us the pathways, grades or occupational standards and we'll build the exact equipment list."}},
+            {"@type":"Question","name":"Can you supply Kenyan Ministry and county tenders?","acceptedAnswer":{"@type":"Answer","text":"Yes. Send your BOQ or tender document and we'll return a compliant, factory-priced quotation."}},
+            {"@type":"Question","name":"How long does delivery to Kenya take?","acceptedAnswer":{"@type":"Answer","text":"Roughly 3–4 weeks to Mombasa by sea, plus inland delivery — we give a firm lead time with your quote."}}
+            ]
+            }
+        </script>
       @endif
       @if($route == "laboratory-equipment-supplier-in-uganda")
       <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-uganda" />

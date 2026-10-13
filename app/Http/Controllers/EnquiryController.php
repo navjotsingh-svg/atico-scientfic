@@ -20,8 +20,26 @@ class EnquiryController extends Controller
                 'message',
             ]);
 
+            if ($request->filled('buyer_type')) {
+                $inputs['message'] = 'Buyer type: '.$request->input('buyer_type')."\n\n".$inputs['message'];
+            }
+
+            $sourcePage = $request->input('source_page');
+            $allowedSourcePages = [
+                'laboratory-equipment-supplier-in-kenya',
+                'laboratory-equipment-supplier-in-uganda',
+                'laboratory-equipment-supplier-in-nigeria',
+                'laboratory-equipment-supplier-in-tanzania',
+                'laboratory-equipment-supplier-in-ghana',
+                'laboratory-equipment-supplier-in-zambia',
+            ];
+
             $validator = (new Enquiry)->validate($inputs);
             if ($validator->fails()) {
+                if (is_string($sourcePage) && in_array($sourcePage, $allowedSourcePages, true)) {
+                    return redirect(route($sourcePage).'#enquiry')->withErrors($validator)->withInput();
+                }
+
                 return back()->withErrors($validator)->withInput();
             }
 
@@ -63,12 +81,21 @@ class EnquiryController extends Controller
                     $message->from(config('mail.from.address'), config('mail.from.name'));
                     $message->to(config('mail.from.address'), 'Atico Scientific Sales');
                     $message->replyTo($enquiry->email, $enquiry->name);
-                    $message->subject('New Website Enquiry — ' . $enquiry->name);
+                    $subject = 'New Website Enquiry — '.$enquiry->name;
+                    if (!empty($enquiry->country)) {
+                        $subject .= ' ('.$enquiry->country.')';
+                    }
+                    $message->subject($subject);
                 });
             } catch (\Throwable $mailError) {
                 Log::error('Enquiry email failed: '.$mailError->getMessage(), [
                     'enquiry_id' => $id,
                 ]);
+            }
+
+            $successMessage = 'Thank you! We have received your requirement. Our team will get back to you within 24–48 hours.';
+            if (is_string($sourcePage) && in_array($sourcePage, $allowedSourcePages, true)) {
+                return redirect(route($sourcePage).'#enquiry')->with('success', $successMessage);
             }
 
             return redirect()->route('contact_us_page')->with('success', 'Thank you! We have received your enquiry. Our team will get back to you soon.');

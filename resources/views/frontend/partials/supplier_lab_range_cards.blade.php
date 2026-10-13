@@ -1,0 +1,6 @@
+<a class="card" href="{{ route('categories', 'physics-lab-equipment') }}"><div class="ic">⚛️</div><h3>Physics Lab Equipment</h3><p>Mechanics, optics, electricity, modern physics.</p><span class="arrow">View range →</span></a>
+<a class="card" href="{{ route('categories', 'chemistry-lab-equipment') }}"><div class="ic">🧪</div><h3>Chemistry Lab Equipment</h3><p>Apparatus, glassware &amp; chemistry sets.</p><span class="arrow">View range →</span></a>
+<a class="card" href="{{ route('categories', 'biology-lab-equipment') }}"><div class="ic">🔬</div><h3>Biology Lab Equipment</h3><p>Models, instruments &amp; microscopes.</p><span class="arrow">View range →</span></a>
+<a class="card" href="{{ route('categories', 'educational-lab-equipment') }}"><div class="ic">🎓</div><h3>Educational &amp; School Science</h3><p>Full curriculum-based school science packages.</p><span class="arrow">View range →</span></a>
+<a class="card" href="{{ route('categories', 'tvet-lab-equipment') }}"><div class="ic">🛠️</div><h3>TVET &amp; Technical Training</h3><p>Workshops: welding, plumbing, electrical.</p><span class="arrow">View range →</span></a>
+<a class="card" href="{{ route('categories', 'engineering-lab-equipment') }}"><div class="ic">⚙️</div><h3>Engineering &amp; Workshop</h3><p>Engineering college lab &amp; workshop kit.</p><span class="arrow">View range →</span></a>

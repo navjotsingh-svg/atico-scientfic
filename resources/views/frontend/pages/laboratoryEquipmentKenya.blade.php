@@ -114,7 +114,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 @media(max-width:480px){.quick .grid,.grid3,.grid4,.grid2{grid-template-columns:1fr}.hero h1{font-size:25px}}
 </style>
 <div class="crumb">
-    <div class="wrap"><a href="#">Home</a> › Laboratory Equipment Supplier in Kenya</div></div>
+    <div class="wrap"><a href="{{ route('home') }}">Home</a> › Laboratory Equipment Supplier in Kenya</div></div>
 
 <!-- HERO -->
 <header class="hero"><div class="wrap">
@@ -176,12 +176,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <section class="aud"><div class="wrap">
   <div class="sec-head"><span class="eyebrow">Lab equipment ranges we export to Kenya</span><h2>Complete lab solutions for Kenyan institutions</h2></div>
   <div class="grid3">
-    <a class="card" href="#"><div class="ic">⚛️</div><h3>Physics Lab Equipment</h3><p>Mechanics, optics, electricity, modern physics.</p><span class="arrow">View range →</span></a>
-    <a class="card" href="#"><div class="ic">🧪</div><h3>Chemistry Lab Equipment</h3><p>Apparatus, glassware &amp; chemistry sets.</p><span class="arrow">View range →</span></a>
-    <a class="card" href="#"><div class="ic">🔬</div><h3>Biology Lab Equipment</h3><p>Models, instruments &amp; microscopes.</p><span class="arrow">View range →</span></a>
-    <a class="card" href="#"><div class="ic">🎓</div><h3>Educational &amp; School Science</h3><p>Full CBC/CBE school science packages.</p><span class="arrow">View range →</span></a>
-    <a class="card" href="#"><div class="ic">🛠️</div><h3>TVET &amp; Technical Training</h3><p>Workshops: welding, plumbing, electrical.</p><span class="arrow">View range →</span></a>
-    <a class="card" href="#"><div class="ic">⚙️</div><h3>Engineering &amp; Workshop</h3><p>Engineering college lab &amp; workshop kit.</p><span class="arrow">View range →</span></a>
+    @include('frontend.partials.supplier_lab_range_cards')
   </div>
 </div></section>
 
@@ -247,14 +242,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <h2 style="color:var(--blue);font-size:30px;font-weight:800">Send your requirement or BOQ</h2>
       <p style="color:var(--muted)">Share your equipment list or tender document and we'll return a compliant, factory-priced quotation to Kenya — usually within 24–48 hours.</p>
     </div>
-    <div class="form-wrap"><div class="form-grid">
-      <div class="field"><label>Name</label><input placeholder="Your name"></div>
-      <div class="field"><label>Email</label><input type="email" placeholder="you@email.com"></div>
-      <div class="field"><label>Phone / WhatsApp</label><input placeholder="+254…"></div>
-      <div class="field"><label>Institution / buyer type</label><select><option>School (CBC/CBE)</option><option>TVET Institute</option><option>University / Polytechnic</option><option>Ministry / County Tender</option><option>Distributor / AGPO bidder</option><option>Other</option></select></div>
-      <div class="field full"><label>Your requirement / BOQ</label><textarea rows="3" placeholder="e.g. CBC physics + chemistry lab for a senior school in Nairobi, 2 streams"></textarea></div>
-      <div class="field full"><button class="btn btn-primary" style="width:100%;justify-content:center">Request My Free Quote →</button></div>
-    </div></div>
+    @include('frontend.partials.supplier_enquiry_form', [
+        'countryName' => 'Kenya',
+        'sourcePageRoute' => 'laboratory-equipment-supplier-in-kenya',
+        'phonePlaceholder' => '+254…',
+        'requirementPlaceholder' => 'e.g. CBC physics + chemistry lab for a senior school in Nairobi, 2 streams',
+        'buyerTypeLabel' => 'Institution / buyer type',
+        'buyerTypeOptions' => [
+            'School (CBC/CBE)',
+            'TVET Institute',
+            'University / Polytechnic',
+            'Ministry / County Tender',
+            'Distributor / AGPO bidder',
+            'Other',
+        ],
+    ])
   </div>
 </div></section>
 
@@ -267,7 +269,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <details><summary>Can you match CBC/CBE and TVET equipment lists?</summary><div class="ans">Yes. Tell us the pathways, grades or occupational standards and we'll build the exact equipment list.</div></details>
   <details><summary>Can you supply Kenyan Ministry and county tenders?</summary><div class="ans">Yes. Send your BOQ or tender document and we'll return a compliant, factory-priced quotation.</div></details>
   <details><summary>How long does delivery to Kenya take?</summary><div class="ans">Roughly 3–4 weeks to Mombasa by sea, plus inland delivery — we give a firm lead time with your quote.</div></details>
-</div></section>                  
+</div></section>
+<section style="padding-top:0"><div class="wrap"><h3 style="color:var(--blue);font-size:18px">We also export to:</h3>@include('frontend.partials.supplier_export_countries')</div></section>
 <script>
     $(".toggle").click(function(){
         if($(".accordion").hasClass("mobile_view"))
