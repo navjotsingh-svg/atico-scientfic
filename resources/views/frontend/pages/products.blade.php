@@ -11,44 +11,17 @@
 
 <section class="ae-page">
     <div class="ae-page-inner">
+        @php
+            $crumbCategory = (isset($activeFilter) && $activeFilter) ? $activeFilter : ($category ?? null);
+            $crumbName = $crumbCategory ? trim(strip_tags($crumbCategory->name)) : '';
+        @endphp
         <nav class="ae-crumb" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
             <span>/</span>
-            <a href="{{ route('products.index') }}">Our Products</a>
-            <span>/</span>
-            @if(isset($cat))
-                <a href="{{ route('categories', $cat->slug) }}">{!! $cat->name !!}</a>
-            @elseif(isset($category))
-                <span>{!! $category->name !!}</span>
-            @endif
-            @if($isHubListing || $showSubcatSelect)
-                @if(isset($sub_cat))
-                    <span>/</span>
-                    <a href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a>
-                @elseif(isset($category))
-                    <span>/</span>
-                    <span>{!! $category->name !!}</span>
-                @endif
-                @if(isset($activeFilter) && $activeFilter)
-                    <span>/</span>
-                    <span>{!! $activeFilter->name !!}</span>
-                @endif
-            @elseif($hasSubFilters)
-                @if(isset($sub_cat))
-                    <span>/</span>
-                    <a href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a>
-                @endif
-                @if(isset($activeFilter) && $activeFilter)
-                    <span>/</span>
-                    <span>{!! $activeFilter->name !!}</span>
-                @endif
-            @elseif(isset($sub_cat))
+            <a href="{{ route('products.index') }}">Products</a>
+            @if($crumbName !== '')
                 <span>/</span>
-                <span>{!! $sub_cat->name !!}</span>
-            @endif
-            @if(!$hasSubFilters && isset($sub_sub_cat))
-                <span>/</span>
-                <span>{!! $sub_sub_cat->name !!}</span>
+                <span>{{ $crumbName }}</span>
             @endif
         </nav>
 

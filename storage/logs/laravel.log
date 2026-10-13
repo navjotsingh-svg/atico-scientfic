@@ -3319,3 +3319,73 @@ Stack trace:
 #21 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/artisan(16): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
 #22 {main}
 "} 
+[2026-10-13 13:10:35] local.ERROR: Uncaught TypeError: Illuminate\Routing\UrlGenerator::__construct(): Argument #2 ($request) must be of type Illuminate\Http\Request, null given, called in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php on line 64 and defined in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:128
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php(64): Illuminate\Routing\UrlGenerator->__construct(Object(Illuminate\Routing\RouteCollection), NULL, NULL)
+#1 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Container/Container.php(931): Illuminate\Routing\RoutingServiceProvider->Illuminate\Routing\{closure}(Object(Illuminate\Foundation\Application), Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Container/Container.php(815): Illuminate\Container\Container->build(Object(Closure))
+#3 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1046): Illuminate\Container\Container->resolve('url', Array, true)
+#4 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Container/Container.php(751): Illuminate\Foundation\Application->resolve('url', Array)
+#5 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1028): Illuminate\Container\Container->make('url', Array)
+#6 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(124): Illuminate\Foundation\Application->make('url', Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(151): app('url')
+#8 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/app/Support/Helpers.php(1738): asset('assets/images/l...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/app/Support/Helpers.php(1722): public_image_url('assets/images/l...')
+#10 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/app/Support/Helpers.php(1743): public_image_info('assets/images/l...')
+#11 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/storage/framework/views/712802df4867047addbfdf70eb9dc4b2.php(27): optimized_img('assets/images/l...', 'Atico Scientifi...', Array)
+#12 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/Applications/X...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#14 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/Applications/X...', Array)
+#15 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/Applications/X...', Array)
+#16 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/Applications/X...', Array)
+#17 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#18 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#19 Command line code(15): Illuminate\View\View->render()
+#20 {main}
+
+Next Illuminate\View\ViewException: Illuminate\Routing\UrlGenerator::__construct(): Argument #2 ($request) must be of type Illuminate\Http\Request, null given, called in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php on line 64 (View: /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/resources/views/frontend/emails/contact_us.blade.php) in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:128
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(TypeError), 0)
+#1 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/Applications/X...', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/Applications/X...', Array)
+#3 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 Command line code(15): Illuminate\View\View->render()
+#6 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught TypeError: Illuminate\\Routing\\UrlGenerator::__construct(): Argument #2 ($request) must be of type Illuminate\\Http\\Request, null given, called in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php on line 64 and defined in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:128
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php(64): Illuminate\\Routing\\UrlGenerator->__construct(Object(Illuminate\\Routing\\RouteCollection), NULL, NULL)
+#1 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Container/Container.php(931): Illuminate\\Routing\\RoutingServiceProvider->Illuminate\\Routing\\{closure}(Object(Illuminate\\Foundation\\Application), Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Container/Container.php(815): Illuminate\\Container\\Container->build(Object(Closure))
+#3 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1046): Illuminate\\Container\\Container->resolve('url', Array, true)
+#4 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Container/Container.php(751): Illuminate\\Foundation\\Application->resolve('url', Array)
+#5 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1028): Illuminate\\Container\\Container->make('url', Array)
+#6 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(124): Illuminate\\Foundation\\Application->make('url', Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(151): app('url')
+#8 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/app/Support/Helpers.php(1738): asset('assets/images/l...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/app/Support/Helpers.php(1722): public_image_url('assets/images/l...')
+#10 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/app/Support/Helpers.php(1743): public_image_info('assets/images/l...')
+#11 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/storage/framework/views/712802df4867047addbfdf70eb9dc4b2.php(27): optimized_img('assets/images/l...', 'Atico Scientifi...', Array)
+#12 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/Applications/X...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#14 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('/Applications/X...', Array)
+#15 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('/Applications/X...', Array)
+#16 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\\View\\Engines\\CompilerEngine->get('/Applications/X...', Array)
+#17 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\\View\\View->getContents()
+#18 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\\View\\View->renderContents()
+#19 Command line code(15): Illuminate\\View\\View->render()
+#20 {main}
+
+Next Illuminate\\View\\ViewException: Illuminate\\Routing\\UrlGenerator::__construct(): Argument #2 ($request) must be of type Illuminate\\Http\\Request, null given, called in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/RoutingServiceProvider.php on line 64 (View: /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/resources/views/frontend/emails/contact_us.blade.php) in /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:128
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(TypeError), 0)
+#1 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('/Applications/X...', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\\View\\Engines\\CompilerEngine->get('/Applications/X...', Array)
+#3 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\\View\\View->getContents()
+#4 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\\View\\View->renderContents()
+#5 Command line code(15): Illuminate\\View\\View->render()
+#6 {main}
+  thrown at /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:128)
+[stacktrace]
+#0 {main}
+"} 

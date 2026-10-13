@@ -14223,6 +14223,7 @@ color: #575757 !important;
         </div>
          <form action="{{ route('enquiry.store') }}" method="post" class="wpcf7-form" enctype="multipart/form-data">
           {!! csrf_field() !!}
+          <input type="hidden" name="source_page" value="blog/{{ $blog->slug }}">
           <div class="contact-feedback-block">
             <div class="form-row">
               <div class="form-group col-md-6 pr-lg-3"><span class="wpcf7-form-control-wrap your-name"><input type="text" required="true" name="name" value="{{ old('name') }}" class="wpcf7-form-control wpcf7-text form-control rounded-0" placeholder="First Name*" /></span></div>

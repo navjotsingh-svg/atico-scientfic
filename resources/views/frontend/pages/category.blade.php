@@ -10,20 +10,10 @@
         <nav class="ae-crumb" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
             <span>/</span>
-            <a href="{{ route('products.index') }}">Our Products</a>
-            <span>/</span>
-            @if(isset($cat))
-                <a href="{{ route('categories', $cat->slug) }}">{!! $cat->name !!}</a>
+            <a href="{{ route('products.index') }}">Products</a>
+            @if(isset($category) && trim(strip_tags($category->name)) !== '')
                 <span>/</span>
-            @endif
-            @if(isset($sub_cat) && isset($category) && (int) $sub_cat->id !== (int) $category->id)
-                <a href="{{ route('categories', $sub_cat->slug) }}">{!! $sub_cat->name !!}</a>
-                <span>/</span>
-            @endif
-            @if(isset($category))
-                <span>{!! $category->name !!}</span>
-            @elseif(isset($cat))
-                <span>{!! $cat->name !!}</span>
+                <span>{{ trim(strip_tags($category->name)) }}</span>
             @endif
         </nav>
 

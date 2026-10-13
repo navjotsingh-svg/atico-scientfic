@@ -1226,14 +1226,82 @@ function getCategoryChain($category)
 
 function getProductBreadcrumbCategories($product_id)
 {
-    $bestChain = [];
-    foreach (getProductCats($product_id) as $cat) {
-        $chain = getCategoryChain($cat);
-        if (count($chain) > count($bestChain)) {
-            $bestChain = $chain;
+    $category = getProductBreadcrumbCategory($product_id);
+
+    return $category ? [$category] : [];
+}
+
+function getProductBreadcrumbCategory($product_id)
+{
+    $assigned = collect(getProductCats($product_id))->filter(function ($cat) {
+        return (int) ($cat->status ?? 1) === 1 && trim((string) $cat->slug) !== '';
+    })->values();
+
+    if ($assigned->isEmpty()) {
+        return null;
+    }
+
+    $leaves = $assigned->reject(function ($cat) use ($assigned) {
+        return $assigned->contains(function ($other) use ($cat) {
+            return (int) $other->parent_id === (int) $cat->id;
+        });
+    })->values();
+
+    if ($leaves->isEmpty()) {
+        $leaves = $assigned;
+    }
+
+    $best = null;
+    $bestDepth = -1;
+    foreach ($leaves as $leaf) {
+        $depth = productBreadcrumbDepth($leaf);
+        if ($depth > $bestDepth) {
+            $bestDepth = $depth;
+            $best = $leaf;
         }
     }
-    return $bestChain;
+
+    return climbProductBreadcrumbCategory($best);
+}
+
+function productBreadcrumbDepth($category): int
+{
+    $depth = 0;
+    $walker = $category;
+    $seen = [];
+    while ($walker && $depth < 8) {
+        $depth++;
+        $seen[(int) $walker->id] = true;
+        if ((int) $walker->parent_id === 0 || $walker->slug === 'educational-lab-equipment') {
+            break;
+        }
+        $parent = \App\Models\Category::where('id', $walker->parent_id)->where('status', 1)->first();
+        if (!$parent || isset($seen[(int) $parent->id]) || $parent->slug === 'educational-lab-equipment') {
+            break;
+        }
+        $walker = $parent;
+    }
+
+    return $depth;
+}
+
+function climbProductBreadcrumbCategory($category)
+{
+    $node = $category;
+    $seen = [];
+    for ($i = 0; $i < 8 && $node; $i++) {
+        $seen[(int) $node->id] = true;
+        if ((int) $node->parent_id === 0 || $node->slug === 'educational-lab-equipment') {
+            return $node;
+        }
+        $parent = \App\Models\Category::where('id', $node->parent_id)->where('status', 1)->first();
+        if (!$parent || isset($seen[(int) $parent->id]) || $parent->slug === 'educational-lab-equipment') {
+            return $node;
+        }
+        $node = $parent;
+    }
+
+    return $node;
 }
 
 

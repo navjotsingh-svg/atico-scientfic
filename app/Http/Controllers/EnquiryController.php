@@ -67,6 +67,8 @@ class EnquiryController extends Controller
                 return back()->with('error', 'Unable to save your enquiry. Please try again.')->withInput();
             }
 
+            $page = $this->enquiryPage($sourcePage);
+
             $data = [
                 'name' => $enquiry->name,
                 'email' => $enquiry->email,
@@ -74,19 +76,18 @@ class EnquiryController extends Controller
                 'mobile_no' => $enquiry->mobile_no,
                 'massage' => $enquiry->message,
                 'file_name' => $fileUrl,
+                'page_name' => $page['name'],
+                'page_url' => $page['url'],
             ];
 
             try {
-                $sourceLabel = is_string($sourcePage) && $sourcePage !== ''
-                    ? str_replace('-', ' ', $sourcePage)
-                    : '';
-                Mail::send('frontend.emails.contact_us', $data, function ($message) use ($enquiry, $sourceLabel) {
+                Mail::send('frontend.emails.contact_us', $data, function ($message) use ($enquiry, $page) {
                     $message->from(config('mail.from.address'), config('mail.from.name'));
                     $message->to('sales@aticoscientific.com', 'Atico Scientific Sales');
                     $message->replyTo($enquiry->email, $enquiry->name);
                     $subject = 'New Website Enquiry — '.$enquiry->name;
-                    if ($sourceLabel !== '') {
-                        $subject .= ' — '.$sourceLabel;
+                    if ($page['name'] !== '') {
+                        $subject .= ' — '.$page['name'];
                     }
                     if (!empty($enquiry->country)) {
                         $subject .= ' ('.$enquiry->country.')';
@@ -104,6 +105,39 @@ class EnquiryController extends Controller
             Log::error('Enquiry store failed: '.$e->getMessage());
             return back()->with('error', 'Something went wrong while submitting your enquiry. Please try again.')->withInput();
         }
+    }
+
+    /**
+     * @return array{name: string, url: string}
+     */
+    private function enquiryPage($sourcePage): array
+    {
+        $sourcePage = is_string($sourcePage) ? trim($sourcePage) : '';
+        if ($sourcePage === '') {
+            return ['name' => '', 'url' => ''];
+        }
+
+        if (str_starts_with($sourcePage, 'blog/')) {
+            $slug = substr($sourcePage, 5);
+            $blog = \App\Models\Blog::query()->where('slug', $slug)->first();
+            $name = $blog ? 'Blog: '.trim(strip_tags($blog->name)) : 'Blog';
+
+            return [
+                'name' => $name,
+                'url' => url('/blog/'.$slug),
+            ];
+        }
+
+        $routes = [
+            'contact-us' => 'contact_us_page',
+        ];
+        $routeName = $routes[$sourcePage] ?? $sourcePage;
+        $url = \Route::has($routeName) ? route($routeName) : '';
+
+        return [
+            'name' => ucwords(str_replace('-', ' ', $sourcePage)),
+            'url' => $url,
+        ];
     }
 
     public function index()

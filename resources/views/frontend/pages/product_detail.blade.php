@@ -5,10 +5,8 @@
     $productCats = getProductCats($product->id);
     $leafCats = collect($productCats)->filter(fn ($c) => (int) $c->parent_id !== 0);
     $displayCats = $leafCats->isNotEmpty() ? $leafCats : collect($productCats);
-    $breadcrumbCats = getProductBreadcrumbCategories($product->id);
-    $visibleBreadcrumbCats = count($breadcrumbCats) > 3 ? array_slice($breadcrumbCats, -3) : $breadcrumbCats;
-    $breadcrumbCollapsed = count($breadcrumbCats) > 3;
-    $breadcrumbProductName = \Illuminate\Support\Str::limit(strip_tags($product->name), 45);
+    $breadcrumbCategory = getProductBreadcrumbCategory($product->id);
+    $breadcrumbProductName = trim(strip_tags($product->name));
     $descPlain = strip_tags((string) $product->description);
     $descPreview = \Illuminate\Support\Str::limit($descPlain, 220);
     $hasLongDesc = strlen($descPlain) > 220;
@@ -19,17 +17,13 @@
         <nav class="ae-crumb ae-crumb-pdp" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
             <span class="ae-crumb-sep">/</span>
-            <a href="{{ route('products.index') }}">Our Products</a>
-            @if($breadcrumbCollapsed)
+            <a href="{{ route('products.index') }}">Products</a>
+            @if($breadcrumbCategory && trim(strip_tags($breadcrumbCategory->slug)) !== '')
                 <span class="ae-crumb-sep">/</span>
-                <span class="ae-crumb-ellipsis" aria-hidden="true">…</span>
+                <a href="{{ route('categories', $breadcrumbCategory->slug) }}">{{ trim(strip_tags($breadcrumbCategory->name)) }}</a>
             @endif
-            @foreach($visibleBreadcrumbCats as $crumbCat)
-                <span class="ae-crumb-sep">/</span>
-                <a href="{{ route('categories', $crumbCat->slug) }}">{!! \Illuminate\Support\Str::limit(strip_tags($crumbCat->name), 30) !!}</a>
-            @endforeach
             <span class="ae-crumb-sep">/</span>
-            <span class="ae-crumb-current" title="{!! strip_tags($product->name) !!}">{!! $breadcrumbProductName !!}</span>
+            <span class="ae-crumb-current">{{ $breadcrumbProductName }}</span>
         </nav>
 
         <div class="ae-pdp-hero">

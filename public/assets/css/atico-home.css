@@ -2442,23 +2442,22 @@ body {
   border-radius: 8px;
   padding: 10px 14px;
   margin-bottom: 16px;
-  flex-wrap: nowrap;
-  overflow: hidden;
-  white-space: nowrap;
+  flex-wrap: wrap;
+  overflow: visible;
+  white-space: normal;
 }
 
 .ae-crumb-pdp a,
 .ae-crumb-pdp .ae-crumb-current {
   flex-shrink: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
 }
 
 .ae-crumb-pdp .ae-crumb-current {
-  flex-shrink: 2;
-  max-width: 220px;
+  max-width: none;
   color: #334155;
   font-weight: 600;
 }
@@ -3132,7 +3131,7 @@ body {
     padding: 8px 10px;
   }
   .ae-crumb-pdp .ae-crumb-current {
-    max-width: 140px;
+    max-width: none;
   }
   .ae-pdp-bulk-cta {
     flex-direction: column;

@@ -52,10 +52,23 @@
                     <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">{!! $mobile_no !!}</td>
                   </tr>
 
-                  <tr style="text-transform: capitalize;">
+                  <tr>
                     <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">Country</td>
                     <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">{!! $country !!}</td>
                   </tr>
+
+                  @if(!empty($page_name))
+                  <tr>
+                    <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">Page</td>
+                    <td style="border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px; text-transform: none;">
+                      @if(!empty($page_url))
+                        <a style="color:#fff;text-decoration:underline;" href="{{ $page_url }}">{{ $page_name }}</a>
+                      @else
+                        {{ $page_name }}
+                      @endif
+                    </td>
+                  </tr>
+                  @endif
 
                   <tr style="text-transform: capitalize;">
                     <td style="background-color: #f76b2b; border: 1px solid #e1e1e1; padding: 6px 3px; font-size: 14px;">Message</td>
