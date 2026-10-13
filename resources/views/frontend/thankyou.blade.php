@@ -20,6 +20,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 500px;
+            margin: 50px 0;
         }
 
         .thank-you-container img {

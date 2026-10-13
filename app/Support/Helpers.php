@@ -1282,6 +1282,88 @@ function getGroups()
     }
 }
 
+function getProductsMegaMenuItems()
+{
+    try {
+        return \Illuminate\Support\Facades\Cache::remember('nav_mega_menu_items', 3600, function () {
+            $groups = getGroups();
+            $items = collect();
+
+            foreach ($groups as $group) {
+                $groupName = trim(strip_tags($group->name));
+                if ($group->categories && $group->categories->isNotEmpty()) {
+                    foreach ($group->categories as $category) {
+                        $sections = \App\Models\Category::where('parent_id', $category->id)
+                            ->where('status', 1)
+                            ->count();
+                        $items->push((object) [
+                            'group_id' => $group->id,
+                            'group_slug' => $group->route,
+                            'group_name' => $groupName,
+                            'name' => trim(strip_tags($category->short_name ?? $category->name)),
+                            'slug' => $category->slug,
+                            'url' => route('categories', $category->slug),
+                            'sections' => $sections,
+                        ]);
+                    }
+                } else {
+                    $items->push((object) [
+                        'group_id' => $group->id,
+                        'group_slug' => $group->route,
+                        'group_name' => $groupName,
+                        'name' => $groupName,
+                        'slug' => $group->route,
+                        'url' => route('categories', $group->route),
+                        'sections' => 0,
+                    ]);
+                }
+            }
+
+            return $items;
+        });
+    } catch (\Throwable $e) {
+        \Log::error('getProductsMegaMenuItems failed: '.$e->getMessage());
+
+        return collect();
+    }
+}
+
+function navMegaMenuIcon(string $slug): string
+{
+    $slug = strtolower($slug);
+    $icons = [
+        'education' => '🎓',
+        'school' => '🏫',
+        'physics' => '⚛️',
+        'chemistry' => '🧪',
+        'biology' => '🔬',
+        'medical' => '🏥',
+        'hospital' => '🩺',
+        'civil' => '🏗️',
+        'mechanical' => '⚙️',
+        'electrical' => '⚡',
+        'electronics' => '💡',
+        'engineering' => '🔧',
+        'tvet' => '🛠️',
+        'vocational' => '🛠️',
+        'testing' => '📊',
+        'scientific' => '🔭',
+        'laboratory' => '🧫',
+        'chemical' => '⚗️',
+        'industrial' => '🏭',
+        'agriculture' => '🌾',
+        'environment' => '🌍',
+    ];
+
+    foreach ($icons as $keyword => $icon) {
+        if (str_contains($slug, $keyword)) {
+            return $icon;
+        }
+    }
+
+    return '🔬';
+}
+
 
 function decreaseWords($content)
 {

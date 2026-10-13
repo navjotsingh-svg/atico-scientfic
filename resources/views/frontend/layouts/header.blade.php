@@ -59,29 +59,11 @@
           <li class="nav-item"><a class="nav-link {{ ($route ?? '') === 'home' ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
           <li class="nav-item"><a class="nav-link {{ request()->is('about-us') ? 'active' : '' }}" href="{{ url('/about-us') }}">About Us</a></li>
           <li class="nav-item dropdown ae-products-drop">
-            <a class="nav-link {{ request()->is('products') || request()->is('category*') || request()->is('product*') ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item fw-bold" href="{{ route('products.index') }}">All Products</a>
-              </li>
-              <li><hr class="dropdown-divider"></li>
-              @foreach(($navGroups ?? getGroups()) as $group)
-                <li class="{{ isset($group->categories) && count($group->categories) ? 'ae-has-sub' : '' }}">
-                  <a class="dropdown-item" href="{{ route('categories', $group->route) }}">{!! $group->name !!}</a>
-                  @if(isset($group->categories) && count($group->categories))
-                    <ul class="submenu dropdown-menu">
-                      @foreach($group->categories as $category)
-                        <li>
-                          <a class="dropdown-item" href="{{ route('categories', $category->slug) }}">
-                            {!! $category->short_name ?? $category->name !!}
-                          </a>
-                        </li>
-                      @endforeach
-                    </ul>
-                  @endif
-                </li>
-              @endforeach
-            </ul>
+            <a class="nav-link ae-products-trigger {{ request()->is('products') || request()->is('category*') || request()->is('product*') ? 'active' : '' }}" href="{{ route('products.index') }}" aria-haspopup="true" aria-expanded="false">
+              Products
+              <svg class="ae-products-chevron d-lg-none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            @include('frontend.partials.products_mega_menu')
           </li>
           <li class="nav-item"><a class="nav-link" href="{{ url('/lab-tenders') }}">Lab Tenders</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url('/blogs') }}">Blog</a></li>
@@ -116,24 +98,49 @@
 @push('scripts')
 <script>
 window.addEventListener('load', function () {
-  document.querySelectorAll('.dropdown-menu a').forEach(function (element) {
-    if (window.innerWidth >= 992) return;
-    element.addEventListener('click', function (e) {
-      var nextEl = this.nextElementSibling;
-      if (nextEl && nextEl.classList.contains('submenu')) {
-        e.preventDefault();
-        nextEl.style.display = nextEl.style.display === 'block' ? 'none' : 'block';
-      }
-    });
-  });
-
   var productsDrop = document.querySelector('.ae-products-drop');
-  var productsLink = productsDrop ? productsDrop.querySelector(':scope > .nav-link') : null;
+  var productsLink = productsDrop ? productsDrop.querySelector('.ae-products-trigger') : null;
+  var megaMenu = productsDrop ? productsDrop.querySelector('.ae-mega-menu') : null;
+
+  function setProductsOpen(open) {
+    if (!productsDrop) return;
+    productsDrop.classList.toggle('is-open', open);
+    if (productsLink) {
+      productsLink.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+  }
+
   if (productsDrop && productsLink) {
     productsLink.addEventListener('click', function (e) {
       if (window.innerWidth >= 992) return;
       e.preventDefault();
-      productsDrop.classList.toggle('is-open');
+      setProductsOpen(!productsDrop.classList.contains('is-open'));
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!productsDrop || window.innerWidth >= 992) return;
+    if (!productsDrop.contains(e.target)) {
+      setProductsOpen(false);
+    }
+  });
+
+  if (megaMenu) {
+    megaMenu.querySelectorAll('.ae-mega-chip').forEach(function (chip) {
+      chip.addEventListener('click', function (e) {
+        e.preventDefault();
+        var filter = chip.getAttribute('data-mega-filter') || 'all';
+        megaMenu.querySelectorAll('.ae-mega-chip').forEach(function (c) {
+          var active = c === chip;
+          c.classList.toggle('is-active', active);
+          c.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        megaMenu.querySelectorAll('.ae-mega-item').forEach(function (item) {
+          var groupId = item.getAttribute('data-mega-group');
+          var show = filter === 'all' || String(groupId) === String(filter);
+          item.classList.toggle('is-filtered-out', !show);
+        });
+      });
     });
   }
 });

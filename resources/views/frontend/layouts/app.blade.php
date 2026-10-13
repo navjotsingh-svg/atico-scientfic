@@ -601,10 +601,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Sora:wght@400;600&display=swap"></noscript>
-        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43">
+        <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=45">
         @else
         <link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43" media="print" onload="this.media='all'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=43"></noscript>
+        <noscript><link rel="stylesheet" href="{{ asset('assets/css/atico-home.css') }}?v=45"></noscript>
         @endif
 
         <link rel="shortcut icon" href="{{ asset('assets/images/fav.jpg') }}" type="image/x-icon">  
