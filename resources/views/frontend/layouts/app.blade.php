@@ -544,38 +544,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     display: none;
 }
 </style>
-    
-<script type='application/ld+json'>{
-            "@context": "http://schema.org",
-            "@type": "Review",
-            "author": {
-                "@type": "Person",
-                "name": "Saksham Sharma",
-                "sameAs": "GOOGLE-PLUS-LINK"
-            },
-            "url": "<data:blog.canonicalUrl/>",
-            "datePublished": "2019-06-26T20:00",
-            "publisher": {
-                "@type": "Organization",
-                "name": "Atico Lab Export",
-                "sameAs": "https://aticolabexport.com/"
-            },
-            "description": "<data:blog.metaDescription/>",
-            "inLanguage": "en",
-            "itemReviewed": {
-                "@type": "Product",
-                "name": "<data:blog.pageName/>",
-                "sameAs": "<data:blog.canonicalUrl/>",
-                "image": "<data:blog.postImageThumbnailUrl/>",
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "5",
-                    "bestRating": "5",
-                    "ratingCount": "21"
-                }
-            }
-        }
-</script>
 {{-- echo $route --}}
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
