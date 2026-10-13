@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\PageMeta;
 use App\Models\Product;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
 class SitemapController extends Controller
@@ -57,6 +58,15 @@ class SitemapController extends Controller
             ['path' => '/engineering-lab-tender', 'route' => 'engineering_lab_tender_page'],
         ];
 
+        $seen = array_fill_keys(array_column($pages, 'path'), true);
+        foreach ($this->publicFixedPages() as $page) {
+            if (isset($seen[$page['path']])) {
+                continue;
+            }
+            $seen[$page['path']] = true;
+            $pages[] = $page;
+        }
+
         $updated = [];
         if (Schema::hasTable('page_metas')) {
             $updated = PageMeta::query()
@@ -66,14 +76,59 @@ class SitemapController extends Controller
                 ->all();
         }
 
+        $routesUpdated = file_exists(base_path('routes/web.php'))
+            ? \Carbon\Carbon::createFromTimestamp(filemtime(base_path('routes/web.php')))
+            : now();
+
         foreach ($pages as $page) {
             $meta = $updated[$page['route']] ?? null;
 
             yield [
                 'path' => $page['path'],
-                'updated_at' => $meta?->updated_at ?? $meta?->created_at ?? now(),
+                'updated_at' => $meta?->updated_at ?? $meta?->created_at ?? $routesUpdated,
             ];
         }
+    }
+
+    /**
+     * Public pages with a fixed address, including landing pages added later.
+     *
+     * @return array<int, array{path: string, route: string}>
+     */
+    protected function publicFixedPages(): array
+    {
+        $skip = ['sitemap.xml', 'thankyou', 'up'];
+        $pages = [];
+
+        foreach (Route::getRoutes() as $route) {
+            if (! in_array('GET', $route->methods(), true)) {
+                continue;
+            }
+            if (in_array('auth', $route->gatherMiddleware(), true)) {
+                continue;
+            }
+
+            $uri = trim($route->uri(), '/');
+            if ($uri === '' || str_contains($uri, '{') || str_starts_with($uri, 'atico-admin')) {
+                continue;
+            }
+            if (in_array($uri, $skip, true)) {
+                continue;
+            }
+
+            $action = $route->getActionName();
+            $isPublicPage = $action === 'Closure' || str_starts_with($action, 'App\\Http\\Controllers\\Frontend\\');
+            if (! $isPublicPage) {
+                continue;
+            }
+
+            $pages[] = [
+                'path' => '/'.$uri,
+                'route' => (string) ($route->getName() ?: $uri),
+            ];
+        }
+
+        return $pages;
     }
 
     /**

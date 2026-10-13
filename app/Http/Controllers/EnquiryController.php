@@ -77,11 +77,17 @@ class EnquiryController extends Controller
             ];
 
             try {
-                Mail::send('frontend.emails.contact_us', $data, function ($message) use ($enquiry) {
+                $sourceLabel = is_string($sourcePage) && $sourcePage !== ''
+                    ? str_replace('-', ' ', $sourcePage)
+                    : '';
+                Mail::send('frontend.emails.contact_us', $data, function ($message) use ($enquiry, $sourceLabel) {
                     $message->from(config('mail.from.address'), config('mail.from.name'));
-                    $message->to(config('mail.from.address'), 'Atico Scientific Sales');
+                    $message->to('sales@aticoscientific.com', 'Atico Scientific Sales');
                     $message->replyTo($enquiry->email, $enquiry->name);
                     $subject = 'New Website Enquiry — '.$enquiry->name;
+                    if ($sourceLabel !== '') {
+                        $subject .= ' — '.$sourceLabel;
+                    }
                     if (!empty($enquiry->country)) {
                         $subject .= ' ('.$enquiry->country.')';
                     }
