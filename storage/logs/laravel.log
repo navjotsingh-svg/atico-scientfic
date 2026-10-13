@@ -3290,3 +3290,6 @@ Stack trace:
 #44 /Applications/XAMPP/xamppfiles/htdocs/aticoscientfic/aticoscientfic/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('/Applications/X...')
 #45 {main}
 "} 
+[2026-10-13 04:59:24] local.ERROR: Home page error: SQLSTATE[HY000] [2002] Connection refused (Connection: mysql, SQL: select * from `products` where `status` = 1 order by `id` desc limit 8)  
+[2026-10-13 04:59:24] local.ERROR: getGroups failed: SQLSTATE[HY000] [2002] Connection refused (Connection: mysql, SQL: select `id`, `route`, `sort`, `name` from `groups` where `status` = 1 order by `sort` asc)  
+[2026-10-13 05:00:10] local.ERROR: getGroups failed: SQLSTATE[HY000] [2002] Connection refused (Connection: mysql, SQL: select `id`, `route`, `sort`, `name` from `groups` where `status` = 1 order by `sort` asc)  

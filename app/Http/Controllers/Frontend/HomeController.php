@@ -810,6 +810,18 @@ class HomeController extends Controller{
         }
     }
 
+    public function SupplierInZambia(){
+        try{
+            $keyword = (object) [
+                'meta_title' => 'Laboratory Equipment Supplier in Zambia | Atico Scientific',
+                'meta_description' => 'Laboratory equipment supplier & exporter to Zambia for ECZ schools, CDF & TEVETA. ZABS-ready, shipped via Dar/Durban. Get a quote.'
+            ];
+             return view('frontend.pages.SupplierInZambia', compact('keyword'));
+        } catch(\Exception $e){
+            return back();
+        }
+    }
+
     
 
     //Lab Tender Function

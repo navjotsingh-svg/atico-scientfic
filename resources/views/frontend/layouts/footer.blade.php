@@ -72,6 +72,17 @@
     </div>
 
     <div class="ae-footer-divider"></div>
+    <div class ="country_serve">
+      <h3 class="ae-footer-title">Countries We Serve</h3>
+      <a href="/laboratory-equipment-supplier-in-kenya">Kenya</a>
+      <a href="/laboratory-equipment-supplier-in-uganda">Uganda</a>
+      <a href="/laboratory-equipment-supplier-in-nigeria">Nigeria</a>
+      <a href="/laboratory-equipment-supplier-in-tanzania">Tanzania</a>
+      <a href="/laboratory-equipment-supplier-in-ghana">Ghana</a>
+      <a href="/laboratory-equipment-supplier-in-zambia">Zambia</a>
+      <a href="/lab-tenders">and 100+ countries in all</a>
+    </div>
+    <div class="ae-footer-divider"></div>
 
     <div class="ae-footer-units">
       <h2>

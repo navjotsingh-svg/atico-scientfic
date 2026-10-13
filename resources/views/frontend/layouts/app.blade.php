@@ -73,8 +73,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'Browse laboratory and educational equipment manufactured and exported by Atico Scientific.',
           ],
           'lab_tender_page' => [
-            'Educational, Scientific, and Workshop Vocational Training Lab Equipment for Ministry of Education Tenders - Atico India',
-            'We have a wide range of Education, Scientific, and Workshop Tools for Ministry of Education Lab Tenders. Contact us for a quotation.',
+            'Lab Equipment Tender Supplier - MOE & Global Tenders | Atico',
+            'Laboratory equipment tender supplier for Ministry of Education, World Bank & TVET projects. Direct manufacturer with bid-ready specs & global shipping. Get a quote.',
           ],
           'engineering_lab_tender_page' => [
             'Engineering Lab Equipment for Ministry of Education Tenders - Atico Scientific',
@@ -100,6 +100,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       
       @if($route == "home")
       <link rel="canonical" href="https://aticoscientific.com/" />
+      @endif
+      @if($route == "lab_tender_page")
+      <link rel="canonical" href="https://aticoscientific.com/lab-tenders" />
       @endif
       @if($route == "categories")
       <link rel="canonical" href="https://aticoscientific.com/category/{{ $keyword->slug }}" />
@@ -350,7 +353,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 @endif
       
-
 @if($route == "laboratory-equipment-supplier-in-ghana")
     <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-ghana" />
 <script type="application/ld+json">
@@ -430,6 +432,88 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }
 </script>
 @endif
+
+@if($route == "laboratory-equipment-supplier-in-zambia")
+    <link rel="canonical" href="https://aticoscientific.com/laboratory-equipment-supplier-in-zambia" />
+    <script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://aticoscientific.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Laboratory Equipment Supplier in Zambia",
+"item": "https://aticoscientific.com/laboratory-equipment-supplier-in-zambia"
+}
+]
+}
+</script>
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Do you export lab equipment to Zambia?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we supply Zambia regularly, routing by sea to Dar es Salaam or Durban and on by road."
+}
+},
+{
+"@type": "Question",
+"name": "Are you a manufacturer or a local reseller?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "We're the manufacturer, based in Ambala, India. You buy direct at factory prices and we export straight to you."
+}
+},
+{
+"@type": "Question",
+"name": "Is your equipment ZABS compliant?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes — we arrange the Certificate of Conformity (or origin-country testing where accepted) so your consignment clears."
+}
+},
+{
+"@type": "Question",
+"name": "Can you supply Ministry, CDF and TEVETA tenders?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Yes. We prepare compliant bids with specifications, pricing and documentation."
+}
+},
+{
+"@type": "Question",
+"name": "Which route do you use for a landlocked country?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Dar es Salaam usually suits the Copperbelt; Durban usually suits Lusaka and the south — we pick the best one for you."
+}
+},
+{
+"@type": "Question",
+"name": "How long does delivery to Zambia take?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "Roughly 5–7 weeks including the inland leg — a firm date comes with your quote."
+}
+}
+]
+}
+</script>
+@endif
+
+
 
  <style>
   .sfield{

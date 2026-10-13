@@ -32,8 +32,9 @@ Route::get('/laboratory-equipment-supplier-in-kenya', [HomeController::class, 'l
 Route::get('/laboratory-equipment-supplier-in-uganda', [HomeController::class, 'SupplierInUganda'])->name('laboratory-equipment-supplier-in-uganda');
 Route::get('/laboratory-equipment-supplier-in-nigeria', [HomeController::class, 'SupplierInNigeria'])->name('laboratory-equipment-supplier-in-nigeria');
 Route::get('/laboratory-equipment-supplier-in-tanzania', [HomeController::class, 'SupplierInTanzania'])->name('laboratory-equipment-supplier-in-tanzania');
-
 Route::get('/laboratory-equipment-supplier-in-ghana', [HomeController::class, 'SupplierInGhana'])->name('laboratory-equipment-supplier-in-ghana');
+
+Route::get('/laboratory-equipment-supplier-in-zambia', [HomeController::class, 'SupplierInZambia'])->name('laboratory-equipment-supplier-in-zambia');
 
 
 Route::get('/products', [HomeController::class, 'productsCatalog'])->name('products.index');
