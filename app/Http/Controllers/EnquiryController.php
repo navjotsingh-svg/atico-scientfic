@@ -93,12 +93,7 @@ class EnquiryController extends Controller
                 ]);
             }
 
-            $successMessage = 'Thank you! We have received your requirement. Our team will get back to you within 24–48 hours.';
-            if (is_string($sourcePage) && in_array($sourcePage, $allowedSourcePages, true)) {
-                return redirect(route($sourcePage).'#enquiry')->with('success', $successMessage);
-            }
-
-            return redirect()->route('contact_us_page')->with('success', 'Thank you! We have received your enquiry. Our team will get back to you soon.');
+            return redirect()->route('thankyou');
         } catch (\Exception $e) {
             Log::error('Enquiry store failed: '.$e->getMessage());
             return back()->with('error', 'Something went wrong while submitting your enquiry. Please try again.')->withInput();
